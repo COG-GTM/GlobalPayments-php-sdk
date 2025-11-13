@@ -1,0 +1,23 @@
+{
+  "brand": {
+    "name": "Your Company",
+    "logo_url": "https://example.com/logo.png",
+    "primary_color": "#1a73e8",
+    "secondary_color": "#ffffff",
+    "font_family": "Arial, sans-serif"
+  },
+  "payment": {
+    "merchant_id": "YOUR_MERCHANT_ID",
+    "account": "YOUR_ACCOUNT",
+    "shared_secret": "YOUR_SHARED_SECRET",
+    "currency": "USD",
+    "amount": "100.00"
+  },
+  "allowed_payment_methods": ["CARDS", "OB"],
+  "page": {
+    "title": "Secure Payment",
+    "description": "Complete your payment securely",
+    "success_url": "https://example.com/success",
+    "cancel_url": "https://example.com/cancel"
+  }
+}
