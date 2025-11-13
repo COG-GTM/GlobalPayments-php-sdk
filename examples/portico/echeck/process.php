@@ -9,8 +9,8 @@ use GlobalPayments\Api\PaymentMethods\ECheck;
 use GlobalPayments\Api\ServiceConfigs\Gateways\PorticoConfig;
 use GlobalPayments\Api\ServicesContainer;
 
-$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$_GET = filter_input_array(INPUT_GET, FILTER_DEFAULT);
 
 $config = new PorticoConfig();
 $config->secretApiKey = 'skapi_cert_MTyMAQBiHVEAewvIzXVFcmUd2UcyBge_eCpaASUp0A'; #gitleaks:allow  
