@@ -55,8 +55,17 @@ class HostedPaymentData
 
     /**
      * Indicates if the customer is known and has an account.
+     * 
+     * Accepts the following values:
+     * - 0 or "0": Create a new payer
+     * - 1 or "1": Use an existing payer
+     * - 2 or "2": If the payer supplied exists, use it; otherwise create a new one
+     * 
+     * For backward compatibility, boolean values are also supported:
+     * - true: Treated as 1 (use existing payer)
+     * - false: Treated as 0 (create new payer)
      *
-     * @var boolean
+     * @var int|string|boolean
      */
     public $customerExists;
 

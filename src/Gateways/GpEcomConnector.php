@@ -265,10 +265,15 @@ class GpEcomConnector extends XmlGateway implements IPaymentGateway, IRecurringS
                 );
             }
             if (isset($builder->hostedPaymentData->customerExists)) {
-                $this->setSerializeData(
-                    'PAYER_EXIST',
-                    $builder->hostedPaymentData->customerExists ? "1" : "0"
-                );
+                $customerExists = $builder->hostedPaymentData->customerExists;
+                
+                if (is_bool($customerExists)) {
+                    $payerExistValue = $customerExists ? "1" : "0";
+                } else {
+                    $payerExistValue = (string)$customerExists;
+                }
+                
+                $this->setSerializeData('PAYER_EXIST', $payerExistValue);
             }
             if (isset($builder->hostedPaymentData->customerKey)) {
                 $this->setSerializeData('PAYER_REF', $builder->hostedPaymentData->customerKey);
