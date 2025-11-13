@@ -31,7 +31,7 @@ $config->merchantContactUrl = 'https://www.example.com';
 
 ServicesContainer::configureService($config);
 
-$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 // add cardholder data
 $card = new CreditCardData();

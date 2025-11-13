@@ -7,8 +7,8 @@ use GlobalPayments\Api\ServicesContainer;
 use GlobalPayments\Api\Entities\Address;
 use GlobalPayments\Api\ServiceConfigs\Gateways\PorticoConfig;
 
-$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$_GET = filter_input_array(INPUT_GET, FILTER_DEFAULT);
 
 $config = new PorticoConfig();
 $config->secretApiKey = 'skapi_cert_MYl2AQAowiQAbLp5JesGKh7QFkcizOP2jcX9BrEMqQ'; #gitleaks:allow

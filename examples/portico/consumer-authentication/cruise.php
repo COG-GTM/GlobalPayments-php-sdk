@@ -7,8 +7,8 @@ use GlobalPayments\Api\ServicesContainer;
 use GlobalPayments\Api\Entities\EcommerceInfo;
 use GlobalPayments\Api\ServiceConfigs\Gateways\PorticoConfig;
 
-$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$_GET = filter_input_array(INPUT_GET, FILTER_DEFAULT);
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);

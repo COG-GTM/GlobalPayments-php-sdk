@@ -12,7 +12,7 @@ use GlobalPayments\Api\ServicesContainer;
 use GlobalPayments\Api\Utils\Logging\Logger;
 use GlobalPayments\Api\Utils\Logging\SampleRequestLogger;
 
-$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 /**
  * The Google Pay token. If you have any input filtering on $_POST, you will need

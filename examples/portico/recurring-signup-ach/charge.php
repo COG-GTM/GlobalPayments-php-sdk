@@ -99,8 +99,8 @@ $config->serviceUrl = 'https://cert.api2.heartlandportico.com';
 
 ServicesContainer::configureService($config);
 
-$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$_GET = filter_input_array(INPUT_GET, FILTER_DEFAULT);
 
 try {
     $customer = createCustomer();
