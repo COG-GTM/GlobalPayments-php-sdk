@@ -6,11 +6,8 @@ use GlobalPayments\Api\Entities\Exceptions\ApiException;
 
 class FileProcessingClient
 {
-    private string $uploadUrl;
-
-    public function __construct($url)
+    public function __construct(private readonly string $uploadUrl)
     {
-        $this->uploadUrl = $url;
     }
 
     public function uploadFile($filePath)

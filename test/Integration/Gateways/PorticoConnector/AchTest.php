@@ -20,7 +20,7 @@ class AchTest extends TestCase
     protected $address;
     private $enableCryptoUrl = true;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->eCheck = new ECheck();
         $this->eCheck->accountNumber = '1357902468';
@@ -106,22 +106,9 @@ class AchTest extends TestCase
 
     protected function getACHToken()
     {
-        $payload = array(
-            'object' => 'token',
-            'token_type' => 'supt',
-            'ach' => array(
-                'account_number'    => '1357902468',
-                'routing_number'    => '122000030',
-            ),
-        );
+        $payload = ['object' => 'token', 'token_type' => 'supt', 'ach' => ['account_number'    => '1357902468', 'routing_number'    => '122000030']];
         $url = 'https://cert.api2-c.heartlandportico.com/Hps.Exchange.PosGateway.Hpf.v1/api/token?api_key=pkapi_cert_jKc1FtuyAydZhZfbB3'; #gitleaks:allow
-        $options = array(
-            'http' => array(
-                'header' => "Content-Type: application/json\r\n",
-                'method' => 'POST',
-                'content' => json_encode($payload),
-            ),
-        );
+        $options = ['http' => ['header' => "Content-Type: application/json\r\n", 'method' => 'POST', 'content' => json_encode($payload)]];
         $context = stream_context_create($options);
         $response = json_decode(file_get_contents($url, false, $context));
         if (!$response || isset($response->error)) {

@@ -68,7 +68,7 @@ class GpApi3DS2Test extends TestCase
      */
     private CreditCardData $card;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->setUpConfig();
         ServicesContainer::configureService($config);
@@ -386,7 +386,7 @@ class GpApi3DS2Test extends TestCase
 
     public function testCardHolderEnrolled_ChallengeRequired_v2_AllSources()
     {
-        $source = array("BROWSER", "MERCHANT_INITIATED", "MOBILE_SDK", "STORED_RECURRING");
+        $source = ["BROWSER", "MERCHANT_INITIATED", "MOBILE_SDK", "STORED_RECURRING"];
         foreach ($source as $value) {
             $secureEcom = Secure3dService::checkEnrollment($this->card)
                 ->withCurrency($this->currency)
@@ -520,7 +520,7 @@ class GpApi3DS2Test extends TestCase
     {
         $this->card->number = GpApi3DSTestCards::CARD_AUTH_SUCCESSFUL_V2_2;
 
-        $source = array("BROWSER", "MERCHANT_INITIATED", "MOBILE_SDK", "STORED_RECURRING");
+        $source = ["BROWSER", "MERCHANT_INITIATED", "MOBILE_SDK", "STORED_RECURRING"];
         foreach ($source as $value) {
             $secureEcom = Secure3dService::checkEnrollment($this->card)
                 ->withCurrency($this->currency)

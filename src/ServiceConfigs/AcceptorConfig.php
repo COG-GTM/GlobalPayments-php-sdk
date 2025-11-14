@@ -12,7 +12,6 @@ use GlobalPayments\Api\Entities\Enums\TerminalOutputCapability;
 
 class AcceptorConfig
 {
-
     /**
      * Used w/TransIT
      *

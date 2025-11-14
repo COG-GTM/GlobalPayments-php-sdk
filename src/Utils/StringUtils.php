@@ -9,7 +9,6 @@ use NumberFormatter;
 
 class StringUtils
 {
-
     public static function asPaddedAtEndString($inString, $toLength, $padChar)
     {
         $padStr = "";
@@ -57,7 +56,7 @@ class StringUtils
         $formatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
         $currency = $formatter->getSymbol(NumberFormatter::INTL_CURRENCY_SYMBOL);
 
-        return ltrim(preg_replace("/[^0-9]/","", $formatter->formatCurrency($value, $currency)), "0");
+        return ltrim(preg_replace("/[^0-9]/", "", $formatter->formatCurrency($value, $currency)), "0");
     }
 
     /**
@@ -92,10 +91,10 @@ class StringUtils
      */
     public static function bytesFromHex($hexString)
     {
-        return pack("H*" , strtolower($hexString));
+        return pack("H*", strtolower($hexString));
     }
 
-    public static function isJson($string) : bool
+    public static function isJson($string): bool
     {
         json_decode($string);
 
@@ -113,11 +112,11 @@ class StringUtils
 
     /**
      * Convert a boolean value to "YES" or "NO" string, used in HPP for GpAPI
-     * 
+     *
      * @param mixed $value The value to convert
      * @return string|null Returns "YES" for true, "NO" for false, or null if not a boolean
      */
-    public static function boolToYesNo($value) : ?string
+    public static function boolToYesNo($value): ?string
     {
         if (!is_bool($value)) {
             return null;

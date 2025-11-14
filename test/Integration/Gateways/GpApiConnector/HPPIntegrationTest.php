@@ -89,10 +89,8 @@ class HPPIntegrationTest extends TestCase
         $this->validPayer->shippingPhone = $this->validPhone;
     }
 
-    /**
-     * @group integration
-     * @group hpp
-     */
+    #[\PHPUnit\Framework\Attributes\Group('integration')]
+    #[\PHPUnit\Framework\Attributes\Group('hpp')]
     public function testCreateBasicHPPUrl()
     {
         $reference = 'INT_TEST_BASIC_' . uniqid();
@@ -124,11 +122,9 @@ class HPPIntegrationTest extends TestCase
         $this->assertMatchesRegularExpression('/^https:\/\/.*\/hpp\/.*/', $response->payByLinkResponse->url);
     }
 
-    /**
-     * @group integration
-     * @group hpp
-     * @group 3ds
-     */
+    #[\PHPUnit\Framework\Attributes\Group('integration')]
+    #[\PHPUnit\Framework\Attributes\Group('hpp')]
+    #[\PHPUnit\Framework\Attributes\Group('3ds')]
     public function testCreateHPPUrlWith3DSAuthentication()
     {
         $reference = 'INT_TEST_3DS_' . uniqid();
@@ -165,11 +161,9 @@ class HPPIntegrationTest extends TestCase
         $this->assertNotNull($response->payByLinkResponse->id);
     }
 
-    /**
-     * @group integration
-     * @group hpp
-     * @group shipping
-     */
+    #[\PHPUnit\Framework\Attributes\Group('integration')]
+    #[\PHPUnit\Framework\Attributes\Group('hpp')]
+    #[\PHPUnit\Framework\Attributes\Group('shipping')]
     public function testCreateHPPUrlWithShipping()
     {
         $reference = 'INT_TEST_SHIPPING_' . uniqid();
@@ -199,11 +193,9 @@ class HPPIntegrationTest extends TestCase
         $this->assertStringContainsString('https://', $response->payByLinkResponse->url);
     }
 
-    /**
-     * @group integration
-     * @group hpp
-     * @group iframe
-     */
+    #[\PHPUnit\Framework\Attributes\Group('integration')]
+    #[\PHPUnit\Framework\Attributes\Group('hpp')]
+    #[\PHPUnit\Framework\Attributes\Group('iframe')]
     public function testCreateHPPUrlWithIframeConfiguration()
     {
         $reference = 'INT_TEST_IFRAME_' . uniqid();
@@ -236,11 +228,9 @@ class HPPIntegrationTest extends TestCase
         $this->assertStringContainsString('https://', $response->payByLinkResponse->url);
     }
 
-    /**
-     * @group integration
-     * @group hpp
-     * @group comprehensive
-     */
+    #[\PHPUnit\Framework\Attributes\Group('integration')]
+    #[\PHPUnit\Framework\Attributes\Group('hpp')]
+    #[\PHPUnit\Framework\Attributes\Group('comprehensive')]
     public function testCreateComprehensiveHPPUrl()
     {
         $reference = 'INT_TEST_COMPREHENSIVE_' . uniqid();
@@ -313,11 +303,10 @@ class HPPIntegrationTest extends TestCase
 
     /**
      * Test error handling for invalid configurations
-     * 
-     * @group integration
-     * @group hpp
-     * @group error-handling
      */
+    #[\PHPUnit\Framework\Attributes\Group('integration')]
+    #[\PHPUnit\Framework\Attributes\Group('hpp')]
+    #[\PHPUnit\Framework\Attributes\Group('error-handling')]
     public function testHPPUrlGenerationErrorHandling()
     {
         $this->expectException(\Exception::class);

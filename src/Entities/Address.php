@@ -82,7 +82,7 @@ class Address
      * @var ?string
      */
     public $country;
-    
+
     /**
      * Consumer's country code.
      *
@@ -104,18 +104,19 @@ class Address
 
     public function __set($property, $value)
     {
-        if (in_array(
+        if (
+            in_array(
                 $property,
                 [
                     'countryCode',
                     'country',
                 ]
-        )) {
+            )
+        ) {
             $countryInfo = CountryUtils::getCountryInfo($value);
         }
 
-        switch ($property)
-        {
+        switch ($property) {
             case 'countryCode':
                 if ($this->country == null && isset($countryInfo)) {
                     $this->country = !empty($countryInfo['name']) ? $countryInfo['name'] : null;
@@ -178,12 +179,13 @@ class Address
 
     /**
      * This method clean and return the phone number in correct format or throw an exception
-     * 
-     * @param string $phoneNumber   
+     *
+     * @param string $phoneNumber
      * @return string
-     * @throws ArgumentException     
+     * @throws ArgumentException
      */
-    public static function checkPhoneNumber($phoneNumber) {
+    public static function checkPhoneNumber($phoneNumber)
+    {
         $phoneNumber = self::cleanPhoneNumber($phoneNumber);
 
         if (!empty($phoneNumber) && strlen($phoneNumber) > self::$_MaxLength['PhoneNumber']) {
@@ -195,12 +197,13 @@ class Address
 
     /**
      * This method cleans and return the Zip code in correct format or throw an exception
-     * 
+     *
      * @param string $zipCode
      * @return string
      * @throws ArgumentException
      */
-    public static function checkZipCode($zipCode) {
+    public static function checkZipCode($zipCode)
+    {
         $zipCode = self::cleanZipCode($zipCode);
 
         if (!empty($zipCode) && strlen($zipCode) > self::$_MaxLength['ZipCode']) {

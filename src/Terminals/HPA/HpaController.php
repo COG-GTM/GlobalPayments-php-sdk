@@ -42,7 +42,7 @@ class HpaController extends DeviceController
         $this->requestIdProvider = $config->requestIdProvider;
     }
 
-    public function configureInterface() : IDeviceInterface
+    public function configureInterface(): IDeviceInterface
     {
         if (empty($this->device)) {
             $this->device = new HpaInterface($this);
@@ -51,12 +51,12 @@ class HpaController extends DeviceController
         return $this->device;
     }
 
-    public function processReport(TerminalReportBuilder $builder) : ITerminalReport
+    public function processReport(TerminalReportBuilder $builder): ITerminalReport
     {
         throw new NotImplementedException();
     }
 
-    public function manageTransaction(TerminalManageBuilder $builder) : TerminalResponse
+    public function manageTransaction(TerminalManageBuilder $builder): TerminalResponse
     {
         $this->builderData = $builder;
         $xml = new \DOMDocument();
@@ -79,22 +79,22 @@ class HpaController extends DeviceController
         }
 
         $request->appendChild($xml->createElement("TotalAmount", $totalAmount));
-        
+
         $response = $this->send($xml->saveXML($request));
         return $response;
     }
 
-    public function processTransaction(TerminalAuthBuilder $builder) : TerminalResponse
+    public function processTransaction(TerminalAuthBuilder $builder): TerminalResponse
     {
         $this->builderData = $builder;
         $xml = new \DOMDocument('1.0', 'utf-8');
         $transactionType = $this->manageTransactionType($builder->transactionType);
         $cardGroup = $this->manageCardGroup($builder->paymentMethodType);
-        
+
         $amount = TerminalUtils::formatAmount($builder->amount);
         $gratuity = TerminalUtils::formatAmount($builder->gratuity);
         $taxAmount = TerminalUtils::formatAmount($builder->taxAmount);
-        
+
         // Build Request
         $request = $xml->createElement("SIP");
         $request->appendChild($xml->createElement("Version", '1.0'));
@@ -110,19 +110,19 @@ class HpaController extends DeviceController
         } else {
             $request->appendChild($xml->createElement("TipAmount", 0));
         }
-        
+
         if ($builder->taxAmount !== null) {
             $request->appendChild($xml->createElement("TaxAmount", $taxAmount));
         } else {
             $request->appendChild($xml->createElement("TaxAmount", 0));
         }
-        
+
         if ($builder->paymentMethodType == PaymentMethodType::EBT) {
             $request->appendChild($xml->createElement("EBTAmount", $amount));
         }
 
         $request->appendChild($xml->createElement("TotalAmount", $amount));
-        
+
         $response = $this->send($xml->saveXML($request));
         return $response;
     }
@@ -145,7 +145,7 @@ class HpaController extends DeviceController
         }
         //send messaege to gateway
         $this->connector->send(trim($message), $requestType);
-        
+
         //check response code
         $acceptedCodes = ["0"];
         $this->checkResponse($this->connector->deviceResponse, $acceptedCodes);
@@ -167,7 +167,7 @@ class HpaController extends DeviceController
         if ($acceptedCodes === null) {
             $acceptedCodes = ["00"];
         }
-        
+
         if (!empty($gatewayResponse->resultText) || !empty($gatewayResponse->gatewayResponseMessage)) {
             $responseCode = (string) $gatewayResponse->resultCode;
             $responseMessage = (string) $gatewayResponse->resultText;
@@ -222,7 +222,7 @@ class HpaController extends DeviceController
                 );
         }
     }
-    
+
     public function manageCardGroup($paymentMethodType)
     {
         $cardGroup = $paymentMethodType;
@@ -237,32 +237,32 @@ class HpaController extends DeviceController
         }
         return $cardGroup;
     }
-    
+
     public function sendFile($sendFileData)
     {
         $sendFile = new HpaSendFileRequest($this->settings);
         $sendFile->validate($sendFileData);
-        
+
         $fileInfo = $sendFile->getFileInformation($sendFileData);
-        
+
         $initialMessage = "<SIP>"
                 . "<Version>1.0</Version>"
                 . "<ECRId>1004</ECRId>"
                 . "<Request>SendFile</Request>"
                 . "<RequestId>%s</RequestId>"
-                . "<FileName>".$sendFileData->imageType."</FileName>"
-                . "<FileSize>".$fileInfo['fileSize']."</FileSize>"
+                . "<FileName>" . $sendFileData->imageType . "</FileName>"
+                . "<FileSize>" . $fileInfo['fileSize'] . "</FileSize>"
                 . "<MultipleMessage>1</MultipleMessage>"
                 . "</SIP>";
 
         $initialFileResponse = $this->send($initialMessage, HpaMessageId::SEND_FILE);
-        
+
         if (!empty($initialFileResponse) && $initialFileResponse->resultCode == 0) {
             $splitedImageData = str_split($fileInfo['fileData'], $initialFileResponse->maxDataSize);
             $totalMessages = sizeof($splitedImageData);
 
             for ($i = 0; $i < $totalMessages; $i++) {
-                $isMultiple = ( ($i+1) != $totalMessages) ? 1 : 0;
+                $isMultiple = ( ($i + 1) != $totalMessages) ? 1 : 0;
                 $subsequentMessage = "<SIP>"
                         . "<Version>1.0</Version>"
                         . "<ECRId>1004</ECRId>"
@@ -277,7 +277,7 @@ class HpaController extends DeviceController
             return $fileResponse;
         }
     }
-    
+
     public function __destruct()
     {
         $this->device->reset();

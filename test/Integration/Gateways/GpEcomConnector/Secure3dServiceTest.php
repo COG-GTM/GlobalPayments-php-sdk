@@ -34,7 +34,7 @@ class Secure3dServiceTest extends TestCase
     private BrowserData $browserData;
     private GatewayProvider|string $gatewayProvider;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->getConfig();
         ServicesContainer::configureService($config);
@@ -149,7 +149,7 @@ class Secure3dServiceTest extends TestCase
 
     public function testFullCycle_v2_FrictionlessCards()
     {
-        $cards = array("4263970000005262" => "2.1.0", "4222000006724235" => "2.1.0", "4222000006285344" => "2.2.0", "4222000009719489" => "2.2.0");
+        $cards = ["4263970000005262" => "2.1.0", "4222000006724235" => "2.1.0", "4222000006285344" => "2.2.0", "4222000009719489" => "2.2.0"];
 
         foreach ($cards as $cardNumber => $cardVersion) {
             $this->card->number = $cardNumber;
@@ -261,7 +261,7 @@ class Secure3dServiceTest extends TestCase
 
     public function testFullCycle_v2_ChallengeRequiredCards()
     {
-        $cards = array("4012001038488884" => "2.1.0", "4222000001227408" => "2.2.0");
+        $cards = ["4012001038488884" => "2.1.0", "4222000001227408" => "2.2.0"];
 
         foreach ($cards as $cardNumber => $cardVersion) {
             $this->card->number = $cardNumber;

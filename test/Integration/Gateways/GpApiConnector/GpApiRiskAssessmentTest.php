@@ -47,7 +47,7 @@ class GpApiRiskAssessmentTest extends TestCase
     /** @var CreditCardData */
     private CreditCardData $card;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->setUpConfig();
         ServicesContainer::configureService($config);
@@ -218,7 +218,7 @@ class GpApiRiskAssessmentTest extends TestCase
 
     public function testTransactionRiskAnalysis_AllSources()
     {
-        $source = array(AuthenticationSource::BROWSER, AuthenticationSource::MERCHANT_INITIATED, AuthenticationSource::MOBILE_SDK);
+        $source = [AuthenticationSource::BROWSER, AuthenticationSource::MERCHANT_INITIATED, AuthenticationSource::MOBILE_SDK];
         foreach ($source as $value) {
             /** @var RiskAssessment $response */
             $response = FraudService::riskAssess($this->card)

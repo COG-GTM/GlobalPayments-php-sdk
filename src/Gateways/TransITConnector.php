@@ -38,10 +38,10 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
     public $password;
     public $developerId;
     public $acceptorConfig;
-    
+
     public $supportsHostedPayments = false;
 
-    public function supportsOpenBanking() : bool
+    public function supportsOpenBanking(): bool
     {
         return false;
     }
@@ -65,7 +65,7 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
                 $cardDataInputMode = 'ELECTRONIC_COMMERCE_NO_SECURITY_CHANNEL_ENCRYPTED_SET_WITHOUT_CARDHOLDER_CERTIFICATE';
             }
         }
-        
+
         $transaction = $xml->createElement($this->mapRequestType($builder));
         $transaction->appendChild($xml->createElement('deviceID', $this->deviceId));
         $transaction->appendChild($xml->createElement('transactionKey', $this->transactionKey));
@@ -119,12 +119,12 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
             if ($builder->commercialData->freightAmount) {
                 $transaction->appendChild($xml->createElement('shippingCharges', AmountUtils::transitFormat($builder->commercialData->freightAmount)));
             }
-            
+
             if ($builder->commercialData->dutyAmount) {
                 $transaction->appendChild($xml->createElement('dutyCharges', AmountUtils::transitFormat($builder->commercialData->dutyAmount)));
             }
         }
-    
+
         if ($paymentMethod instanceof CreditCardData) {
             $transaction->appendChild($xml->createElement('cardNumber', $paymentMethod->token != null ? $paymentMethod->token : $paymentMethod->number));
 
@@ -213,7 +213,7 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
                 if (!empty($lineItem->unitOfMeasure)) {
                     $productDetailsNode->appendChild($xml->createElement('measurementUnit', $lineItem->unitOfMeasure));
                 }
-                
+
                 if (!empty($lineItem->discountDetails)) {
                     $productDiscountDetailsNode = $xml->createElement('productDiscountDetails');
 
@@ -251,7 +251,7 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
                     if (!empty($lineItem->taxPercentage)) {
                         $productTaxDetailsNode->appendChild($xml->createElement('productTaxPercentage', $lineItem->taxPercentage));
                     }
-                    
+
                     if (!empty($lineItem->taxType)) {
                         $productTaxDetailsNode->appendChild($xml->createElement('productTaxType'));
                     }
@@ -278,14 +278,14 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
                 $transaction->appendChild($productDetailsNode);
             }
         }
-      
+
         if ($commercialDataSubmitted) {
             if ($builder->commercialData->commercialIndicator === CommercialIndicator::LEVEL_II) {
                 $transaction->appendChild($xml->createElement('commercialCardLevel', 'LEVEL2'));
             } elseif ($builder->commercialData->commercialIndicator === CommercialIndicator::LEVEL_III) {
                 $transaction->appendChild($xml->createElement('commercialCardLevel', 'LEVEL3'));
             }
-            
+
             if (!empty($builder->commercialData->poNumber)) {
                 $transaction->appendChild($xml->createElement('purchaseOrder', $builder->commercialData->poNumber));
             }
@@ -330,7 +330,7 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
                 $transaction->appendChild($xml->createElement('destinationCountryCode', $builder->commercialData->destinationCountryCode));
             }
         }
-      
+
         if (!empty($builder->billingAddress) && !$commercialDataSubmitted) { // addy and commercial data are mutually exclusive
             $transaction->appendChild($xml->createElement('addressLine1', $builder->billingAddress->streetAddress1));
             $transaction->appendChild($xml->createElement('zip', $builder->billingAddress->postalCode));
@@ -351,7 +351,7 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
         if ($transaction->tagName === "CardVerification") {
             $transaction->appendChild($xml->createElement('developerID', $this->developerId));
         }
-        
+
         if (!empty($builder->cashTendered)) {
             $transaction->appendChild($xml->createElement('cashTendered', AmountUtils::transitFormat($builder->cashTendered)));
         }
@@ -391,7 +391,7 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
         } else {
             $transaction->appendChild($xml->createElement('cardDataInputMode', $cardDataInputMode));
         }
-        
+
         $transaction->appendChild($xml->createElement('cardholderAuthenticationEntity', $this->acceptorConfig->cardHolderAuthenticationEntity));
         $transaction->appendChild($xml->createElement('cardDataOutputCapability', $this->acceptorConfig->cardDataOutputCapability));
 
@@ -426,7 +426,7 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
         if (empty($this->transactionKey) && empty($this->manifest)) {
             throw new ConfigurationException('transactionKey/manifest is required for this transaction.');
         }
-        
+
         $xml = new DOMDocument();
 
         $paymentMethod = $builder->paymentMethod;
@@ -438,11 +438,11 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
         if (!empty($builder->amount)) {
             $transaction->appendChild($xml->createElement('transactionAmount', AmountUtils::transitFormat($builder->amount)));
         }
-        
+
         if (!empty($builder->gratuity)) {
             $transaction->appendChild($xml->createElement('tip', AmountUtils::transitFormat($builder->gratuity)));
         }
-        
+
         if (!empty($paymentMethod->transactionId)) {
             $transaction->appendChild($xml->createElement('transactionID', $paymentMethod->transactionId));
         }
@@ -462,20 +462,20 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
 
             $partialShipmentDataNode->appendChild($xml->createElement('currentPaymentSequenceNumber', $builder->multiCaptureSequence));
             $partialShipmentDataNode->appendChild($xml->createElement('totalPaymentCount', $builder->multiCapturePaymentCount));
-            
+
             $transaction->appendChild($partialShipmentDataNode);
         }
-        
+
         if ($builder->transactionType === TransactionType::BATCH_CLOSE) {
             $transaction->appendChild($xml->createElement('operatingUserID', $this->userId));
         } else {
             $transaction->appendChild($xml->createElement('developerID', $this->developerId));
         }
-        
+
         if (!empty($builder->description) && $builder->transactionType == TransactionType::VOID) {
             $transaction->appendChild($xml->createElement('voidReason', $builder->description));
         }
-        
+
         $response = $this->doTransaction($xml->saveXML($transaction));
         return $this->mapResponse($builder, $response);
     }
@@ -523,7 +523,7 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
     public function mapResponse($builder, $rawResponse)
     {
         $root = $this->xml2object($rawResponse);
-                
+
         $this->checkResponse($root);
 
         $response = new Transaction();
@@ -542,7 +542,7 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
         $response->authorizationCode = (string)$root->authCode;
         $response->transactionKey = (string)$root->transactionKey;
         $response->cardBrandTransactionId = (string)$root->cardTransactionIdentifier;
-        
+
         if (!empty($builder) && $builder->transactionType === TransactionType::BATCH_CLOSE) {
             $response->batchSummary = new BatchSummary();
             $response->batchSummary->totalAmount = (string)$root->batchInfo->saleAmount;
@@ -591,24 +591,24 @@ class TransITConnector extends XmlGateway implements IPaymentGateway
             );
         }
     }
-    
+
     public function getTransactionKey()
     {
         $xml = new DOMDocument();
-        
+
         $transaction = $xml->createElement('GenerateKey');
         $transaction->appendChild($xml->createElement('mid', $this->merchantId));
         $transaction->appendChild($xml->createElement('userID', $this->userId));
         $transaction->appendChild($xml->createElement('password', $this->password));
-        
+
         if (!empty($this->transactionKey)) {
             $transaction->appendChild($xml->createElement('transactionKey', $this->transactionKey));
         }
-        
+
         $response = $this->doTransaction($xml->saveXML($transaction));
         return $this->mapResponse(null, $response);
     }
-    
+
     public function createManifest()
     {
         $sEncryptedData = "";

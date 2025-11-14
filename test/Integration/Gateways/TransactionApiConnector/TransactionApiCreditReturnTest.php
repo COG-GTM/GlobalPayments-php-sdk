@@ -26,7 +26,7 @@ class TransactionApiCreditReturnTest extends TestCase
     private Address $addressCa;
 
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->card = new CreditCardData();
@@ -303,9 +303,9 @@ class TransactionApiCreditReturnTest extends TestCase
     private function getTransactionData($region, $countryCode = null, $lang = null)
     {
         $transData = new TransactionApiData();
-        $transData->countryCode = isset($countryCode) ? $countryCode : CountryUtils::getNumericCodeByCountry('US');
+        $transData->countryCode = $countryCode ?? CountryUtils::getNumericCodeByCountry('US');
         $transData->ecommerceIndicator = EcommerceIndicator::ECOMMERCE_INDICATOR_2;
-        $transData->language = isset($lang) ? $lang : TransactionLanguage::EN_US;
+        $transData->language = $lang ?? TransactionLanguage::EN_US;
         $transData->softDescriptor = "soft";
         $transData->region = $region;
         return $transData;

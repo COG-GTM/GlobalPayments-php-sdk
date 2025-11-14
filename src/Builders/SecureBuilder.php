@@ -244,7 +244,7 @@ abstract class SecureBuilder extends BaseBuilder
 
 
     /** @return bool */
-    public function  isAddressMatchIndicator()
+    public function isAddressMatchIndicator()
     {
         return $this->addressMatchIndicator;
     }

@@ -10,7 +10,7 @@ use GlobalPayments\Api\Gateways\BillPay\Requests\GetTransactionByOrderIDRequest;
 use GlobalPayments\Api\Gateways\BillPay\Responses\TransactionByOrderIDRequestResponse;
 use GlobalPayments\Api\Utils\ElementTree;
 
-class ReportRequest extends GatewayRequestBase 
+class ReportRequest extends GatewayRequestBase
 {
     public function __construct(Credentials $credentials, string $serviceUrl, int $timeout, ?IRequestLogger $requestLogger = null)
     {

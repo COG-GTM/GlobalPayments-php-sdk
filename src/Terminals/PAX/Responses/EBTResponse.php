@@ -7,7 +7,6 @@ use GlobalPayments\Api\Terminals\PAX\Entities\Enums\PaxMessageId;
 
 class EBTResponse extends PaxTerminalResponse
 {
-
     public function __construct($rawResponse)
     {
         parent::__construct($rawResponse, [PaxMessageId::T05_RSP_DO_EBT]);

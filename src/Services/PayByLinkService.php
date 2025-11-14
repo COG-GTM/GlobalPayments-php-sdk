@@ -13,14 +13,14 @@ class PayByLinkService
 {
     public static function create(PayByLinkData $payByLink, $amount)
     {
-        return (new AuthorizationBuilder( TransactionType::CREATE))
+        return (new AuthorizationBuilder(TransactionType::CREATE))
             ->withAmount($amount)
             ->withPayByLinkData($payByLink);
     }
 
     public static function edit($payByLinkId)
     {
-        return (new ManagementBuilder( TransactionType::PAYBYLINK_UPDATE))
+        return (new ManagementBuilder(TransactionType::PAYBYLINK_UPDATE))
             ->withPaymentLinkId($payByLinkId);
     }
 

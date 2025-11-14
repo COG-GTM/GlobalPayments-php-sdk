@@ -9,5 +9,5 @@ use GlobalPayments\Api\Entities\Transaction;
 
 interface IFraudCheckService
 {
-    public function processFraud(FraudBuilder $builder) : RiskAssessment;
+    public function processFraud(FraudBuilder $builder): RiskAssessment;
 }

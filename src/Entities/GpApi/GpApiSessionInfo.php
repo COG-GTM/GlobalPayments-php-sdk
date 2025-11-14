@@ -17,7 +17,7 @@ class GpApiSessionInfo implements IAccessTokenProvider
         return $base->format(\DateTime::RFC3339);
     }
 
-    public function signIn($appId, $appKey, $secondsToExpire = null, $intervalToExpire = null, $permissions = []) : GpApiRequest
+    public function signIn($appId, $appKey, $secondsToExpire = null, $intervalToExpire = null, $permissions = []): GpApiRequest
     {
         $nonce = self::generateNonce();
 

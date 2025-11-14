@@ -3,17 +3,17 @@
 namespace GlobalPayments\Api\Builders\RequestBuilder\GpApi;
 
 use GlobalPayments\Api\Builders\{
-    BaseBuilder, 
+    BaseBuilder,
     InstallmentBuilder
 };
-use GlobalPayments\Api\Entities\{ 
-    IRequestBuilder, 
+use GlobalPayments\Api\Entities\{
+    IRequestBuilder,
     Request
 };
 use GlobalPayments\Api\Entities\Enums\TransactionType;
 use GlobalPayments\Api\Entities\GpApi\GpApiRequest;
 use GlobalPayments\Api\ServiceConfigs\Gateways\GpApiConfig;
-use GlobalPayments\Api\PaymentMethods\Installment;  
+use GlobalPayments\Api\PaymentMethods\Installment;
 use GlobalPayments\Api\Entities\GpApi\DTO\PaymentMethod;
 
 class GpApiInstallmentRequestBuilder implements IRequestBuilder
@@ -22,7 +22,7 @@ class GpApiInstallmentRequestBuilder implements IRequestBuilder
      * @param InstallmentBuilder $builder
      * @return bool
     */
-    public static function canProcess($builder = null) : bool
+    public static function canProcess($builder = null): bool
     {
         if ($builder instanceof InstallmentBuilder) {
             return true;
@@ -37,22 +37,23 @@ class GpApiInstallmentRequestBuilder implements IRequestBuilder
      *
      * @return Request
      */
-    public function buildRequest(BaseBuilder $builder, $config) : Request
+    public function buildRequest(BaseBuilder $builder, $config): Request
     {
         switch ($builder->transactionType) {
             case TransactionType::CREATE:
                 $endpoint = GpApiRequest::INSTALLMENT_ENDPOINT;
                 $verb = 'POST';
-                if ($builder->entity instanceof Installment)
+                if ($builder->entity instanceof Installment) {
                     $installmentRequest = $this->prepareInstallmentRequest($builder);
-            
+                }
+
                 break;
         }
-        
+
         return new GpApiRequest($endpoint, $verb, $installmentRequest);
     }
 
-    private function prepareInstallmentRequest($installment) : array
+    private function prepareInstallmentRequest($installment): array
     {
         $requestData = [];
         $requestData['account_name'] = $installment->entity->accountName;
@@ -78,7 +79,7 @@ class GpApiInstallmentRequestBuilder implements IRequestBuilder
                 'expiry_year' => $expYear
             ];
         $requestData['payment_method'] = $paymentMethod;
-    
+
         return $requestData;
     }
 
@@ -86,5 +87,7 @@ class GpApiInstallmentRequestBuilder implements IRequestBuilder
      * @param mixed $jsonRequest
      * @param mixed $config
      */
-    public function buildRequestFromJson(mixed $jsonRequest, mixed $config){}
+    public function buildRequestFromJson(mixed $jsonRequest, mixed $config)
+    {
+    }
 }

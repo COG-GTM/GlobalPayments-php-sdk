@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 
 class ReportingStoredPaymentMethodsTest extends TestCase
 {
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
     }
@@ -48,9 +48,7 @@ class ReportingStoredPaymentMethodsTest extends TestCase
         $this->assertNotNull($response);
         $this->assertTrue(is_array($response->result));
         $paymentMethodsList = $response->result;
-        uasort($paymentMethodsList, function ($a, $b) {
-            return strcmp(($a->timeCreated)->format('Y-m-d H:i:s'), ($b->timeCreated)->format('Y-m-d H:i:s'));
-        });
+        uasort($paymentMethodsList, fn($a, $b) => strcmp((string) ($a->timeCreated)->format('Y-m-d H:i:s'), (string) ($b->timeCreated)->format('Y-m-d H:i:s')));
 
         /** @var StoredPaymentMethodSummary $rs */
         foreach ($response->result as $index => $rs) {

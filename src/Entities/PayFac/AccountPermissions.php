@@ -12,7 +12,7 @@ class AccountPermissions
      * @var string
      */
     public $achIn;
-    
+
     /**
      * Account balance allowed to be pushed to on-file DDA. Affects automatic sweeps. Valid values are: Y and N
      *
@@ -21,7 +21,7 @@ class AccountPermissions
      * @var string
      */
     public $achOut;
-    
+
     /**
      * Valid values are: Y and N
      *
@@ -30,7 +30,7 @@ class AccountPermissions
      * @var string
      */
     public $ccProcessing;
-    
+
     /**
      * Valid values are: Y and N
      *
@@ -39,7 +39,7 @@ class AccountPermissions
      * @var string
      */
     public $proPayIn;
-    
+
     /**
      * Valid values are: Y and N
      *
@@ -48,7 +48,7 @@ class AccountPermissions
      * @var string
      */
     public $proPayOut;
-    
+
     /**
      * Valid values between 0 and 999999999. Expressed as number of pennies in USD or number of account's currency
      * without decimals.
@@ -58,7 +58,7 @@ class AccountPermissions
      * @var string
      */
     public $creditCardMonthLimit;
-    
+
     /**
      * Valid values between 0 and 999999999. Expressed as number of pennies in USD or number of account's currency
      * without decimals.
@@ -68,7 +68,7 @@ class AccountPermissions
      * @var string
      */
     public $creditCardTransactionLimit;
-    
+
     /**
      * Used to update status of ProPay account. Note: the ONLY value that will allow an account to
      * process transactions is "ReadyToProcess" Valid values are:
@@ -86,7 +86,7 @@ class AccountPermissions
      * @var GlobalPayments\Api\Entities\Enums\ProPayAccountStatus
      */
     public $merchantOverallStatus;
-    
+
     /**
      * Valid values are Y and N. Please work with ProPay for more information about soft limits feature
      *
@@ -95,7 +95,7 @@ class AccountPermissions
      * @var string
      */
     public $softLimitEnabled;
-    
+
     /**
      * Valid values are Y and N. Please work with ProPay for more information about soft limits feature
      *
@@ -104,7 +104,7 @@ class AccountPermissions
      * @var string
      */
     public $achPaymentSoftLimitEnabled;
-    
+
     /**
      * Valid values between 0 and 499. Please work with ProPay for more information about soft limits feature
      *
@@ -113,7 +113,7 @@ class AccountPermissions
      * @var string
      */
     public $softLimitAchOffPercent;
-    
+
     /**
      * Valid values between 0 and 499. Please work with ProPay for more information about soft limits feature
      *

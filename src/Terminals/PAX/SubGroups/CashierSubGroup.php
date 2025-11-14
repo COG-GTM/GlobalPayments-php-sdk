@@ -7,10 +7,9 @@ use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 
 class CashierSubGroup implements IRequestSubGroup
 {
-
     public $clerkId;
     public $shiftId;
-    
+
     public function getElementString()
     {
         $requestParams = ['clerkId', 'shiftId'];

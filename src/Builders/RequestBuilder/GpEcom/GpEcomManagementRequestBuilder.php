@@ -79,7 +79,8 @@ class GpEcomManagementRequestBuilder extends GpEcomRequestBuilder implements IRe
 
         if (
             ($builder->transactionType === TransactionType::REFUND && is_null($builder->alternativePaymentType)) ||
-            ($builder->multiCapture === true)) {
+            ($builder->multiCapture === true)
+        ) {
             $request->appendChild($xml->createElement("authcode", $builder->paymentMethod->authCode ?? ''));
         }
 
@@ -118,10 +119,10 @@ class GpEcomManagementRequestBuilder extends GpEcomRequestBuilder implements IRe
 
         //supplementarydata
         if (
-            in_array($builder->transactionType,[TransactionType::REFUND, TransactionType::CAPTURE]) &&
+            in_array($builder->transactionType, [TransactionType::REFUND, TransactionType::CAPTURE]) &&
             !empty($builder->supplementaryData)
         ) {
-            $this->buildSupplementaryData($builder, $xml,$request);
+            $this->buildSupplementaryData($builder, $xml, $request);
         }
 
         // comments needs to be multiple

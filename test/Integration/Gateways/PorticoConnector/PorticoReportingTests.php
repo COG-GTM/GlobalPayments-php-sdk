@@ -21,7 +21,7 @@ class PorticoReportingTests extends TestCase
     /** @var ReportingService */
     private ReportingService $reportingService;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->card = new CreditCardData();
         $this->card->number = '4111111111111111';
@@ -335,7 +335,7 @@ class PorticoReportingTests extends TestCase
         $card->cvn = '123';
 
         // generate random clienttxnid
-        $randomID = rand(10,100000);
+        $randomID = random_int(10,100000);
         /** @var string */
         $clientTxnID = (string)$randomID;
 
@@ -365,9 +365,7 @@ class PorticoReportingTests extends TestCase
         //Get reportItem that matches the clienttxnid
         $reportItem = array_filter(
             $reportResponse,
-            function ($summary) use ($clientTxnID) {
-                return $summary->clientTransactionId === $clientTxnID;
-            }
+            fn($summary) => $summary->clientTransactionId === $clientTxnID
         );
 
         $reportItem = reset($reportItem); // Get the first match
@@ -386,7 +384,7 @@ class PorticoReportingTests extends TestCase
         $card->cvn = '123';
 
         // generate random clienttxnid
-        $randomID = rand(10,100000);
+        $randomID = random_int(10,100000);
         /** @var string */
         $clientTxnID = (string)$randomID;
 
@@ -410,9 +408,7 @@ class PorticoReportingTests extends TestCase
         // Get reportItem that matches the clienttxnid
         $reportItem = array_filter(
             $reportResponse,
-            function ($summary) use ($clientTxnID) {
-                return $summary->clientTransactionId === $clientTxnID;
-            }
+            fn($summary) => $summary->clientTransactionId === $clientTxnID
         );
 
         $reportItem = reset($reportItem); // Get the first match

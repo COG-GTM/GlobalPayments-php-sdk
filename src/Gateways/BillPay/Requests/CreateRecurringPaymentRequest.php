@@ -11,8 +11,8 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class CreateRecurringPaymentRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) 
-    {   
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 
@@ -96,8 +96,9 @@ class CreateRecurringPaymentRequest extends BillPayRequestBase
         return $this->et->toString($envelope);
     }
 
-    protected function buildRecurringBillTransactions(Element $parent, array $bills) {
-        foreach ($bills as $bill) {    
+    protected function buildRecurringBillTransactions(Element $parent, array $bills)
+    {
+        foreach ($bills as $bill) {
             /** @var Element */
             $billTransaction = $this->et->subElement($parent, "bdms:RecurringPaymentBill");
             $this->et->subElement($billTransaction, "bdms:BillType", $bill->getBillType());
@@ -124,7 +125,8 @@ class CreateRecurringPaymentRequest extends BillPayRequestBase
         }
     }
 
-    protected function buildPayOrData(Element $parent, Customer $customer) {
+    protected function buildPayOrData(Element $parent, Customer $customer)
+    {
         $this->et->subElement($parent, "bdms:PayorBusinessName", $customer->company);
         $this->et->subElement($parent, "bdms:PayorEmailAddress", $customer->email);
         $this->et->subElement($parent, "bdms:PayorFirstName", $customer->firstName);
@@ -142,7 +144,7 @@ class CreateRecurringPaymentRequest extends BillPayRequestBase
         }
     }
 
-    protected function buildEndDate(Element $parent, DateTime $endDate) 
+    protected function buildEndDate(Element $parent, DateTime $endDate)
     {
         $day = str_pad($endDate->format('d'), 2, '0', STR_PAD_LEFT);
         $indexedMonth = (int)$endDate->format('m') - 1;
@@ -178,5 +180,4 @@ class CreateRecurringPaymentRequest extends BillPayRequestBase
         $this->et->subElement($parent, "bdms:SecondInstanceMonth", $secondInstanceMonth);
         $this->et->subElement($parent, "bdms:SecondInstanceYear", $year);
     }
-
 }

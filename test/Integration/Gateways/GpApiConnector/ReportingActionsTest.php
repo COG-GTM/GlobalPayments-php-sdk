@@ -24,7 +24,7 @@ class ReportingActionsTest extends TestCase
     /** @var ActionSummary */
     private mixed $actionSummary;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->startDate = (new DateTime())->modify('-30 days')->setTime(0, 0, 0);
@@ -93,9 +93,7 @@ class ReportingActionsTest extends TestCase
         $this->assertNotNull($response);
         $this->assertTrue(is_array($response->result));
         $actionsList = $response->result;
-        uasort($actionsList, function ($a, $b) {
-            return strcmp(($a->timeCreated)->format('Y-m-d H:i:s'), ($b->timeCreated)->format('Y-m-d H:i:s'));
-        });
+        uasort($actionsList, fn($a, $b) => strcmp((string) ($a->timeCreated)->format('Y-m-d H:i:s'), (string) ($b->timeCreated)->format('Y-m-d H:i:s')));
 
         /** @var ActionSummary $rs */
         foreach ($response->result as $index => $rs) {

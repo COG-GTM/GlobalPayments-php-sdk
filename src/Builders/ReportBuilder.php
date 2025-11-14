@@ -59,7 +59,6 @@ abstract class ReportBuilder extends BaseBuilder
             default:
                 $client = ServicesContainer::instance()->getClient($configName);
                 break;
-
         }
 
         return $client->processReport($this);

@@ -1,0 +1,10 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    excludePaths:
+        - vendor
+    ignoreErrors:
+        # Allow some flexibility during initial migration
+        - '#Call to an undefined method#'
+    treatPhpDocTypesAsCertain: false

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * APM Configuration for Hosted Payment Pages, goes in order.payment_method_configuration.amp
- * 
+ *
  */
 
 namespace GlobalPayments\Api\Entities;
@@ -19,13 +20,13 @@ class HPPApmConfiguration
      * @var bool|null
      */
     public ?bool $shippingAddressEnabled = false;
-    
+
     /**
      * Determines whether the shipping address can be changed by the customer on the PayPal review page
      * @var bool|null
      */
     public ?bool $addressOverride = false;
-    
+
     /**
      * Validate APM configuration
      * @return array List of validation errors, empty if valid
@@ -33,17 +34,17 @@ class HPPApmConfiguration
     public function validate(): array
     {
         $errors = [];
-        
+
         // Validate shippingAddressEnabled, if provided
         if (!is_null($this->shippingAddressEnabled) && !is_bool($this->shippingAddressEnabled)) {
             $errors[] = 'shippingAddressEnabled must be a boolean value';
         }
-        
+
         // Validate addressOverride, if provided
         if (!is_null($this->addressOverride) && !is_bool($this->addressOverride)) {
             $errors[] = 'addressOverride must be a boolean value';
         }
-        
+
         return $errors;
     }
 }

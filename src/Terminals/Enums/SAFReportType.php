@@ -1,11 +1,11 @@
 <?php
+
 namespace GlobalPayments\Api\Terminals\Enums;
 
 use GlobalPayments\Api\Entities\Enum;
 
 class SAFReportType extends Enum
 {
-
     const APPROVED = "APPROVED SAF SUMMARY";
 
     const PENDING = "PENDING SAF SUMMARY";

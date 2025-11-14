@@ -19,6 +19,5 @@ abstract class GpEcomRequestBuilder
             $supplementaryData->appendChild($item);
         }
         $request->appendChild($supplementaryData);
-
     }
 }

@@ -6,8 +6,6 @@ use GlobalPayments\Api\Utils\ReverseEnumMap;
 
 class EnumUtils
 {
-
-    
     public static function isDefined($valueType, $value)
     {
         $parsedValue = self::parse($valueType, $value);

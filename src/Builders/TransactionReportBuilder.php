@@ -20,7 +20,7 @@ class TransactionReportBuilder extends ReportBuilder
      * @var string
      */
     public $clientTransactionId;
-    
+
     /**
      * @internal
      * @var string
@@ -186,9 +186,9 @@ class TransactionReportBuilder extends ReportBuilder
     }
 
     /**
-     * 
-     * @param mixed $value 
-     * @return $this 
+     *
+     * @param mixed $value
+     * @return $this
      */
     public function withStartDate($value)
     {
@@ -224,9 +224,9 @@ class TransactionReportBuilder extends ReportBuilder
 
     /**
      * Sets the batchId for the report.
-     * 
+     *
      * @param int $value The batchId method
-     * 
+     *
      * @return TransactionReportBuilder
      */
     public function withBatchId($value)

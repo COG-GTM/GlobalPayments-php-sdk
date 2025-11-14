@@ -1,8 +1,6 @@
 <?php
 
-
 namespace GlobalPayments\Api\Entities\GpApi\DTO;
-
 
 class Card
 {
@@ -20,5 +18,4 @@ class Card
     public $pin_block;
     public $brand_reference;
     public $authcode;
-
- }
+}

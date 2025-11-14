@@ -81,7 +81,7 @@ class ApmTest extends TestCase
         return $config;
     }
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         ServicesContainer::configureService($this->config());
         ServicesContainer::configureService($this->blikConfig(), 'blikConfig');
@@ -303,7 +303,7 @@ class ApmTest extends TestCase
         }
     }
 
-    public function testApmForRefund()
+    public function testApmForRefund(): never
     {
         $this->markTestSkipped('You need a valid values for orderId and payment refrence to run this test!');
         // a settle request requires the original order id
@@ -402,7 +402,7 @@ class ApmTest extends TestCase
     }
 
     /* Validates that the first refund attempt on a Blik APM transaction is approved successfully. */
-    public function testBlikRefund_WhenFirstAttempt_ShouldSucceed() {
+    public function testBlikRefund_WhenFirstAttempt_ShouldSucceed(): never {
 
         $this->markTestSkipped('To run this test you need to follow below steps for Refund transaction.');
 
@@ -514,7 +514,7 @@ class ApmTest extends TestCase
     }
 
     /* Validates that the first refund attempt on a PayU APM transaction is approved successfully. */
-     public function testPayuRefund_WhenFirstAttempt_ShouldSucceed() {
+     public function testPayuRefund_WhenFirstAttempt_ShouldSucceed(): never {
 
         $this->markTestSkipped('To run this test you need to follow below steps for Refund transaction.');
 

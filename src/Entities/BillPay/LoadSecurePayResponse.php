@@ -2,4 +2,6 @@
 
 namespace GlobalPayments\Api\Entities\BillPay;
 
-class LoadSecurePayResponse extends LoadHostedPaymentResponse {}
+class LoadSecurePayResponse extends LoadHostedPaymentResponse
+{
+}

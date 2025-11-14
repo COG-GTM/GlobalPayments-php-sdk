@@ -26,7 +26,7 @@ class ApiCaseTest extends TestCase
 {
     /* 01. Process Payment Authorisation */
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $config = new GpEcomConfig();
         $config->merchantId = 'heartlandgpsandbox';
@@ -65,7 +65,7 @@ class ApiCaseTest extends TestCase
 
             $this->assertNotEquals(null, $response);
             $this->assertEquals("00", $responseCode);
-        } catch (ApiException $e) {
+        } catch (ApiException) {
             // TODO: add your error handling here
         }
     }
@@ -119,7 +119,7 @@ class ApiCaseTest extends TestCase
 
             $this->assertNotEquals(null, $response);
             $this->assertEquals("00", $responseCode);
-        } catch (ApiException $e) {
+        } catch (ApiException) {
             // TODO: Add your error handling here
         }
     }
@@ -152,7 +152,7 @@ class ApiCaseTest extends TestCase
 
             $this->assertNotEquals(null, $response);
             $this->assertEquals("00", $response->responseCode);
-        } catch (ApiException $e) {
+        } catch (ApiException) {
             // TODO: Add your error handling here
         }
     }
@@ -184,7 +184,7 @@ class ApiCaseTest extends TestCase
 
             $this->assertNotEquals(null, $response);
             $this->assertEquals("00", $responseCode);
-        } catch (ApiException $e) {
+        } catch (ApiException) {
             // TODO: Add your error handling here
         }
     }
@@ -759,31 +759,10 @@ class ApiCaseTest extends TestCase
         $decisionManager->invoiceHeaderReturnsAccepted = true;
 
         $products = [];
-        $products[] = array(
-                    'product_id' => 'SKU251584',
-                    'productname' => 'Magazine Subscription',
-                    'quantity' => '12',
-                    'unitprice' => '1200',
-                    'gift' => 'true',
-                    'type' => 'subscription',
-                    'risk' => 'Low'
-                );
-        $products[] = array(
-                    'product_id' => 'SKU8884784',
-                    'productname' => 'Charger',
-                    'quantity' => '10',
-                    'unitprice' => '1200',
-                    'gift' => 'false',
-                    'type' => 'subscription',
-                    'risk' => 'High'
-                );
+        $products[] = ['product_id' => 'SKU251584', 'productname' => 'Magazine Subscription', 'quantity' => '12', 'unitprice' => '1200', 'gift' => 'true', 'type' => 'subscription', 'risk' => 'Low'];
+        $products[] = ['product_id' => 'SKU8884784', 'productname' => 'Charger', 'quantity' => '10', 'unitprice' => '1200', 'gift' => 'false', 'type' => 'subscription', 'risk' => 'High'];
 
-        $custom[] = array(
-                    'field01' => 'fieldValue01',
-                    'field02' => 'fieldValue02',
-                    'field03' => 'fieldValue03',
-                    'field04' => 'fieldValue04'
-                );
+        $custom[] = ['field01' => 'fieldValue01', 'field02' => 'fieldValue02', 'field03' => 'fieldValue03', 'field04' => 'fieldValue04'];
 
         $response = $card->charge(199.99)
                 ->withCurrency("EUR")

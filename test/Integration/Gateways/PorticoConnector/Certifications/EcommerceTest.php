@@ -349,7 +349,7 @@ class EcommerceTest extends TestCase
         return $config;
     }
 
-    protected function setup(): void
+    protected function setUp(): void
     {
         ServicesContainer::configureService($this->config());
         $this->publicKey = 'pkapi_cert_jKc1FtuyAydZhZfbB3';
@@ -365,8 +365,8 @@ class EcommerceTest extends TestCase
             $this->assertNotNull($response);
         } catch (ApiException $e) {
             if (
-                false === strpos($e->getMessage(), static::BATCH_NOT_OPEN)
-                && false === strpos($e->getMessage(), static::NO_TRANS_IN_BATCH)
+                !str_contains($e->getMessage(), (string) static::BATCH_NOT_OPEN)
+                && !str_contains($e->getMessage(), (string) static::NO_TRANS_IN_BATCH)
             ) {
                 $this->fail($e->getMessage());
             }
@@ -1966,8 +1966,8 @@ class EcommerceTest extends TestCase
             // printf('sequence number: %s', $response->sequenceNumber);
         } catch (ApiException $e) {
             if (
-                false === strpos($e->getMessage(), static::BATCH_NOT_OPEN)
-                && false === strpos($e->getMessage(), static::NO_TRANS_IN_BATCH)
+                !str_contains($e->getMessage(), (string) static::BATCH_NOT_OPEN)
+                && !str_contains($e->getMessage(), (string) static::NO_TRANS_IN_BATCH)
             ) {
                 $this->fail($e->getMessage());
             }
@@ -2044,7 +2044,7 @@ class EcommerceTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    public function testEcomWithWalletDataMobileType()
+    public function testEcomWithWalletDataMobileType(): never
     {
         $this->markTestSkipped('You need a valid ApplePay token that it is valid only for 60 sec');
 
@@ -2231,25 +2231,10 @@ class EcommerceTest extends TestCase
      */
     protected function getMastercardToken(string $pubKey) : string
     {
-        $payload = array(
-            'object' => 'token',
-            'token_type' => 'supt',
-            'card' => array(
-                'number' => '5454545454545454',
-                'cvc' => '123',
-                'exp_month' => '12',
-                'exp_year' => '2023'
-            )
-        );
+        $payload = ['object' => 'token', 'token_type' => 'supt', 'card' => ['number' => '5454545454545454', 'cvc' => '123', 'exp_month' => '12', 'exp_year' => '2023']];
         $url = 'https://cert.api2-c.heartlandportico.com/Hps.Exchange.PosGateway.Hpf.v1/api/token?api_key='
             . $pubKey;
-        $options = array(
-            'http' => array(
-                'header' => "Content-Type: application/json\r\n",
-                'method' => 'POST',
-                'content' => json_encode($payload),
-            ),
-        );
+        $options = ['http' => ['header' => "Content-Type: application/json\r\n", 'method' => 'POST', 'content' => json_encode($payload)]];
         $context = stream_context_create($options);
         $response = json_decode(file_get_contents($url, false, $context));
         if (!$response || isset($response->error)) {

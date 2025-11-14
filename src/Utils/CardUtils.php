@@ -45,7 +45,7 @@ class CardUtils
             '708885' => '708889'
         ]
     ];
-    
+
     /**
      * Card type regex patterns
      *
@@ -62,7 +62,7 @@ class CardUtils
         'Wex' => '/^(?:690046|707138)/',
         'Voyager' => '/^70888[5-9]/'
     ];
-    
+
     public static function parseTrackData($paymentMethod)
     {
         $trackData = $paymentMethod->value;
@@ -73,14 +73,16 @@ class CardUtils
             $discretionary = !empty($matches[3]) ? $matches[3] : null;
 
             if (!empty($discretionary)) {
-                if (strlen($pan.$expiry.$discretionary) == 37 &&
-                        substr(strtolower($discretionary), -1) == 'f') {
+                if (
+                    strlen($pan . $expiry . $discretionary) == 37 &&
+                        substr(strtolower($discretionary), -1) == 'f'
+                ) {
                     $discretionary = substr($discretionary, 0, strlen($discretionary) - 1);
                 }
 
                 $paymentMethod->discretionaryData = $discretionary;
             }
-            
+
             $paymentMethod->trackNumber = TrackNumber::TRACK_TWO;
             $paymentMethod->pan = $pan;
             $paymentMethod->expiry = $expiry;
@@ -101,7 +103,7 @@ class CardUtils
 
         return $paymentMethod;
     }
-    
+
     /**
      * Gets a card's type based on the BIN
      *
@@ -129,7 +131,7 @@ class CardUtils
 
         return $rvalue;
     }
-    
+
     public static function isFleet($cardType, $pan)
     {
         if (!empty($pan)) {

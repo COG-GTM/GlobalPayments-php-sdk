@@ -9,7 +9,7 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class GetTokenRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) 
+    public function __construct(ElementTree $et)
     {
         parent::__construct($et);
     }
@@ -31,7 +31,7 @@ class GetTokenRequest extends BillPayRequestBase
         $accountHolderDataElement = $this->et->subElement($requestElement, "bdms:AccountHolderData");
         if ($builder->billingAddress !== null) {
             $this->et->subElement(
-                $accountHolderDataElement, 
+                $accountHolderDataElement,
                 "pos:Zip",
                 $builder->billingAddress->postalCode
             );
@@ -44,8 +44,8 @@ class GetTokenRequest extends BillPayRequestBase
         $this->et->subElement($requestElement, "bdms:ExpirationMonth", $card->expMonth);
         $this->et->subElement($requestElement, "bdms:ExpirationYear", $card->expYear);
         $this->et->subElement(
-            $requestElement, 
-            "bdms:PaymentMethod", 
+            $requestElement,
+            "bdms:PaymentMethod",
             $this->getPaymentMethodType($card->paymentMethodType)
         );
 

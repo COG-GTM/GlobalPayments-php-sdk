@@ -37,7 +37,7 @@ class TerminalSearchBuilder
     {
         return $this->reportBuilder->execute();
     }
-    
+
     public function andCondition($criteria, $value)
     {
         if (property_exists($this, $criteria)) {

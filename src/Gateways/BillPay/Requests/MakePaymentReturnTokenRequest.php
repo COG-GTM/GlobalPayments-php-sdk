@@ -6,17 +6,17 @@ use GlobalPayments\Api\Utils\ElementTree;
 
 class MakePaymentReturnTokenRequest extends MakeBlindPaymentRequest
 {
-    public function __construct(ElementTree $et) 
+    public function __construct(ElementTree $et)
     {
         parent::__construct($et);
     }
 
-    protected function getMethodElementTagName(): string 
+    protected function getMethodElementTagName(): string
     {
         return "bil:MakePaymentReturnToken";
     }
 
-    protected function getRequestElementTagName() 
+    protected function getRequestElementTagName()
     {
         return "bil:MakePaymentReturnTokenRequest";
     }

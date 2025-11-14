@@ -56,7 +56,7 @@ class GpApiConnector extends RestGateway implements IPaymentGateway, ISecure3dPr
     private $builtInMerchantManagementService = true;
     private $config;
 
-    public function supportsOpenBanking() : bool
+    public function supportsOpenBanking(): bool
     {
         return true;
     }
@@ -189,7 +189,7 @@ class GpApiConnector extends RestGateway implements IPaymentGateway, ISecure3dPr
         throw new UnsupportedTransactionException(sprintf('Method %s not supported by %s', __METHOD__, $this->gpApiConfig->gatewayProvider));
     }
 
-    public function processFraud(FraudBuilder $builder) : RiskAssessment
+    public function processFraud(FraudBuilder $builder): RiskAssessment
     {
         if (empty($this->accessToken)) {
             $this->signIn();
@@ -221,7 +221,7 @@ class GpApiConnector extends RestGateway implements IPaymentGateway, ISecure3dPr
         );
     }
 
-    public function processFileUpload(FileProcessingBuilder $builder) : FileProcessor
+    public function processFileUpload(FileProcessingBuilder $builder): FileProcessor
     {
         if (empty($this->accessToken)) {
             $this->signIn();
@@ -248,8 +248,9 @@ class GpApiConnector extends RestGateway implements IPaymentGateway, ISecure3dPr
     */
     public function processInstallment(InstallmentBuilder $builder): ?Installment
     {
-        if (empty($this->accessToken))
+        if (empty($this->accessToken)) {
             $this->signIn();
+        }
 
         $requestBuilder = new GpApiInstallmentRequestBuilder();
         $request = $requestBuilder->buildRequest($builder, $this->config);
@@ -305,16 +306,16 @@ class GpApiConnector extends RestGateway implements IPaymentGateway, ISecure3dPr
     {
         // TODO: Implement serializeRequest() method.
     }
-    
+
     /**
-     * 
-     * @param string $verb 
-     * @param string $endpoint 
-     * @param string|null $data 
-     * @param array|null $queryStringParams 
-     * @param null|string $idempotencyKey 
-     * @return string 
-     * @throws GatewayException 
+     *
+     * @param string $verb
+     * @param string $endpoint
+     * @param string|null $data
+     * @param array|null $queryStringParams
+     * @param null|string $idempotencyKey
+     * @return string
+     * @throws GatewayException
      */
     public function doTransaction(
         $verb,

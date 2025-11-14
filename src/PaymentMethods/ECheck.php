@@ -87,7 +87,7 @@ class ECheck implements
      *
      * @return AuthorizationBuilder
      */
-    public function verify() : AuthorizationBuilder
+    public function verify(): AuthorizationBuilder
     {
         return new AuthorizationBuilder(TransactionType::VERIFY, $this);
     }
@@ -111,7 +111,7 @@ class ECheck implements
     }
 
     public function tokenizeWithCustomerData(
-        bool $validateCard, 
+        bool $validateCard,
         Address $billingAddress,
         Customer $customerData,
         string $configName = 'default'
@@ -138,7 +138,7 @@ class ECheck implements
     /**
      * Gets token information for the specified token
      * @param string $configName
-     * 
+     *
      * @return Transaction
      */
     public function getTokenInformation(string $configName = 'default'): Transaction
@@ -151,11 +151,14 @@ class ECheck implements
         return $builder->execute($configName);
     }
 
-    public function updateTokenExpiry() {
+    public function updateTokenExpiry()
+    {
         throw new UnsupportedTransactionException();
     }
 
-    public function deleteToken() {}
+    public function deleteToken()
+    {
+    }
 
     public function detokenize()
     {

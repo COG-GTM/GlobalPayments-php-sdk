@@ -41,7 +41,7 @@ class UpaCreditTests extends TestCase
     /**
      * @throws ApiException
      */
-    public function setup(): void
+    public function setUp(): void
     {
         $this->device = DeviceService::create($this->getConfig());
 

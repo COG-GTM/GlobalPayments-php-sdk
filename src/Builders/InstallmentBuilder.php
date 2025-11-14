@@ -7,7 +7,7 @@ use GlobalPayments\Api\ServicesContainer;
 use GlobalPayments\Api\Entities\Enums\TransactionType;
 use GlobalPayments\Api\PaymentMethods\Installment;
 
-class InstallmentBuilder extends TransactionBuilder 
+class InstallmentBuilder extends TransactionBuilder
 {
     /**
      * @internal
@@ -48,5 +48,7 @@ class InstallmentBuilder extends TransactionBuilder
         return $client->processInstallment($this);
     }
 
-    protected function setupValidations(){}
+    protected function setupValidations()
+    {
+    }
 }

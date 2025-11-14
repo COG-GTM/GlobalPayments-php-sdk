@@ -53,7 +53,8 @@ class GpEcomAuthorizationRequestBuilder extends GpEcomRequestBuilder implements 
     {
         /** @var AuthorizationBuilder $builder */
         //for google payment amount and currency is required
-        if (!empty($builder->transactionModifier) &&
+        if (
+            !empty($builder->transactionModifier) &&
             $builder->transactionModifier === TransactionModifier::ENCRYPTED_MOBILE &&
             $builder->paymentMethod->mobileType === EncyptedMobileType::GOOGLE_PAY &&
             (empty($builder->amount) || empty($builder->currency))
@@ -88,7 +89,7 @@ class GpEcomAuthorizationRequestBuilder extends GpEcomRequestBuilder implements 
 
         // This needs to be figured out based on txn type and set to 0, 1 or MULTI
         if ($builder->transactionType === TransactionType::SALE || $builder->transactionType == TransactionType::AUTH) {
-            $autoSettle = $builder->transactionType === TransactionType::SALE ? "1" : ($builder->multiCapture === true ? "MULTI" :"0");
+            $autoSettle = $builder->transactionType === TransactionType::SALE ? "1" : ($builder->multiCapture === true ? "MULTI" : "0");
             $element = $xml->createElement("autosettle");
             $element->setAttribute("flag", $autoSettle);
             $request->appendChild($element);
@@ -102,7 +103,7 @@ class GpEcomAuthorizationRequestBuilder extends GpEcomRequestBuilder implements 
 
         $request->appendChild($xml->createElement("orderid", $orderId));
         if (isset($builder->surchargeAmount)) {
-            $surchargeAmount = $xml->createElement("surchargeamount",  preg_replace('/[^0-9]/', '', sprintf('%01.2f', $builder->surchargeAmount)));
+            $surchargeAmount = $xml->createElement("surchargeamount", preg_replace('/[^0-9]/', '', sprintf('%01.2f', $builder->surchargeAmount)));
             if (!empty($builder->creditDebitIndicator)) {
                 $surchargeAmount->setAttribute("type", strtolower($builder->creditDebitIndicator));
             }
@@ -197,12 +198,12 @@ class GpEcomAuthorizationRequestBuilder extends GpEcomRequestBuilder implements 
             $dccinfo = $xml->createElement("dccinfo");
             $dccinfo->appendChild($xml->createElement(
                 "ccp",
-                !empty($builder->dccRateData->dccProcessor) ? $builder->dccRateData->dccProcessor : DccProcessor::FEXCO)
-            );
+                !empty($builder->dccRateData->dccProcessor) ? $builder->dccRateData->dccProcessor : DccProcessor::FEXCO
+            ));
             $dccinfo->appendChild($xml->createElement(
                 "type",
-                !empty($builder->dccRateData->dccType) ? $builder->dccRateData->dccType : "1")
-            );
+                !empty($builder->dccRateData->dccType) ? $builder->dccRateData->dccType : "1"
+            ));
             $dccinfo->appendChild($xml->createElement("ratetype", $builder->dccRateData->dccRateType ?? ''));
             if ($builder->transactionType !== TransactionType::DCC_RATE_LOOKUP) {
                 $amount = $xml->createElement("amount", preg_replace('/[^0-9]/', '', $builder->dccRateData->cardHolderAmount));
@@ -250,7 +251,7 @@ class GpEcomAuthorizationRequestBuilder extends GpEcomRequestBuilder implements 
                 if ($card->cvn !== null || isset($card->cvnPresenceIndicator)) {
                     //if cvn number is not empty indicator should be PRESENT
                     $cvnPresenceIndicator = (!empty($card->cvn)) ?
-                        CvnPresenceIndicator::PRESENT:
+                        CvnPresenceIndicator::PRESENT :
                         $card->cvnPresenceIndicator;
 
                     $cvnElement = $xml->createElement("cvn");
@@ -320,8 +321,10 @@ class GpEcomAuthorizationRequestBuilder extends GpEcomRequestBuilder implements 
 
             $hash = '';
             if ($builder->transactionType === TransactionType::VERIFY) {
-                if (!empty($builder->transactionModifier) &&
-                    $builder->transactionModifier === TransactionModifier::SECURE3D) {
+                if (
+                    !empty($builder->transactionModifier) &&
+                    $builder->transactionModifier === TransactionModifier::SECURE3D
+                ) {
                     $hash = GenerationUtils::generateHash(
                         $config->sharedSecret,
                         implode('.', [
@@ -426,7 +429,7 @@ class GpEcomAuthorizationRequestBuilder extends GpEcomRequestBuilder implements 
 
         //Supplementary Data
         if (!empty($builder->supplementaryData)) {
-            $this->buildSupplementaryData($builder, $xml,$request);
+            $this->buildSupplementaryData($builder, $xml, $request);
         }
 
         // mpi
@@ -513,7 +516,8 @@ class GpEcomAuthorizationRequestBuilder extends GpEcomRequestBuilder implements 
             }
             $request->appendChild($fraudFilter);
         }
-        if ($builder->customerId !== null || $builder->productId !== null ||
+        if (
+            $builder->customerId !== null || $builder->productId !== null ||
             $builder->clientTransactionId !== null || $builder->verifyAddress !== false
         ) {
             $tssInfo = $xml->createElement("tssinfo");

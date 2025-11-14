@@ -11,9 +11,9 @@ use GlobalPayments\Api\Entities\Exceptions\ApiException;
 
 class ElementTree
 {
-    /** 
+    /**
      * @var DOMDocument;
-     * */ 
+     * */
     private $doc;
 
     /**
@@ -28,12 +28,12 @@ class ElementTree
         $this->namespaces = array();
     }
 
-    public function addNamespace(String $prefix, String $uri) 
+    public function addNamespace(string $prefix, string $uri)
     {
         $this->namespaces[$prefix] = $uri;
     }
 
-    public function getNameSpace(String $prefix): string
+    public function getNameSpace(string $prefix): string
     {
         return $this->namespaces[$prefix];
     }
@@ -65,15 +65,15 @@ class ElementTree
                 } else {
                     if (count($arguments) == 3 && is_int($arguments[2])) {
                         return $this->subElementInt($arguments[0], $arguments[1], $arguments[2]);
-                    } else if (count($arguments) == 3 && is_string($arguments[2])) {
+                    } elseif (count($arguments) == 3 && is_string($arguments[2])) {
                         return $this->subElementString($arguments[0], $arguments[1], $arguments[2]);
-                    } else if (count($arguments) == 3 && is_float($arguments[2])) {
+                    } elseif (count($arguments) == 3 && is_float($arguments[2])) {
                         return $this->subElementFloat($arguments[0], $arguments[1], $arguments[2]);
-                    } else if (count($arguments) == 3 && $arguments[2] instanceof Enum) {
+                    } elseif (count($arguments) == 3 && $arguments[2] instanceof Enum) {
                         return $this->subElementEnum($arguments[0], $arguments[1], $arguments[2]);
                     }
                 }
-            } 
+            }
         }
 
         throw new BadMethodCallException("Method $name not found.");
@@ -97,11 +97,11 @@ class ElementTree
     }
 
     /**
-     * 
-     * @param Element $parent 
-     * @param string $tagName 
-     * @param null|int $value 
-     * @return null|Element 
+     *
+     * @param Element $parent
+     * @param string $tagName
+     * @param null|int $value
+     * @return null|Element
      */
     private function subElementInt(Element $parent, string $tagName, ?int $value = null): ?Element
     {
@@ -113,11 +113,11 @@ class ElementTree
     }
 
     /**
-     * 
-     * @param Element $parent 
-     * @param string $tagName 
-     * @param null|string $value 
-     * @return null|Element 
+     *
+     * @param Element $parent
+     * @param string $tagName
+     * @param null|string $value
+     * @return null|Element
      */
     private function subElementString(Element $parent, string $tagName, ?string $value = null): ?Element
     {
@@ -128,11 +128,11 @@ class ElementTree
     }
 
     /**
-     * 
-     * @param Element $parent 
-     * @param string $tagName 
-     * @param null|Enum $value 
-     * @return null|Element 
+     *
+     * @param Element $parent
+     * @param string $tagName
+     * @param null|Enum $value
+     * @return null|Element
      */
     private function subElementEnum(Element $parent, string $tagName, ?Enum $value = null): ?Element
     {
@@ -144,11 +144,11 @@ class ElementTree
     }
 
     /**
-     * 
-     * @param Element $parent 
-     * @param string $tagName 
-     * @param null|float $value 
-     * @return null|Element 
+     *
+     * @param Element $parent
+     * @param string $tagName
+     * @param null|float $value
+     * @return null|Element
      */
     private function subElementFloat(Element $parent, string $tagName, ?float $value = null): ?Element
     {
@@ -217,5 +217,4 @@ class ElementTree
 
         return null;
     }
-
 }

@@ -42,18 +42,19 @@ class MitcGateway extends RestGateway
     }
 
     /**
-     * 
-     * @param MitcConfig $mitcConfig 
-     * @return void 
+     *
+     * @param MitcConfig $mitcConfig
+     * @return void
      */
-    private function formMitcCredentials(MitcConfig $mitcConfig) : void
-    {   $this->accountCredentials =
+    private function formMitcCredentials(MitcConfig $mitcConfig): void
+    {
+        $this->accountCredentials =
             $mitcConfig->xWebId . ':' . $mitcConfig->terminalId . ':' . $mitcConfig->authKey;
         $this->apiKey = $mitcConfig->apiKey;
         $this->apiSecret = $mitcConfig->apiSecret;
         $this->targetDevice = $mitcConfig->targetDevice;
         $this->region = $mitcConfig->region;
-        $this->serviceUrl = $mitcConfig->environment === Environment::PRODUCTION ? 
+        $this->serviceUrl = $mitcConfig->environment === Environment::PRODUCTION ?
             ServiceEndpoints::MEET_IN_THE_CLOUD_PROD : ServiceEndpoints::MEET_IN_THE_CLOUD_TEST;
         $this->appName = $mitcConfig->appName;
         $this->appVersion = $mitcConfig->appVersion;
@@ -62,17 +63,18 @@ class MitcGateway extends RestGateway
     }
 
     /**
-     * 
-     * @param null|string $message 
-     * @param string $endpoint 
-     * @param string $verb 
-     * @return GatewayResponse 
-     * @throws Exception 
+     *
+     * @param null|string $message
+     * @param string $endpoint
+     * @param string $verb
+     * @return GatewayResponse
+     * @throws Exception
      */
     public function send(
-        ?string $message, string $endpoint, string $verb
-    ) : GatewayResponse
-    {
+        ?string $message,
+        string $endpoint,
+        string $verb
+    ): GatewayResponse {
         if (array_key_exists('X-GP-Target-Device', $this->headers)) {
             unset($this->headers['X-GP-Target-Device']);
         }
@@ -85,13 +87,13 @@ class MitcGateway extends RestGateway
             $endpoint,
             $message
         );
-   }
+    }
 
    /**
-    * 
-    * @return string 
+    *
+    * @return string
     */
-    private function generateToken() : string
+    private function generateToken(): string
     {
         $headerObj = new stdClass();
         $headerObj->alg = "HS256";
@@ -115,7 +117,7 @@ class MitcGateway extends RestGateway
         return "{$headerJSON}.{$payloadJSON}.{$signature}";
     }
 
-    private function base64url_encode($data) : string
+    private function base64url_encode($data): string
     {
         $newString = base64_encode($data);
         $newString = strtr($newString, "/=+$/", "");

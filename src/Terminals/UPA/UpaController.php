@@ -59,7 +59,7 @@ class UpaController extends DeviceController
         $this->requestIdProvider = $config->requestIdProvider;
     }
 
-    public function configureInterface() : IDeviceInterface
+    public function configureInterface(): IDeviceInterface
     {
         if (empty($this->deviceInterface)) {
             $this->deviceInterface = new UpaInterface($this);
@@ -68,7 +68,7 @@ class UpaController extends DeviceController
         return $this->deviceInterface;
     }
 
-    public function manageTransaction(TerminalManageBuilder $builder) : TerminalResponse
+    public function manageTransaction(TerminalManageBuilder $builder): TerminalResponse
     {
         /** @var DeviceMessage $request */
         $request = $this->buildManageTransaction($builder);
@@ -77,7 +77,7 @@ class UpaController extends DeviceController
         return $this->doTransaction($request);
     }
 
-    public function processTransaction(TerminalAuthBuilder $builder) : TerminalResponse
+    public function processTransaction(TerminalAuthBuilder $builder): TerminalResponse
     {
         $request = $this->buildProcessTransaction($builder);
         $this->checkRequest($request->getJsonRequest());
@@ -88,8 +88,7 @@ class UpaController extends DeviceController
     private function checkRequest(array $request): void
     {
         $command = $request['data']['command'] ?? null;
-        switch ($command)
-        {
+        switch ($command) {
             case UpaMessageId::UPDATE_LODGING_DETAILS:
                 $this->deviceInterface->validations->setMandatoryParams(['referenceNumber', 'amount']);
                 break;
@@ -121,7 +120,7 @@ class UpaController extends DeviceController
         }
     }
 
-    private function buildManageTransaction(TerminalManageBuilder $builder) : IDeviceMessage
+    private function buildManageTransaction(TerminalManageBuilder $builder): IDeviceMessage
     {
         $requestId = $builder->requestId ?? $this->requestIdProvider->getRequestId();
         $requestType = $this->mapTransactionType($builder->transactionType, $builder->transactionModifier);
@@ -155,7 +154,7 @@ class UpaController extends DeviceController
         return TerminalUtils::buildUpaRequest($requestMessage);
     }
 
-    private function buildProcessTransaction(TerminalAuthBuilder $builder) : DeviceMessage
+    private function buildProcessTransaction(TerminalAuthBuilder $builder): DeviceMessage
     {
         $requestId = (!empty($builder->requestId)) ?
             $builder->requestId :
@@ -271,8 +270,7 @@ class UpaController extends DeviceController
                 }
                 break;
             case TransactionType::CONFIRM:
-                switch ($trnModifier)
-                {
+                switch ($trnModifier) {
                     case TransactionModifier::CONTINUE_EMV_TRANSACTION:
                         return UpaMessageId::CONTINUE_EMV_TRANSACTION;
                     case TransactionModifier::CONTINUE_CARD_TRANSACTION:
@@ -303,7 +301,7 @@ class UpaController extends DeviceController
      * @return ITerminalReport
      * @throws GatewayException
      */
-    public function processReport(TerminalReportBuilder $builder) : ITerminalReport
+    public function processReport(TerminalReportBuilder $builder): ITerminalReport
     {
         $response = $this->connector->send($this->buildReportTransaction($builder));
         if (empty($response)) {
@@ -326,7 +324,7 @@ class UpaController extends DeviceController
         }
     }
 
-    private function buildReportTransaction(TerminalReportBuilder $builder) : IDeviceMessage
+    private function buildReportTransaction(TerminalReportBuilder $builder): IDeviceMessage
     {
         $requestId = $builder->searchBuilder->referenceNumber;
         if (empty($requestId) && isset($this->requestIdProvider)) {
@@ -374,7 +372,7 @@ class UpaController extends DeviceController
                 return UpaMessageId::GET_SAF_REPORT;
             case TerminalReportType::GET_BATCH_REPORT:
                 return UpaMessageId::GET_BATCH_REPORT;
-            case TerminalReportType::FIND_BATCHES;
+            case TerminalReportType::FIND_BATCHES:
                 return UpaMessageId::AVAILABLE_BATCHES;
             case TerminalReportType::GET_BATCH_DETAILS:
                 return UpaMessageId::GET_BATCH_DETAILS;
@@ -387,8 +385,7 @@ class UpaController extends DeviceController
 
     public function configureConnector(): IDeviceCommInterface
     {
-        switch ($this->settings->getConnectionMode())
-        {
+        switch ($this->settings->getConnectionMode()) {
             case ConnectionModes::TCP_IP:
                 return new UpaTcpInterface($this->settings);
             case ConnectionModes::HTTP:

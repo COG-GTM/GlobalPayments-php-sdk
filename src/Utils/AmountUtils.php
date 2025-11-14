@@ -4,7 +4,6 @@ namespace GlobalPayments\Api\Utils;
 
 class AmountUtils
 {
-
     /**
      * Should be used on all dollar amounts w/TransIT gateway to avoid gateway errors
      *

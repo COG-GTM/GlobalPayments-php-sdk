@@ -1,11 +1,11 @@
 <?php
+
 namespace GlobalPayments\Api\Entities\PayFac;
 
 use GlobalPayments\Api\Entities\Address;
 
 class PayFacResponseData
 {
-    
     public $accountNumber;
     public $password;
     public $sourceEmail;
@@ -34,17 +34,17 @@ class PayFacResponseData
     public $aCHPaymentMonthlyVolume;
     public $reserveBalance;
     public $masterPassCheckoutMerchantID;
-    
+
     // Account balance
     public $pendingAmount;
     public $reserveAmount;
     public $aCHOut;
     public $flashFunds;
-    
+
     //PayFac response
     public $transactionId;
     public $transactionNumber;
-    
+
     public function __construct()
     {
         $this->physicalAddress = new Address();

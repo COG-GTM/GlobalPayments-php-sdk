@@ -26,7 +26,7 @@ class PorticoConfig extends GatewayConfig
     public $versionNumber;
     public $secretApiKey;
     public $uniqueDeviceId;
-    
+
     //ProPay
     public $certificationStr;
     public $terminalId;
@@ -87,13 +87,13 @@ class PorticoConfig extends GatewayConfig
         $gateway->uniqueDeviceId = $this->uniqueDeviceId;
         $gateway->requestLogger = $this->requestLogger;
         $gateway->webProxy = $this->webProxy;
-        
+
         $services->gatewayConnector = $gateway;
 
         if (empty($this->dataClientId)) {
             $services->reportingService = $gateway;
         }
-        
+
         $payplan = new PayPlanConnector();
         $payplan->secretApiKey = $this->secretApiKey;
         $payplan->developerId = $this->developerId;
@@ -102,7 +102,7 @@ class PorticoConfig extends GatewayConfig
         $payplan->serviceUrl = $this->serviceUrl . $this->getPayPlanEndpoint();
 
         $services->recurringConnector = $payplan;
-        
+
         //propay connector
         if (!empty($this->certificationStr)) {
             if ($this->environment === Environment::TEST) {
@@ -110,14 +110,14 @@ class PorticoConfig extends GatewayConfig
             } else {
                 $this->serviceUrl = ($this->proPayUS) ? ServiceEndpoints::PROPAY_PRODUCTION : ServiceEndpoints::PROPAY_PRODUCTION_CANADIAN;
             }
-            
+
             $payFac = new ProPayConnector();
             $payFac->certStr = $this->certificationStr;
             $payFac->termId = $this->terminalId;
             $payFac->timeout = $this->timeout;
             $payFac->serviceUrl = $this->serviceUrl;
             $payFac->selfSignedCert = $this->selfSignedCertLocation;
-            
+
             $services->setPayFacProvider($payFac);
         }
     }
@@ -125,9 +125,10 @@ class PorticoConfig extends GatewayConfig
     public function validate()
     {
         parent::validate();
-        
+
         // Portico API key
-        if (!empty($this->secretApiKey)
+        if (
+            !empty($this->secretApiKey)
             && (
                 !empty($this->siteId)
                 || !empty($this->licenseId)
@@ -142,7 +143,8 @@ class PorticoConfig extends GatewayConfig
         }
 
         // Portico legacy
-        if ((
+        if (
+            (
             !empty($this->siteId)
                 || !empty($this->licenseId)
                 || !empty($this->deviceId)

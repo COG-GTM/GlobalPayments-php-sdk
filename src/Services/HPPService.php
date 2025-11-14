@@ -1,10 +1,12 @@
 <?php
+
 namespace GlobalPayments\Api\Services;
 
 use GlobalPayments\Api\Builders\AuthorizationBuilder;
 use GlobalPayments\Api\Entities\HPPData;
 use GlobalPayments\Api\Entities\Enums\TransactionType;
 use GlobalPayments\Api\Entities\Exceptions\ArgumentException;
+
 /**
  * Service class for creating hosted payment pages
  */
@@ -23,5 +25,5 @@ class HPPService
     {
         return (new AuthorizationBuilder(TransactionType::HOSTED_PAYMENT_PAGE))
             ->withHostedPaymentData($HPPData);
-    }    
+    }
 }

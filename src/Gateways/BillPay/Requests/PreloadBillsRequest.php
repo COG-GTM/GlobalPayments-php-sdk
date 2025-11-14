@@ -9,7 +9,8 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class PreloadBillsRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) {
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 
@@ -27,7 +28,7 @@ class PreloadBillsRequest extends BillPayRequestBase
         /** @var Element */
         $bills = $this->et->subElement($requestElement, "bdms:Bills");
 
-        foreach($builder->getBills() as $bill) { 
+        foreach ($builder->getBills() as $bill) {
             /** @var Element */
             $billElement = $this->et->subElement($bills, "bdms:Bill");
             /** @var Element */
@@ -40,8 +41,8 @@ class PreloadBillsRequest extends BillPayRequestBase
             $this->et->subElement($billIdentifierExtended, "bdms:ID4", $bill->getIdentifier4());
 
             $this->et->subElement(
-                $billIdentifierExtended, 
-                "bdms:DueDate", 
+                $billIdentifierExtended,
+                "bdms:DueDate",
                 $this->getDateFormatted($bill->getDueDate())
             );
 

@@ -29,7 +29,7 @@ class ReportingTransactionsTest extends TestCase
     private DateTime $startDate;
     private DateTime $endDate;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->startDate = (new DateTime())->modify('-30 days')->setTime(0, 0, 0);
@@ -322,7 +322,7 @@ class ReportingTransactionsTest extends TestCase
     public function testReportFindTransactionsBy_AllCardBrands()
     {
         //"MC", "DINERS", "JCB" not supported in sandbox env
-        $cardBrand = array("VISA", "AMEX", "DISCOVER", "CUP");
+        $cardBrand = ["VISA", "AMEX", "DISCOVER", "CUP"];
         foreach ($cardBrand as $value) {
             try {
                 $response = ReportingService::findTransactionsPaged(1, 10)
@@ -582,9 +582,7 @@ class ReportingTransactionsTest extends TestCase
         $this->assertNotNull($response);
         $this->assertTrue(is_array($response->result));
         $transactionList = $response->result;
-        uasort($transactionList, function ($a, $b) {
-            return strcmp($a->transactionType, $b->transactionType);
-        });
+        uasort($transactionList, fn($a, $b) => strcmp($a->transactionType, $b->transactionType));
         foreach ($response->result as $index => $tr) {
             $this->assertSame($transactionList[$index], $tr);
         }
@@ -599,9 +597,7 @@ class ReportingTransactionsTest extends TestCase
         $this->assertNotNull($response);
         $this->assertTrue(is_array($response->result));
         $transactionList = $response->result;
-        uasort($transactionList, function ($a, $b) {
-            return strcmp($a->transactionId, $b->transactionId);
-        });
+        uasort($transactionList, fn($a, $b) => strcmp($a->transactionId, $b->transactionId));
         foreach ($response->result as $index => $tr) {
             $this->assertSame($transactionList[$index], $tr);
         }
@@ -616,9 +612,7 @@ class ReportingTransactionsTest extends TestCase
         $this->assertNotNull($response);
         $this->assertTrue(is_array($response->result));
         $transactionList = $response->result;
-        uasort($transactionList, function ($a, $b) {
-            return strcmp(($a->transactionDate)->format('Y-m-d H:i:s'), ($b->transactionDate)->format('Y-m-d H:i:s'));
-        });
+        uasort($transactionList, fn($a, $b) => strcmp((string) ($a->transactionDate)->format('Y-m-d H:i:s'), (string) ($b->transactionDate)->format('Y-m-d H:i:s')));
         foreach ($response->result as $index => $tr) {
             $this->assertSame($transactionList[$index], $tr);
         }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace GlobalPayments\Api\Entities\Reporting;
-
 
 use GlobalPayments\Api\Builders\ManagementBuilder;
 use GlobalPayments\Api\Builders\TransactionReportBuilder;

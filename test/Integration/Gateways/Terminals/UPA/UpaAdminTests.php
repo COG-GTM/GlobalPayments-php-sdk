@@ -49,7 +49,7 @@ class UpaAdminTests extends TestCase
 {
     private IDeviceInterface $device;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->device = DeviceService::create($this->getConfig());
     }

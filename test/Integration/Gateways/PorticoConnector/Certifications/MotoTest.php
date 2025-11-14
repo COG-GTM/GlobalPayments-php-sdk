@@ -61,7 +61,7 @@ class MotoTest extends TestCase
         return $config;
     }
 
-    protected function setup() : void
+    protected function setUp(): void : void
     {
         ServicesContainer::configureService($this->config());
 
@@ -77,8 +77,8 @@ class MotoTest extends TestCase
             // print 'batch id: ' . $response->id . "\n";
             // print 'sequence number: ' . $response->sequenceNumber . "\n";
         } catch (ApiException $e) {
-            if (false === strpos($e->getMessage(), static::BATCH_NOT_OPEN)
-                && false === strpos($e->getMessage(), static::NO_TRANS_IN_BATCH)
+            if (!str_contains($e->getMessage(), (string) static::BATCH_NOT_OPEN)
+                && !str_contains($e->getMessage(), (string) static::NO_TRANS_IN_BATCH)
             ) {
                 $this->fail($e->getMessage());
             }
@@ -1703,8 +1703,8 @@ class MotoTest extends TestCase
             // printf('batch id: %s', $response->id);
             // printf('sequence number: %s', $response->sequenceNumber);
         } catch (ApiException $e) {
-            if (false === strpos($e->getMessage(), static::BATCH_NOT_OPEN)
-                || false === strpos($e->getMessage(), static::NO_TRANS_IN_BATCH)
+            if (!str_contains($e->getMessage(), (string) static::BATCH_NOT_OPEN)
+                || !str_contains($e->getMessage(), (string) static::NO_TRANS_IN_BATCH)
             ) {
                 $this->fail($e->getMessage());
             }

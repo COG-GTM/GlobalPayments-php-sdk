@@ -27,14 +27,14 @@ use GlobalPayments\Api\Utils\AmountUtils;
 class GeniusController extends DeviceController
 {
     /**
-     * 
+     *
      * @var MitcGateway
      */
     public $mitcGateway;
 
     /** @var GeniusInterface */
     private $device;
-    
+
     public function __construct(ConnectionConfig $config)
     {
         $this->device = new GeniusInterface($this);
@@ -48,26 +48,27 @@ class GeniusController extends DeviceController
         throw new NotImplementedException();
     }
 
-    public function configureInterface(): IDeviceInterface {
-        if ($this->device == null)
+    public function configureInterface(): IDeviceInterface
+    {
+        if ($this->device == null) {
             $this->device = new GeniusInterface($this);
+        }
         return $this->device;
- }
+    }
 
     /**
-     * 
+     *
      * @param string $message JSON string containing request contents
      * @param MitcRequestType $requestType
      * @param string $targetId transactionId used for 'Follow-On Transactions'
-     * @return GatewayResponse 
-     * @throws Exception 
+     * @return GatewayResponse
+     * @throws Exception
      */
     public function send(
         $message,
         $requestType = null,
         string $targetId = null
-    ) : GatewayResponse
-    {
+    ): GatewayResponse {
         $endpoint = '';
         $verb = '';
 
@@ -117,76 +118,87 @@ class GeniusController extends DeviceController
 
         $dynamicHeaders = array();
 
-        if (!$followOnTransaction)
+        if (!$followOnTransaction) {
             $dynamicHeaders['X-GP-Target-Device'] = $this->mitcGateway->targetDevice;
-        
+        }
+
         $this->device->geniusController->mitcGateway->dynamicHeaders = $dynamicHeaders;
-        
+
         return $this->mitcGateway->send($message, $endpoint, $verb);
     }
 
     /**
-     * 
-     * @param TerminalAuthBuilder $builder 
-     * @return MitcResponse 
-     * @throws Exception 
+     *
+     * @param TerminalAuthBuilder $builder
+     * @return MitcResponse
+     * @throws Exception
      */
-    public function processTransaction($builder) : TerminalResponse
+    public function processTransaction($builder): TerminalResponse
     {
         $healthcareAmounts = array();
 
         if (isset($builder->autoSubstantiation)) {
             $autoSubObj = $builder->autoSubstantiation;
 
-            if (0 != $autoSubObj->getCopaySubTotal())
+            if (0 != $autoSubObj->getCopaySubTotal()) {
                 $healthcareAmounts['copay_amount'] = AmountUtils::transitFormat(
                     $autoSubObj->getCopaySubTotal()
                 );
+            }
 
-            if (0 != $autoSubObj->getClinicSubTotal())
+            if (0 != $autoSubObj->getClinicSubTotal()) {
                 $healthcareAmounts['clinical_amount'] = AmountUtils::transitFormat(
                     $autoSubObj->getClinicSubTotal()
                 );
+            }
 
-            if (0 != $autoSubObj->getDentalSubTotal())
+            if (0 != $autoSubObj->getDentalSubTotal()) {
                 $healthcareAmounts['dental_amount'] = AmountUtils::transitFormat(
                     $autoSubObj->getDentalSubTotal()
                 );
+            }
 
-            if (0 != $autoSubObj->getPrescriptionSubTotal())
+            if (0 != $autoSubObj->getPrescriptionSubTotal()) {
                 $healthcareAmounts['prescription_amount'] = AmountUtils::transitFormat(
                     $autoSubObj->getPrescriptionSubTotal()
                 );
+            }
 
-            if (0 != $autoSubObj->getVisionSubTotal())
+            if (0 != $autoSubObj->getVisionSubTotal()) {
                 $healthcareAmounts['vision_amount'] = AmountUtils::transitFormat(
                     $autoSubObj->getVisionSubTotal()
                 );
+            }
 
-            if (0 != $autoSubObj->getTotalHealthcareAmount())
+            if (0 != $autoSubObj->getTotalHealthcareAmount()) {
                 $healthcareAmounts['healthcare_total_amount'] = AmountUtils::transitFormat(
                     $autoSubObj->getTotalHealthcareAmount()
                 );
+            }
         }
 
         $purchaseOrder = array();
 
-        if (isset($builder->address) && !empty($builder->address->postalCode))
+        if (isset($builder->address) && !empty($builder->address->postalCode)) {
             $purchaseOrder['destination_postal_code'] = $builder->address->postalCode;
+        }
 
-        if (!empty($builder->poNumber))
+        if (!empty($builder->poNumber)) {
             $purchaseOrder['po_number'] = $builder->poNumber;
+        }
 
-        if (!empty($builder->taxAmount))
+        if (!empty($builder->taxAmount)) {
             $purchaseOrder['tax_amount'] = AmountUtils::transitFormat(
                 $builder->taxAmount
             );
+        }
 
         $payment = array();
 
-        if (!empty($builder->amount))
+        if (!empty($builder->amount)) {
             $payment['amount'] = AmountUtils::transitFormat($builder->amount);
-        
+        }
+
         $payment['currency_code'] = '840'; // may add logic here
 
         if (!empty($builder->invoiceNumber)) {
@@ -197,16 +209,19 @@ class GeniusController extends DeviceController
             );
         }
 
-        if (!empty($builder->gratuity))
+        if (!empty($builder->gratuity)) {
             $payment['gratuity_eligible_amount'] = AmountUtils::transitFormat(
                 $builder->gratuity
             );
+        }
 
-        if (count($healthcareAmounts) > 0)
+        if (count($healthcareAmounts) > 0) {
             $payment['healthcare_amounts'] = $healthcareAmounts;
+        }
 
-        if (count($purchaseOrder) > 0)
+        if (count($purchaseOrder) > 0) {
             $payment['purchase_order'] = $purchaseOrder;
+        }
 
         $receipt = array();
 
@@ -218,35 +233,40 @@ class GeniusController extends DeviceController
 
         $processingIndicators = array();
 
-        if (isset($builder->allowDuplicates))
+        if (isset($builder->allowDuplicates)) {
             $processingIndicators['allow_duplicate'] = $builder->allowDuplicates;
+        }
 
-        if (isset($builder->tokenRequest))
+        if (isset($builder->tokenRequest)) {
             $processingIndicators['create_token'] = $builder->tokenRequest;
+        }
 
-        if (isset($builder->allowPartialAuth))
+        if (isset($builder->allowPartialAuth)) {
             $processingIndicators['partial_approval'] = $builder->allowPartialAuth;
+        }
 
         $terminal = array();
         $terminal['terminal_id'] = $this->mitcGateway->terminalId;
 
-        $transaction= array();
+        $transaction = array();
 
-        if (isset($this->mitcGateway->allowKeyEntry))
+        if (isset($this->mitcGateway->allowKeyEntry)) {
             $transaction['keyed_entry_mode'] = 'allowed';
+        }
 
         $transaction['country_code'] = '840'; // may add logic here in the future
         $transaction['language'] = 'en-US'; // and here too
 
-        if (count($processingIndicators) > 0)
+        if (count($processingIndicators) > 0) {
             $transaction['processing_indicators'] = $processingIndicators;
+        }
 
         if (isset($builder->tokenRequest) && $builder->tokenRequest) {
             if ($builder->transactionInitiator == StoredCredentialInitiator::CARDHOLDER) {
                 $transaction['create_token_reason'] = 'unscheduled_customer_initiated_transaction';
             } else {
                 $transaction['create_token_reason'] = 'unscheduled_merchant_initiated_transaction';
-            }  
+            }
         }
 
         $transaction['terminal'] = $terminal;
@@ -275,7 +295,7 @@ class GeniusController extends DeviceController
         }
 
         // send the request
-        $gatewayResponse = 
+        $gatewayResponse =
             $this->send(json_encode($request), $requestType, $targetId);
 
         return new MitcResponse(
@@ -286,18 +306,17 @@ class GeniusController extends DeviceController
     }
 
     /**
-     * 
-     * @param TransactionType $transactionType 
-     * @param string $transactionId 
-     * @param TransactionIdType $transactionIdType 
-     * @return MitcResponse 
-     * @throws ApiException 
-     * @throws Exception 
+     *
+     * @param TransactionType $transactionType
+     * @param string $transactionId
+     * @param TransactionIdType $transactionIdType
+     * @return MitcResponse
+     * @throws ApiException
+     * @throws Exception
      */
     public function processReport(
         TerminalReportBuilder $builder
-    ) : ITerminalReport
-    {
+    ): ITerminalReport {
         if ($builder->searchBuilder->transactionType == TransactionType::SALE) {
             if ($builder->searchBuilder->transactionIdType == TransactionIdType::CLIENT_TRANSACTION_ID) {
                 $requestType = MitcRequestType::REPORT_SALE_CLIENT_ID;
@@ -317,7 +336,7 @@ class GeniusController extends DeviceController
         }
 
         // send the request
-        $gatewayResponse = 
+        $gatewayResponse =
             $this->send(null, $requestType, $builder->searchBuilder->transactionId);
 
         return new MitcResponse(
@@ -328,19 +347,21 @@ class GeniusController extends DeviceController
     }
 
     /**
-     * 
-     * @param MitcManageBuilder $builder 
-     * @return MitcResponse 
+     *
+     * @param MitcManageBuilder $builder
+     * @return MitcResponse
      */
-    public function manageTransaction($builder) : TerminalResponse
+    public function manageTransaction($builder): TerminalResponse
     {
         $payment = array();
 
-        if (!empty($builder->amount))
+        if (!empty($builder->amount)) {
             $payment['amount'] = AmountUtils::transitFormat($builder->amount);
+        }
 
-        if (!empty($builder->invoiceNumber))
+        if (!empty($builder->invoiceNumber)) {
             $payment['invoice_number'] = $builder->invoiceNumber;
+        }
 
         $receipt = array();
 
@@ -352,8 +373,9 @@ class GeniusController extends DeviceController
 
         $processingIndicators = array();
 
-        if (isset($builder->allowDuplicates))
+        if (isset($builder->allowDuplicates)) {
             $processingIndicators['allow_duplicate'] = $builder->allowDuplicates;
+        }
 
         if (isset($builder->receipt) && $builder->receipt) {
             $processingIndicators['generate_receipt'] = true;
@@ -361,16 +383,18 @@ class GeniusController extends DeviceController
             $processingIndicators['generate_receipt'] = false;
         }
 
-        $transaction= array();
+        $transaction = array();
         $transaction['processing_indicators'] = $processingIndicators;
 
         $request = array();
 
-        if (count($payment) > 0)
+        if (count($payment) > 0) {
             $request['payment'] = $payment;
+        }
 
-        if (count($transaction) > 0)
+        if (count($transaction) > 0) {
             $request['transaction'] = $transaction;
+        }
 
         $requestType = null;
         $targetId = $builder->clientTransactionId;
@@ -384,13 +408,13 @@ class GeniusController extends DeviceController
                 } else {
                     $requestType = MitcRequestType::VOID_DEBIT_SALE;
                 }
-            }            
+            }
         } elseif ($builder->followOnTransactionType == TransactionType::REFUND) {
             $requestType = MitcRequestType::REFUND_BY_CLIENT_ID;
         }
 
         // send the request
-        $gatewayResponse = 
+        $gatewayResponse =
             $this->send(json_encode($request), $requestType, $targetId);
 
         return new MitcResponse(

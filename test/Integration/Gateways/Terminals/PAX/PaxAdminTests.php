@@ -18,7 +18,7 @@ class PaxAdminTests extends TestCase
 
     private $device;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->device = DeviceService::create($this->getConfig());
     }
@@ -64,7 +64,7 @@ class PaxAdminTests extends TestCase
         $this->device->cancel();
     }
     
-    public function testReboot()
+    public function testReboot(): never
     {
         $this->markTestSkipped('Reboot skipped');
         

@@ -7,15 +7,15 @@ use GlobalPayments\Api\Entities\{IRequestLogger, Transaction};
 use GlobalPayments\Api\Entities\BillPay\Credentials;
 use GlobalPayments\Api\Entities\Enums\TransactionType;
 use GlobalPayments\Api\Entities\Exceptions\{
-    GatewayException, 
+    GatewayException,
     UnsupportedTransactionException
 };
 use GlobalPayments\Api\Gateways\BillPay\Requests\{
-    ReversePaymentRequest, 
+    ReversePaymentRequest,
     UpdateTokenRequest
 };
 use GlobalPayments\Api\Gateways\BillPay\Responses\{
-    ReversalResponse, 
+    ReversalResponse,
     UpdateTokenResponse
 };
 use GlobalPayments\Api\PaymentMethods\CreditCardData;
@@ -61,7 +61,7 @@ class ManagementRequest extends GatewayRequestBase
             $builder,
             $this->credentials
         );
-        
+
         /** @var string */
         $response = $this->doTransaction($request);
         $reversalResponse = new ReversalResponse();
@@ -71,14 +71,14 @@ class ManagementRequest extends GatewayRequestBase
             ->withResponseTagName("ReversePaymentResponse")
             ->withResponse($response)
             ->map();
-        
+
         if ($result->responseCode == "0") {
             return $result;
         }
 
         throw new GatewayException(
-            "There was an error attempting to reverse the payment", 
-            $result->responseCode, 
+            "There was an error attempting to reverse the payment",
+            $result->responseCode,
             $result->responseMessage
         );
     }
@@ -107,10 +107,10 @@ class ManagementRequest extends GatewayRequestBase
         if ($result->responseCode == "0") {
             return $result;
         }
-        
+
         throw new GatewayException(
-            "There was an error attempting to the token expiry information", 
-            $result->responseCode, 
+            "There was an error attempting to the token expiry information",
+            $result->responseCode,
             $result->responseMessage
         );
     }

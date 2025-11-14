@@ -50,7 +50,7 @@ class BillPayVerificationTests extends TestCase
     protected Bill $billLoad;
     protected Bill $blindBill;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->getConfig());
 
@@ -374,15 +374,13 @@ class BillPayVerificationTests extends TestCase
 
         $this->assertFalse(empty($token));
 
-        $this->RunAndValidateTransaction(function() use($paymentMethod, $fee) : Transaction {
-            return $paymentMethod
-                ->charge($this->bill->getAmount())
-                ->withAddress($this->address)
-                ->withBill($this->bill)
-                ->withConvenienceAmount($fee)
-                ->withCurrency('USD')
-                ->execute();
-        });
+        $this->RunAndValidateTransaction(fn(): Transaction => $paymentMethod
+            ->charge($this->bill->getAmount())
+            ->withAddress($this->address)
+            ->withBill($this->bill)
+            ->withConvenienceAmount($fee)
+            ->withCurrency('USD')
+            ->execute());
     }
 
     public function testCharge_UsingSingleUseToken_ReturnsSuccessfulTransaction()
@@ -416,17 +414,15 @@ class BillPayVerificationTests extends TestCase
             $bill->getAmount()
         );
         
-        $transaction = $this->RunAndValidateTransaction(function() use($paymentMethod, $fee, $bill, $address, $customer): Transaction {
-            return $paymentMethod
-                ->charge($bill->getAmount())
-                ->withAddress($address)
-                ->withCustomerData($customer)
-                ->withBill($bill)
-                ->withConvenienceAmount($fee)
-                ->withCurrency('USD')
-                ->withPaymentMethodUsageMode(PaymentMethodUsageMode::SINGLE)
-                ->execute();
-        });
+        $transaction = $this->RunAndValidateTransaction(fn(): Transaction => $paymentMethod
+            ->charge($bill->getAmount())
+            ->withAddress($address)
+            ->withCustomerData($customer)
+            ->withBill($bill)
+            ->withConvenienceAmount($fee)
+            ->withCurrency('USD')
+            ->withPaymentMethodUsageMode(PaymentMethodUsageMode::SINGLE)
+            ->execute());
 
         $this->assertNotNull($transaction);
     }
@@ -462,18 +458,16 @@ class BillPayVerificationTests extends TestCase
             $bill->getAmount()
         );
 
-        $transaction = $this->RunAndValidateTransaction(function() use($paymentMethod, $fee, $bill, $address, $customer): Transaction {
-            return $paymentMethod
-                ->charge($bill->getAmount())
-                ->withAddress($address)
-                ->withCustomerData($customer)
-                ->withBill($bill)
-                ->withConvenienceAmount($fee)
-                ->withCurrency('USD')
-                ->withRequestMultiUseToken(true)
-                ->withPaymentMethodUsageMode(PaymentMethodUsageMode::SINGLE)
-                ->execute();
-        });
+        $transaction = $this->RunAndValidateTransaction(fn(): Transaction => $paymentMethod
+            ->charge($bill->getAmount())
+            ->withAddress($address)
+            ->withCustomerData($customer)
+            ->withBill($bill)
+            ->withConvenienceAmount($fee)
+            ->withCurrency('USD')
+            ->withRequestMultiUseToken(true)
+            ->withPaymentMethodUsageMode(PaymentMethodUsageMode::SINGLE)
+            ->execute());
 
         $this->assertNotNull($transaction);
         $this->assertNotNull($transaction->token);
@@ -497,16 +491,13 @@ class BillPayVerificationTests extends TestCase
         $this->assertNotNull($result);
         $this->assertNotEmpty($result);
 
-        $this->RunAndValidateTransaction(function() use($paymentMethod, $fee): Transaction 
-        {
-            return $paymentMethod
-                ->charge($this->bill->getAmount())
-                ->withBill($this->bill)
-                ->withConvenienceAmount($fee)
-                ->withCurrency('USD')
-                ->withAddress($this->address)
-                ->execute();
-        });
+        $this->RunAndValidateTransaction(fn(): Transaction => $paymentMethod
+            ->charge($this->bill->getAmount())
+            ->withBill($this->bill)
+            ->withConvenienceAmount($fee)
+            ->withCurrency('USD')
+            ->withAddress($this->address)
+            ->execute());
     }
 
     public function testCharge_UsingTokenFromPreviousPayment_ReturnsSuccessfulTransaction()
@@ -530,17 +521,14 @@ class BillPayVerificationTests extends TestCase
             $newBill->getAmount()
         );
 
-        $transaction = $this->RunAndValidateTransaction(function() use ($fee, $clearTextCredit, $newBill): Transaction 
-        {
-            return $clearTextCredit
-                ->charge($newBill->getAmount())
-                ->withAddress($this->address)
-                ->withBill($newBill)
-                ->withConvenienceAmount($fee)
-                ->withCurrency('USD')
-                ->withRequestMultiUseToken(true)
-                ->execute();
-        });
+        $transaction = $this->RunAndValidateTransaction(fn(): Transaction => $clearTextCredit
+            ->charge($newBill->getAmount())
+            ->withAddress($this->address)
+            ->withBill($newBill)
+            ->withConvenienceAmount($fee)
+            ->withCurrency('USD')
+            ->withRequestMultiUseToken(true)
+            ->execute());
 
         $this->assertNotNull($transaction->token);
         $this->assertNotEmpty($transaction->token);
@@ -609,27 +597,23 @@ class BillPayVerificationTests extends TestCase
         );
 
         // Make transaction to reverse
-        $transaction = $this->RunAndValidateTransaction(function() use($fee, $clearTextCredit): Transaction {
-            return $clearTextCredit
-                ->charge($this->bill->getAmount())
-                ->withAddress($this->address)
-                ->withBill($this->bill)
-                ->withConvenienceAmount($fee)
-                ->withCurrency('USD')
-                ->execute();
-        });
+        $transaction = $this->RunAndValidateTransaction(fn(): Transaction => $clearTextCredit
+            ->charge($this->bill->getAmount())
+            ->withAddress($this->address)
+            ->withBill($this->bill)
+            ->withConvenienceAmount($fee)
+            ->withCurrency('USD')
+            ->execute());
 
         // Now reverse it
-        $reversal = $this->RunAndValidateTransaction(function() use($transaction, $fee): Transaction {
-            return Transaction::fromId(
-                $transaction->transactionId, 
-                null, 
-                PaymentMethodType::CREDIT
-            )
-            ->reverse($this->bill->getAmount())
-            ->withConvenienceAmount($fee)
-            ->execute();
-        });
+        $reversal = $this->RunAndValidateTransaction(fn(): Transaction => Transaction::fromId(
+            $transaction->transactionId, 
+            null, 
+            PaymentMethodType::CREDIT
+        )
+        ->reverse($this->bill->getAmount())
+        ->withConvenienceAmount($fee)
+        ->execute());
     }
 
     public function testReversePayment_WithPreviousMultiBillTransaction_ReturnsSuccessfulTransaction()
@@ -644,24 +628,20 @@ class BillPayVerificationTests extends TestCase
         );
 
         // Make transaction to reverse
-        $transaction = $this->RunAndValidateTransaction(function() use($totalAmount, $fee): Transaction {
-            return $this->clearTextCredit
-                ->charge($totalAmount)
-                ->withAddress($this->address)
-                ->withBills($this->bills)
-                ->withConvenienceAmount($fee)
-                ->withCurrency('USD')
-                ->execute();
-        });
+        $transaction = $this->RunAndValidateTransaction(fn(): Transaction => $this->clearTextCredit
+            ->charge($totalAmount)
+            ->withAddress($this->address)
+            ->withBills($this->bills)
+            ->withConvenienceAmount($fee)
+            ->withCurrency('USD')
+            ->execute());
 
         // Now reverse it
-        $reversal = $this->RunAndValidateTransaction(function() use($transaction): Transaction {
-            return Transaction::fromId(
-                $transaction->transactionId,
-                null,
-                PaymentMethodType::CREDIT
-            );
-        });
+        $reversal = $this->RunAndValidateTransaction(fn(): Transaction => Transaction::fromId(
+            $transaction->transactionId,
+            null,
+            PaymentMethodType::CREDIT
+        ));
     }
 
     public function testPartialReversal_WithCreditCard_ReturnsSuccessfulTransaction()
@@ -683,16 +663,14 @@ class BillPayVerificationTests extends TestCase
         );
 
         // Make transaction to reverse
-        $transaction = $this->RunAndValidateTransaction(function() use($totalAmount, $fee, $clearTextCredit): Transaction {
-            return $clearTextCredit
-                ->charge($totalAmount)
-                ->withAddress($this->address)
-                ->withBills($this->bills)
-                ->withPaymentMethod($clearTextCredit)
-                ->withConvenienceAmount($fee)
-                ->withCurrency('USD')
-                ->execute();
-        });
+        $transaction = $this->RunAndValidateTransaction(fn(): Transaction => $clearTextCredit
+            ->charge($totalAmount)
+            ->withAddress($this->address)
+            ->withBills($this->bills)
+            ->withPaymentMethod($clearTextCredit)
+            ->withConvenienceAmount($fee)
+            ->withCurrency('USD')
+            ->execute());
 
         // Now reverse it
         $reversal = $this->RunAndValidateTransaction(
@@ -1121,16 +1099,14 @@ class BillPayVerificationTests extends TestCase
 
         $orderID = uniqid();
         $transactionResponse = $this->RunAndValidateTransaction(
-            function() use($paymentMethod, $address, $fee, $orderID): Transaction {
-                return $paymentMethod
-                    ->charge($this->bill->getAmount())
-                    ->withAddress($address)
-                    ->withBill($this->bill)
-                    ->withConvenienceAmount($fee)
-                    ->withOrderId($orderID)
-                    ->withCurrency('USD')
-                    ->execute();
-            }
+            fn(): Transaction => $paymentMethod
+                ->charge($this->bill->getAmount())
+                ->withAddress($address)
+                ->withBill($this->bill)
+                ->withConvenienceAmount($fee)
+                ->withOrderId($orderID)
+                ->withCurrency('USD')
+                ->execute()
         );
 
         /** @var TransactionSummary */
@@ -1151,16 +1127,14 @@ class BillPayVerificationTests extends TestCase
 
         $orderID = uniqid();
         $transactionResponse = $this->RunAndValidateTransaction(
-            function() use($totalAmount, $fee, $orderID): Transaction {
-                return $this->clearTextCredit
-                    ->charge($totalAmount)
-                    ->withAddress($this->address)
-                    ->withBills($this->bills)
-                    ->withConvenienceAmount($fee)
-                    ->withOrderId($orderID)
-                    ->withCurrency('USD')
-                    ->execute();
-            }
+            fn(): Transaction => $this->clearTextCredit
+                ->charge($totalAmount)
+                ->withAddress($this->address)
+                ->withBills($this->bills)
+                ->withConvenienceAmount($fee)
+                ->withOrderId($orderID)
+                ->withCurrency('USD')
+                ->execute()
         );
 
         /** @var TransactionSummary */

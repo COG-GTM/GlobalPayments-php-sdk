@@ -13,7 +13,7 @@ use GlobalPayments\Api\ServiceConfigs\Gateways\TransitConfig;
 use PHPUnit\Framework\TestCase;
 
 final class Token_Request_Only extends TestCase {
-    public function setup() : void {
+    public function setUp(): void : void {
         ServicesContainer::configureService($this->getConfig());
     }
 

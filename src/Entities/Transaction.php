@@ -430,7 +430,7 @@ class Transaction
      *
      * @return ManagementBuilder
      */
-    public function additionalAuth($amount = null) : ManagementBuilder
+    public function additionalAuth($amount = null): ManagementBuilder
     {
         return (new ManagementBuilder(TransactionType::AUTH))
             ->withPaymentMethod($this->transactionReference)

@@ -70,7 +70,7 @@ class GpApi3DSecureTest extends TestCase
      */
     private CreditCardData $card;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->setUpConfig();
         ServicesContainer::configureService($config);
@@ -120,11 +120,11 @@ class GpApi3DSecureTest extends TestCase
     /**
      * Frictionless scenario
      *
-     * @dataProvider FrictionlessSuccessful3DSV2CardTests
      * @param $cardNumber
      * @param $status
      * @throws ApiException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('FrictionlessSuccessful3DSV2CardTests')]
     public function testFrictionlessFullCycle_v2($cardNumber, $status)
     {
         $this->card->number = $cardNumber;
@@ -178,11 +178,11 @@ class GpApi3DSecureTest extends TestCase
     /**
      * Frictionless failed scenario
      *
-     * @dataProvider FrictionlessFailed3DSV2CardTests
      * @param $cardNumber
      * @param $status
      * @throws ApiException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('FrictionlessFailed3DSV2CardTests')]
     public function testFrictionlessFullCycle_v2_Failed($cardNumber, $status)
     {
         $this->card->number = $cardNumber;
@@ -229,11 +229,11 @@ class GpApi3DSecureTest extends TestCase
     /**
      * Challenge scenario
      *
-     * @dataProvider ChallengeSuccessful3DSV2CardTests
      * @param $cardNumber
      * @param $status
      * @throws ApiException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('ChallengeSuccessful3DSV2CardTests')]
     public function testCardHolderEnrolled_ChallengeRequired_v2($cardNumber, $status)
     {
         $this->card->number = $cardNumber;
@@ -775,7 +775,7 @@ class GpApi3DSecureTest extends TestCase
         $this->assertEquals(TransactionStatus::CAPTURED, $response->responseMessage);
     }
 
-    public function ChallengeSuccessful3DSV2CardTests(): array
+    public static function ChallengeSuccessful3DSV2CardTests(): array
     {
         return [
             'Challenge v2.1' => [GpApi3DSTestCards::CARD_CHALLENGE_REQUIRED_V2_1, Secure3dStatus::SUCCESS_AUTHENTICATED],
@@ -792,7 +792,7 @@ class GpApi3DSecureTest extends TestCase
         ];
     }
 
-    public function FrictionlessSuccessful3DSV2CardTests(): array
+    public static function FrictionlessSuccessful3DSV2CardTests(): array
     {
         return [
             'Frictionless v2.1' => [GpApi3DSTestCards::CARD_AUTH_SUCCESSFUL_V2_1, Secure3dStatus::SUCCESS_AUTHENTICATED],
@@ -802,7 +802,7 @@ class GpApi3DSecureTest extends TestCase
         ];
     }
 
-    public function FrictionlessFailed3DSV2CardTests(): array
+    public static function FrictionlessFailed3DSV2CardTests(): array
     {
         return [
             'Frictionless failed 1' => [GpApi3DSTestCards::CARD_AUTH_ATTEMPTED_BUT_NOT_SUCCESSFUL_V2_1, Secure3dStatus::SUCCESS_ATTEMPT_MADE],

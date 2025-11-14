@@ -48,5 +48,4 @@ class StoredPaymentMethodSummary extends BaseSummary
      * @var int
      */
     public $cardExpYear;
-
 }

@@ -30,14 +30,14 @@ class AlternativePaymentMethod implements
     IPinProtected
 {
     public $paymentMethodType = PaymentMethodType::APM;
-    
+
     /**
      * Specifies the payment method
      *
      * @var string
      */
     public $alternativePaymentMethodType;
-    
+
     /**
      * The endpoint to which the customer should be redirected after a payment has been attempted or
      * successfully completed on the payment scheme's site.
@@ -98,7 +98,7 @@ class AlternativePaymentMethod implements
 
     /** @var BankList */
     public $bank;
-    
+
     public function __construct($alternativePaymentMethodType)
     {
         $this->alternativePaymentMethodType = $alternativePaymentMethodType;

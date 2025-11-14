@@ -82,7 +82,7 @@ class MessageReader
     public function readToCode($code, $removeCode = true)
     {
         $rvalue = "";
-        
+
         try {
             while (1) {
                 $currentValue = ord($this->peek());

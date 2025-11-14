@@ -6,7 +6,6 @@ use GlobalPayments\Api\Entities\Enum;
 
 class PaxSearchCriteria extends Enum
 {
-
     const TRANSACTION_TYPE = "TransactionType";
     const CARD_TYPE = "CardType";
     const RECORD_NUMBER = "RecordNumber";

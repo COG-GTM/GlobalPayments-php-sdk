@@ -28,7 +28,7 @@ class RetailTest extends TestCase
     private static $amextoken;
     private $enableCryptoUrl = true;
 
-    protected function setup(): void
+    protected function setUp(): void
     {
         $config = new PorticoConfig();
         $config->secretApiKey = 'skapi_cert_MaePAQBr-1QAqjfckFC8FTbRTT120bVQUlfVOjgCBw'; #gitleaks:allow
@@ -46,8 +46,8 @@ class RetailTest extends TestCase
             // error_log(sprintf('Batch ID: %s', $response->Id));
             // error_log(sprintf('Sequence Number: %s', $response->sequenceNumber));
         } catch (ApiException $e) {
-            if (false === strpos($e->getMessage(), static::BATCH_NOT_OPEN)
-                && false === strpos($e->getMessage(), static::NO_TRANS_IN_BATCH)
+            if (!str_contains($e->getMessage(), (string) static::BATCH_NOT_OPEN)
+                && !str_contains($e->getMessage(), (string) static::NO_TRANS_IN_BATCH)
             ) {
                 $this->fail($e->getMessage());
             }
@@ -1455,7 +1455,7 @@ class RetailTest extends TestCase
         $this->assertEquals(22.00, $response->authorizedAmount);
     }
 
-    public function testRetail069DebitSaleVisaPartialApproval()
+    public function testRetail069DebitSaleVisaPartialApproval(): never
     {
         $this->markTestSkipped();
         
@@ -1972,8 +1972,8 @@ class RetailTest extends TestCase
             // error_log(sprintf('Batch ID: %s', $response->Id));
             // error_log(sprintf('Sequence Number: %s', $response->SequenceNumber));
         } catch (Exception $e) {
-            if (false === strpos($e->getMessage(), static::BATCH_NOT_OPEN)
-                && false === strpos($e->getMessage(), static::NO_TRANS_IN_BATCH)
+            if (!str_contains($e->getMessage(), (string) static::BATCH_NOT_OPEN)
+                && !str_contains($e->getMessage(), (string) static::NO_TRANS_IN_BATCH)
             ) {
                 $this->fail($e->getMessage());
             }

@@ -17,7 +17,7 @@ class ThreatRiskData
      * @var string
      */
     public $threatMetrixPolicy;
-    
+
     /**
      * SessionId for Threat Metrix, see ProPay Fraud Detection Solutions Manual
      *

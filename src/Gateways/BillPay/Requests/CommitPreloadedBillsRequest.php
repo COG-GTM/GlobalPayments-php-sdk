@@ -7,7 +7,8 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class CommitPreloadedBillsRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) {
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 

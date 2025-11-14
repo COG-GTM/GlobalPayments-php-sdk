@@ -19,7 +19,7 @@ class GeniusTests extends TestCase
      */
     public $device;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->device = DeviceService::create($this->getConfig());
     }
@@ -242,6 +242,6 @@ class GeniusTests extends TestCase
     {
         $beginning = (int) str_pad('1', $digits, '0');
         $end = (int) str_pad('9', $digits, '9');
-        return (string) rand($beginning, $end);
+        return (string) random_int($beginning, $end);
     }
 }

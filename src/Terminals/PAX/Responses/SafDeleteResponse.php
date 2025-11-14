@@ -1,4 +1,5 @@
 <?php
+
 namespace GlobalPayments\Api\Terminals\PAX\Responses;
 
 use GlobalPayments\Api\Terminals\PAX\Entities\Enums\PaxMessageId;
@@ -7,7 +8,6 @@ use GlobalPayments\Api\Terminals\PAX\SubGroups\HostResponse;
 
 class SafDeleteResponse extends PaxTerminalResponse
 {
-
     public $safDeletedCount;
 
     public function __construct($rawResponse)

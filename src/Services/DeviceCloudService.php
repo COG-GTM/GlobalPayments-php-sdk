@@ -21,7 +21,7 @@ class DeviceCloudService
         ServicesContainer::configureService($config);
     }
 
-    public function parseResponse($response) : TerminalResponse
+    public function parseResponse($response): TerminalResponse
     {
         if (empty($response)) {
             throw new ApiException("Enable to parse : empty response");
@@ -30,8 +30,7 @@ class DeviceCloudService
             throw new ApiException("Unexpected response format!");
         }
 
-        switch ($this->config->getConnectionMode())
-        {
+        switch ($this->config->getConnectionMode()) {
             case ConnectionModes::DIAMOND_CLOUD:
                 return new DiamondCloudResponse($response);
             default:

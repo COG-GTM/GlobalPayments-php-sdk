@@ -63,7 +63,7 @@ class PartnershipModeTest extends TestCase
 
     private \DateTime $startDate;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->baseConfig = $this->setUpConfig();
         ServicesContainer::configureService($this->baseConfig);
@@ -132,12 +132,8 @@ class PartnershipModeTest extends TestCase
 
         $transactionAccounts = array_filter(
             $accounts->result,
-            function ($account) {
-                return (
-                    $account->type == MerchantAccountType::TRANSACTION_PROCESSING &&
-                    in_array(PaymentMethodName::CARD, $account->paymentMethods)
-                );
-            }
+            fn($account) => $account->type == MerchantAccountType::TRANSACTION_PROCESSING &&
+            in_array(PaymentMethodName::CARD, $account->paymentMethods)
         );
 
         $config->accessTokenInfo->transactionProcessingAccountID =
@@ -150,12 +146,8 @@ class PartnershipModeTest extends TestCase
         $configAch->accessTokenInfo = new AccessTokenInfo();
         $transactionAccounts = array_filter(
             $accounts->result,
-            function ($account) {
-                return (
-                    $account->type == MerchantAccountType::TRANSACTION_PROCESSING &&
-                    in_array("BANK_TRANSFER", $account->paymentMethods)
-                );
-            }
+            fn($account) => $account->type == MerchantAccountType::TRANSACTION_PROCESSING &&
+            in_array("BANK_TRANSFER", $account->paymentMethods)
         );
 
         $configAch->accessTokenInfo->transactionProcessingAccountID =
@@ -348,7 +340,7 @@ class PartnershipModeTest extends TestCase
         $this->assertEquals(TransactionStatus::CAPTURED, $response->responseMessage);
     }
 
-    public function testVerifyTokenizedPaymentMethodWithPartnerMode()
+    public function testVerifyTokenizedPaymentMethodWithPartnerMode(): never
     {
         $this->markTestSkipped('Missing TKA_ account from the merchant');
         $response = $this->card->tokenize()->execute('config_' . $this->merchantId);

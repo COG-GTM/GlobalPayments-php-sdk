@@ -17,7 +17,7 @@ class DeviceService
      * @return IDeviceInterface
      * @throws \GlobalPayments\Api\Entities\Exceptions\ApiException
      */
-    public static function create(ConnectionConfig $config, string $configName = "default") : IDeviceInterface
+    public static function create(ConnectionConfig $config, string $configName = "default"): IDeviceInterface
     {
         ServicesContainer::configureService($config, $configName);
         if (!empty($config->gatewayConfig)) {

@@ -79,17 +79,17 @@ class TransactionApiAuthorizationRequestBuilder implements IRequestBuilder
     }
 
     /**
-     * 
-     * @param BaseBuilder $builder 
-     * @param null|TransactionApiConfig $config 
-     * @param string $additionalSlug 
-     * @return array 
-     * @throws ArgumentException 
+     *
+     * @param BaseBuilder $builder
+     * @param null|TransactionApiConfig $config
+     * @param string $additionalSlug
+     * @return array
+     * @throws ArgumentException
      */
     private function createFromAuthorizationBuilder(
         BaseBuilder $builder,
         ?TransactionApiConfig $config = null,
-        String $additionalSlug = ""
+        string $additionalSlug = ""
     ) {
         $requestBody = [];
         if (empty($additionalSlug)) {
@@ -113,7 +113,7 @@ class TransactionApiAuthorizationRequestBuilder implements IRequestBuilder
                             "check_number" => $builder->paymentMethod->checkNumber,
                         ];
                     }
-                } else if ($config->country == Region::US) {
+                } elseif ($config->country == Region::US) {
                     if (!empty($builder->paymentMethod->token)) {
                         $requestBody["check"] = [
                             "account_type" => $builder->paymentMethod->accountType,
@@ -128,7 +128,7 @@ class TransactionApiAuthorizationRequestBuilder implements IRequestBuilder
                         ];
                     }
                 }
-            } else if (empty($additionalSlug)) {
+            } elseif (empty($additionalSlug)) {
                 if (!empty($builder->paymentMethod->token)) {
                     if ($builder->paymentMethodUsageMode === PaymentMethodUsageMode::SINGLE) {
                         $requestBody["card"] = [
@@ -227,7 +227,7 @@ class TransactionApiAuthorizationRequestBuilder implements IRequestBuilder
      *
      * @return array
      */
-    private function buildTransactionData(BaseBuilder $builder, TransactionApiConfig $config, String $additionalSlug)
+    private function buildTransactionData(BaseBuilder $builder, TransactionApiConfig $config, string $additionalSlug)
     {
         if ($builder->paymentMethod->paymentMethodType == PaymentMethodType::ACH) {
             return $this->buildAchTransactionData($builder, $config, $additionalSlug);
@@ -247,10 +247,9 @@ class TransactionApiAuthorizationRequestBuilder implements IRequestBuilder
      *
      * @return array
      */
-    private function buildAchTransactionData(BaseBuilder $builder, TransactionApiConfig $config, String $additionalSlug)
+    private function buildAchTransactionData(BaseBuilder $builder, TransactionApiConfig $config, string $additionalSlug)
     {
         if (isset($builder->transactionData)) {
-
             $transactionData = $builder->transactionData;
             if (empty($additionalSlug)) {
                 $transactionObjectCountry = [
@@ -272,7 +271,7 @@ class TransactionApiAuthorizationRequestBuilder implements IRequestBuilder
                 if ($config->country == Region::CA) {
                     $transactionObject["payment_purpose_code"] = isset($builder->paymentPurposeCode)
                         ? $builder->paymentPurposeCode : "";
-                } else if ($config->country == Region::US) {
+                } elseif ($config->country == Region::US) {
                     $transactionObject["entry_class"] = isset($builder->entryClass)
                         ? $builder->entryClass : "";
                 } else {
@@ -308,7 +307,7 @@ class TransactionApiAuthorizationRequestBuilder implements IRequestBuilder
      *
      * @return array
      */
-    private function buildCreditCardTransactionData(BaseBuilder $builder, TransactionApiConfig $config, String $additionalSlug)
+    private function buildCreditCardTransactionData(BaseBuilder $builder, TransactionApiConfig $config, string $additionalSlug)
     {
         $transactionData = [];
         if (isset($builder->transactionData)) {
@@ -343,7 +342,7 @@ class TransactionApiAuthorizationRequestBuilder implements IRequestBuilder
                 "partial_approval" => isset($builder->allowPartialAuth)
                     ? $builder->allowPartialAuth : false
             ];
-        } else if ($builder->transactionType == TransactionType::SALE) {
+        } elseif ($builder->transactionType == TransactionType::SALE) {
             $transactionObject["processing_indicators"] = [
                 "partial_approval" => isset($builder->allowPartialAuth)
                     ? $builder->allowPartialAuth : false,
@@ -352,14 +351,14 @@ class TransactionApiAuthorizationRequestBuilder implements IRequestBuilder
             ];
         }
 
-        if (isset($builder->allowDuplicates) && $builder->allowDuplicates == TRUE) {
+        if (isset($builder->allowDuplicates) && $builder->allowDuplicates == true) {
             $transactionObject["processing_indicators"]["allow_duplicate"] = true;
         }
 
         if (
             isset($builder->transactionData)
             && isset($builder->transactionData->generateReceipt)
-            && $builder->transactionData->generateReceipt == TRUE
+            && $builder->transactionData->generateReceipt == true
         ) {
             $transactionObject["processing_indicators"]["generate_receipt"] = true;
         }
@@ -375,7 +374,7 @@ class TransactionApiAuthorizationRequestBuilder implements IRequestBuilder
      *
      * @return array
      */
-    private function getPhoneNumber(AuthorizationBuilder $builder, String $type)
+    private function getPhoneNumber(AuthorizationBuilder $builder, string $type)
     {
         $phoneKey = strtolower($type) . 'Phone';
         $phoneCountryCode = $phoneNumber = '';

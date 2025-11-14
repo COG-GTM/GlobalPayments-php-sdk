@@ -12,16 +12,16 @@ abstract class RestGateway extends Gateway
     {
         parent::__construct('application/json');
     }
-    
+
     /**
-     * 
-     * @param mixed $verb 
-     * @param mixed $endpoint 
-     * @param mixed $data 
-     * @param null|array $queryStringParams 
-     * @return string 
-     * @throws Exception 
-     * @throws GatewayException 
+     *
+     * @param mixed $verb
+     * @param mixed $endpoint
+     * @param mixed $data
+     * @param null|array $queryStringParams
+     * @return string
+     * @throws Exception
+     * @throws GatewayException
      */
     protected function doTransaction(
         $verb,
@@ -33,7 +33,7 @@ abstract class RestGateway extends Gateway
             if (!empty($data)) {
                 $data = (array) $data;
                 $data = ArrayUtils::array_remove_empty($data);
-                $data = json_encode($data, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
+                $data = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
             }
             if (!empty($queryStringParams)) {
                 $queryStringParams = ArrayUtils::array_remove_empty($queryStringParams);
@@ -80,7 +80,7 @@ abstract class RestGateway extends Gateway
                     $this->requestLogger->responseError($gatewayException, $response->header);
                 }
                 throw $gatewayException;
-            } else if ($this->isTransactionApi()) {
+            } elseif ($this->isTransactionApi()) {
                 if (isset($error) && isset($error->detail)) {
                     $gatewayException = new GatewayException(
                         sprintf(

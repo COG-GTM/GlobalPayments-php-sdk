@@ -25,7 +25,7 @@ class HpaSendSafResponse implements IDeviceResponseHandler
                 'declinedSafVoidSummary' => []
             ]
         ];
-        
+
         //incase of muliple message needs to be splitted
         //convert the response as array using </SIP> keyword
         $messageList = explode('</SIP>', $gatewayMultipleResponse);
@@ -41,7 +41,7 @@ class HpaSendSafResponse implements IDeviceResponseHandler
                 }
             }
         }
-        
+
         return $this->deviceResponse;
     }
 
@@ -128,7 +128,7 @@ class HpaSendSafResponse implements IDeviceResponseHandler
             $this->deviceResponse->{$propertyName} = $response[$responseKey];
         }
     }
-    
+
     private function formatKey($key)
     {
         //convert "APPLICATION MODE" key as "applicationMode"
@@ -136,7 +136,7 @@ class HpaSendSafResponse implements IDeviceResponseHandler
         $key = str_replace(' ', '', $key);
         return $key;
     }
-    
+
     private function formatValue($key, $value)
     {
         if (!empty($value) && (stripos($key, 'amt') !== false || stripos($key, 'amount') !== false)) {
@@ -144,7 +144,7 @@ class HpaSendSafResponse implements IDeviceResponseHandler
         }
         return $value;
     }
-    
+
     private function formatTableCategory($gatewayRecord)
     {
         $tableCategory = (!empty($gatewayRecord['TableCategory'])) ?

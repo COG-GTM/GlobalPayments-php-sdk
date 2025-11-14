@@ -17,7 +17,7 @@ class TransactionApiAchTest extends TestCase
 
     private $customer;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->eCheck = new ECheck();
         $this->eCheck->accountNumber = '12121';
@@ -77,7 +77,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('US')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->routingNumber = '112000066';
 
         $response = $this->eCheck->charge(11)
@@ -101,7 +101,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('US')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->routingNumber = '112000066';
 
         $response = $this->eCheck->refund(11)
@@ -125,7 +125,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('US')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->routingNumber = '112000066';
 
         $response = $this->eCheck->charge(11)
@@ -160,7 +160,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('US')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->routingNumber = '112000066';
 
         $response = $this->eCheck->charge(11)
@@ -194,7 +194,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('CA')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->branchTransitNumber = "12345";
         $this->eCheck->financialInstitutionNumber = "999";
 
@@ -219,7 +219,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('CA')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->branchTransitNumber = "12345";
         $this->eCheck->financialInstitutionNumber = "999";
 
@@ -244,7 +244,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('CA')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->branchTransitNumber = "12345";
         $this->eCheck->financialInstitutionNumber = "999";
 
@@ -258,7 +258,7 @@ class TransactionApiAchTest extends TestCase
         $checkSaleId = $response->transactionReference->transactionId;
 
         $transaction = Transaction::fromId($checkSaleId, null, PaymentMethodType::ACH);
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
 
         $response = $transaction->refund(6)
             ->withCurrency('124')
@@ -280,7 +280,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('CA')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->branchTransitNumber = "12345";
         $this->eCheck->financialInstitutionNumber = "999";
 
@@ -296,7 +296,7 @@ class TransactionApiAchTest extends TestCase
 
         $transaction = Transaction::fromClientTransactionId($referenceID, null, PaymentMethodType::ACH);
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
 
         $response = $transaction->refund(8)
             ->withCurrency('124')
@@ -320,7 +320,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('US')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->routingNumber = '112000066';
 
         $response = $this->eCheck->charge(11)
@@ -334,7 +334,7 @@ class TransactionApiAchTest extends TestCase
         $this->assertNotNull($response);
         $this->assertNotNull($response->token);
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->token = $response->token;
 
         $response = $this->eCheck->charge(11)
@@ -358,7 +358,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('CA')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->branchTransitNumber = "12345";
         $this->eCheck->financialInstitutionNumber = "999";
 
@@ -373,7 +373,7 @@ class TransactionApiAchTest extends TestCase
         $this->assertNotNull($response);
         $this->assertNotNull($response->token);
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->token = $response->token;
 
         $response = $this->eCheck->charge(11)
@@ -397,7 +397,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('US')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->routingNumber = '112000066';
 
         $response = $this->eCheck->charge(15)
@@ -411,7 +411,7 @@ class TransactionApiAchTest extends TestCase
         $this->assertNotNull($response);
         $this->assertNotNull($response->token);
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->token = $response->token;
 
         $response = $this->eCheck->refund(15)
@@ -435,7 +435,7 @@ class TransactionApiAchTest extends TestCase
             CountryUtils::getNumericCodeByCountry('CA')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->branchTransitNumber = "12345";
         $this->eCheck->financialInstitutionNumber = "999";
 
@@ -450,7 +450,7 @@ class TransactionApiAchTest extends TestCase
         $this->assertNotNull($response);
         $this->assertNotNull($response->token);
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->token = $response->token;
 
         $response = $this->eCheck->refund(15)
