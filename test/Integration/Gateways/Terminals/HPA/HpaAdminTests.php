@@ -21,7 +21,7 @@ class HpaAdminTests extends TestCase
 
     private $device;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->device = DeviceService::create($this->getConfig());
     }
@@ -92,7 +92,7 @@ class HpaAdminTests extends TestCase
         $this->assertEquals('Reset', $response->response);
     }
 
-    public function testReboot()
+    public function testReboot(): never
     {
         $this->markTestSkipped('Reboot skipped');
         
@@ -143,7 +143,7 @@ class HpaAdminTests extends TestCase
         $this->assertNotNull($response->responseData['getBatchReport']['batchDetail']);
     }
     
-    public function testStartDownload()
+    public function testStartDownload(): never
     {
         $this->markTestSkipped('StartDownload skipped');
         
@@ -161,7 +161,7 @@ class HpaAdminTests extends TestCase
         $this->assertEquals('0', $response->resultCode);
     }
     
-    public function testPartialStartDownload()
+    public function testPartialStartDownload(): never
     {
         $this->markTestSkipped('StartDownload skipped');
         
@@ -179,7 +179,7 @@ class HpaAdminTests extends TestCase
         $this->assertEquals('0', $response->resultCode);
     }
     
-    public function testEndOfDayStartDownload()
+    public function testEndOfDayStartDownload(): never
     {
         $this->markTestSkipped('StartDownload skipped');
         
@@ -197,7 +197,7 @@ class HpaAdminTests extends TestCase
         $this->assertEquals('0', $response->resultCode);
     }
     
-    public function testCustomStartDownload()
+    public function testCustomStartDownload(): never
     {
         $this->markTestSkipped('StartDownload skipped');
         
@@ -265,7 +265,7 @@ class HpaAdminTests extends TestCase
     public function testSendFileBanner()
     {
         $sendFileInfo = new SendFileData();
-        $sendFileInfo->imageLocation = dirname(__FILE__) . '/sampleimages/hpa_banner_iSC250_60_480.jpg';
+        $sendFileInfo->imageLocation = __DIR__ . '/sampleimages/hpa_banner_iSC250_60_480.jpg';
         $sendFileInfo->imageType = SendFileType::BANNER;
         
         $response = $this->device->sendFile($sendFileInfo);
@@ -281,7 +281,7 @@ class HpaAdminTests extends TestCase
     public function testSendFileIdleLogo()
     {
         $sendFileInfo = new SendFileData();
-        $sendFileInfo->imageLocation = dirname(__FILE__) . '/sampleimages/hpa_logo_iSC250_272_480.jpg';
+        $sendFileInfo->imageLocation = __DIR__ . '/sampleimages/hpa_logo_iSC250_272_480.jpg';
         $sendFileInfo->imageType = SendFileType::IDLELOGO;
         
         $response = $this->device->sendFile($sendFileInfo);
@@ -307,7 +307,7 @@ class HpaAdminTests extends TestCase
     public function testIncorrectFileSize()
     {
         $sendFileInfo = new SendFileData();
-        $sendFileInfo->imageLocation = dirname(__FILE__) . '/sampleimages/image_500_500.jpg';
+        $sendFileInfo->imageLocation = __DIR__ . '/sampleimages/image_500_500.jpg';
         $sendFileInfo->imageType = SendFileType::BANNER;
         
         $this->device->sendFile($sendFileInfo);

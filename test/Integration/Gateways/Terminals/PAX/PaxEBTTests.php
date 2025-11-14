@@ -15,7 +15,7 @@ class PaxEBTTests extends TestCase
 
     private $device;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->device = DeviceService::create($this->getConfig());
     }

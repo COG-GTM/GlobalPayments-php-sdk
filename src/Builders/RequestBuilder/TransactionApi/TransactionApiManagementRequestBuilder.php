@@ -58,7 +58,7 @@ class TransactionApiManagementRequestBuilder implements IRequestBuilder
                         $payload["transaction"] = [
                             "payment_purpose_code" => isset($builder->paymentPurposeCode) ? $builder->paymentPurposeCode : null,
                         ];
-                    } else if ($config->country == Region::US) {
+                    } elseif ($config->country == Region::US) {
                         $payload["transaction"] = [
                             "entry_class" => isset($builder->entryClass) ? $builder->entryClass : null,
                         ];
@@ -67,7 +67,7 @@ class TransactionApiManagementRequestBuilder implements IRequestBuilder
                     if (isset($builder->paymentMethod->transactionId)) {
                         $endpoint = TransactionApiRequest::CHECKSALES . '/' .
                             $builder->paymentMethod->transactionId . '/' . TransactionApiRequest::CHECKREFUND;
-                    } else if (isset($builder->paymentMethod->clientTransactionId)) {
+                    } elseif (isset($builder->paymentMethod->clientTransactionId)) {
                         $endpoint = TransactionApiRequest::CHECKSALESREF . '/'
                             . $builder->paymentMethod->clientTransactionId . '/' . TransactionApiRequest::CHECKREFUND;
                     } else {
@@ -80,7 +80,7 @@ class TransactionApiManagementRequestBuilder implements IRequestBuilder
                         $endpoint = TransactionApiRequest::CREDITSALEREF . '/'
                             . $builder->paymentMethod->clientTransactionId . '/'
                             . TransactionApiRequest::CREDITREFUND;
-                    } else if (isset($builder->paymentMethod->transactionId)) {
+                    } elseif (isset($builder->paymentMethod->transactionId)) {
                         $endpoint = TransactionApiRequest::CREDITSALE . '/'
                             . $builder->paymentMethod->transactionId . '/'
                             . TransactionApiRequest::CREDITREFUND;
@@ -118,7 +118,7 @@ class TransactionApiManagementRequestBuilder implements IRequestBuilder
 
                 if (isset($builder->paymentMethod) && isset($builder->paymentMethod->transactionId)) {
                     $endpoint = TransactionApiRequest::CREDITSALE . '/' . $builder->paymentMethod->transactionId;
-                } else if (isset($builder->paymentMethod) && isset($builder->paymentMethod->clientTransactionId)) {
+                } elseif (isset($builder->paymentMethod) && isset($builder->paymentMethod->clientTransactionId)) {
                     $endpoint = TransactionApiRequest::CREDITSALEREF . '/' . $builder->paymentMethod->clientTransactionId;
                 } else {
                     throw new ApiException("Previous transaction ID must be supplied");
@@ -132,15 +132,15 @@ class TransactionApiManagementRequestBuilder implements IRequestBuilder
                 if (isset($builder->originalTransactionType) && $builder->originalTransactionType === TransactionType::SALE) {
                     if (isset($builder->paymentMethod->transactionId)) {
                         $endpoint = TransactionApiRequest::CREDITSALE . '/' . $builder->paymentMethod->transactionId . "/" . TransactionApiRequest::CREDITSALEVOID;
-                    } else if (isset($builder->paymentMethod->clientTransactionId)) {
+                    } elseif (isset($builder->paymentMethod->clientTransactionId)) {
                         $endpoint = TransactionApiRequest::CREDITSALEREF . '/' . $builder->paymentMethod->clientTransactionId . "/" . TransactionApiRequest::CREDITSALEVOID;
                     } else {
                         throw new ApiException("Previous transaction ID must be supplied");
                     }
-                } else if (isset($builder->originalTransactionType) && $builder->originalTransactionType === TransactionType::REFUND) {
+                } elseif (isset($builder->originalTransactionType) && $builder->originalTransactionType === TransactionType::REFUND) {
                     if (isset($builder->paymentMethod->transactionId)) {
                         $endpoint = TransactionApiRequest::CREDITREFUND . '/' . $builder->paymentMethod->transactionId . "/" . TransactionApiRequest::CREDITSALEVOID;
-                    } else if (isset($builder->paymentMethod->clientTransactionId)) {
+                    } elseif (isset($builder->paymentMethod->clientTransactionId)) {
                         $endpoint = TransactionApiRequest::CREDITREFUNDREF . '/' . $builder->paymentMethod->clientTransactionId . "/" . TransactionApiRequest::CREDITSALEVOID;
                     } else {
                         throw new ApiException("Previous transaction ID must be supplied");

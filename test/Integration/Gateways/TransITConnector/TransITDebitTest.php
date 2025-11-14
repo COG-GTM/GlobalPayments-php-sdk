@@ -14,7 +14,7 @@ class TransITDebitTest extends TestCase
 {
     protected $track;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->track = new DebitTrackData();
         

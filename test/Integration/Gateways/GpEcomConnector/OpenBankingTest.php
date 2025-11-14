@@ -24,7 +24,7 @@ class OpenBankingTest extends TestCase
     private string $remittanceReferenceValue = 'Nike Bounce Shoes';
     private bool $runAuto = true;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->getConfig();
         ServicesContainer::configureService($config);
@@ -247,7 +247,7 @@ class OpenBankingTest extends TestCase
         $this->assertNotNull($response);
         $this->assertNotEmpty($response->result);
         /** @var TransactionSummary $trn */
-        $trn = $response->result[rand(0, count($response->result) - 1)];
+        $trn = $response->result[random_int(0, count($response->result) - 1)];
         $bankPaymentResponse = $trn->bankPaymentResponse;
         switch ($bankPaymentResponse->type) {
             case BankPaymentType::FASTERPAYMENTS:

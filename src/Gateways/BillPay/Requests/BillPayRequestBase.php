@@ -5,7 +5,7 @@ namespace GlobalPayments\Api\Gateways\BillPay\Requests;
 use DateTime;
 use GlobalPayments\Api\Builders\{AuthorizationBuilder, ManagementBuilder};
 use GlobalPayments\Api\Entities\{
-    Address, 
+    Address,
     Customer,
     HostedPaymentData
 };
@@ -24,6 +24,7 @@ use GlobalPayments\Api\PaymentMethods\{CreditCardData, ECheck};
 use GlobalPayments\Api\PaymentMethods\Interfaces\IPaymentMethod;
 use GlobalPayments\Api\PaymentMethods\TransactionReference;
 use GlobalPayments\Api\Utils\{Element, ElementTree};
+
 use function PHPUnit\Framework\isEmpty;
 
 abstract class BillPayRequestBase
@@ -73,11 +74,11 @@ abstract class BillPayRequestBase
      * @param ?float $feeAmount
      */
     protected function buildACHAccount(
-        Element $parent, 
-        ECheck $eCheck, 
-        float $amountToCharge, 
-        ?float $feeAmount = null)
-    {
+        Element $parent,
+        ECheck $eCheck,
+        float $amountToCharge,
+        ?float $feeAmount = null
+    ) {
         /** @var Element */
         $achAccounts = $this->et->subElement($parent, "bdms:ACHAccountsToCharge");
         $achAccount = $this->et->subElement($achAccounts, "bdms:ACHAccountToCharge");
@@ -103,7 +104,7 @@ abstract class BillPayRequestBase
 
     /**
      * Builds a list of BillPay Bill Transactions from a list of Bills
-     * 
+     *
      * @param Element $parent
      * @param array $bills
      * @param string $billLabel
@@ -111,7 +112,7 @@ abstract class BillPayRequestBase
      */
     protected function buildBillTransactions(Element $parent, array $bills, string $billLabel, string $amountLabel)
     {
-        foreach ($bills as $bill) {  
+        foreach ($bills as $bill) {
             /** @var Element */
             $billTransaction = $this->et->subElement($parent, $billLabel);
             $this->et->subElement($billTransaction, "bdms:BillType", $bill->getBillType());
@@ -125,7 +126,7 @@ abstract class BillPayRequestBase
 
     /**
      * Builds a BillPay ClearTextCredit card from CreditCardData
-     * 
+     *
      * @param Element $parent
      * @param CreditCardData $card
      * @param float $amountToCharge
@@ -134,10 +135,15 @@ abstract class BillPayRequestBase
      * @param ?EmvLastChipRead $lastRead
      * @param ?Address $address
      */
-    protected function buildClearTextCredit(Element $parent, CreditCardData $card, float $amountToCharge,
-                                            ?float $feeAmount = null, ?EmvFallbackCondition $condition = null,
-                                            ?EmvLastChipRead $lastRead = null, ?Address $address = null) 
-    {
+    protected function buildClearTextCredit(
+        Element $parent,
+        CreditCardData $card,
+        float $amountToCharge,
+        ?float $feeAmount = null,
+        ?EmvFallbackCondition $condition = null,
+        ?EmvLastChipRead $lastRead = null,
+        ?Address $address = null
+    ) {
         $isEmvFallback = $condition !== null && $condition === EmvFallbackCondition::CHIP_READ_FAILURE;
         $isPreviousEmvFallback = $lastRead != null && $lastRead === EmvLastChipRead::FAILED;
 
@@ -170,14 +176,14 @@ abstract class BillPayRequestBase
 
     /**
      * Builds the account billing information
-     * 
+     *
      * @param Element $parent The XML element to attach.
      * @param Address $address The billing address of the customer.
      * @param string $nameOnAccount The name on the payment account.
-     * 
+     *
      * @return void
      */
-    protected function buildAccountHolderData(Element $parent, ?Address $address, string $nameOnAccount) 
+    protected function buildAccountHolderData(Element $parent, ?Address $address, string $nameOnAccount)
     {
         $this->et->subElement($parent, "pos:NameOnCard", $nameOnAccount);
         if ($address !== null) {
@@ -190,7 +196,7 @@ abstract class BillPayRequestBase
 
     /**
      * Builds a BillPay token to charge from any payment method
-     * 
+     *
      * @param Element $parent The parent XML element to attach to
      * @param IPaymentMethod $paymentMethod The token to pay
      * @param float $amount The amount to charge
@@ -201,16 +207,15 @@ abstract class BillPayRequestBase
         IPaymentMethod $paymentMethod,
         float $amount,
         ?float $feeAmount = null
-    )
-    {
+    ) {
         /** @var Element */
         $tokensToCharge = $this->et->subElement($parent, "bdms:TokensToCharge");
         $tokenToCharge = $this->et->subElement($tokensToCharge, "bdms:TokenToCharge");
 
         $this->et->subElement($tokenToCharge, "bdms:Amount", $amount);
         $this->et->subElement(
-            $tokenToCharge, 
-            "bdms:CardProcessingMethod", 
+            $tokenToCharge,
+            "bdms:CardProcessingMethod",
             $this->getCardProcessingMethod($paymentMethod->getPaymentMethodType())
         );
         $this->et->subElement($tokenToCharge, "bdms:ExpectedFeeAmount", $feeAmount);
@@ -223,11 +228,11 @@ abstract class BillPayRequestBase
 
     /**
      * Builds the BillPay transaction object
-     * 
+     *
      * @param Element $parent
      * @param AuthorizationBuilder $builder
      */
-    protected function buildTransaction(Element $parent, AuthorizationBuilder $builder) 
+    protected function buildTransaction(Element $parent, AuthorizationBuilder $builder)
     {
         /** @var Element */
         $transaction = $this->et->subElement($parent, "bdms:Transaction");
@@ -257,7 +262,6 @@ abstract class BillPayRequestBase
         $this->et->subElement($transaction, "bdms:PayorCountry", $address->country);
         $this->et->subElement($transaction, "bdms:PayorPostalCode", $address->postalCode);
         $this->et->subElement($transaction, "bdms:PayorState", $address->state);
-
     }
 
     protected function buildCustomer(Element $parent, Customer $customer)
@@ -284,7 +288,7 @@ abstract class BillPayRequestBase
     /**
      * Validates that the AuthorizationBuilder is configured correctly for a Bill Payment
      */
-    protected function validateTransaction(AuthorizationBuilder $builder) 
+    protected function validateTransaction(AuthorizationBuilder $builder)
     {
         /** @var array<string> */
         $validationErrors = array();
@@ -293,12 +297,12 @@ abstract class BillPayRequestBase
             array_push($validationErrors, "Bill Payments must have at least one bill to pay.");
         } else {
             $billSum = 0.0;
-            foreach($builder->bills as $bill) {
+            foreach ($builder->bills as $bill) {
                 $billSum = $billSum + $bill->getAmount();
             }
 
             $amountFloat = (float) $builder->amount;
-            if($amountFloat !== $billSum) {
+            if ($amountFloat !== $billSum) {
                 array_push($validationErrors, "The sum of the bill amounts must match the amount charged.");
             }
         }
@@ -315,14 +319,15 @@ abstract class BillPayRequestBase
     /**
      * @param Array<Bill> $bills
      */
-    protected function validateBills(array $bills) {
+    protected function validateBills(array $bills)
+    {
         /** @var array<string> */
         $validationErrors = array();
 
         if ($bills === null || count($bills) === 0) {
             array_push($validationErrors, "At least one Bill required to Load Bills.");
         } else {
-            foreach($bills as $bill) { 
+            foreach ($bills as $bill) {
                 if ($bill->getAmount() <= 0) {
                     array_push($validationErrors, "Bills require an amount greater than zero.");
                     break;
@@ -335,7 +340,8 @@ abstract class BillPayRequestBase
         }
     }
 
-    protected function validateReversal(ManagementBuilder $builder) {
+    protected function validateReversal(ManagementBuilder $builder)
+    {
         /** @var array<string> */
         $validationErrors = array();
 
@@ -348,16 +354,16 @@ abstract class BillPayRequestBase
             }
         }
 
-        if ($builder->bills !== null || !isEmpty($builder->bills)) { 
+        if ($builder->bills !== null || !isEmpty($builder->bills)) {
             /** @var Bill[] */
             $bills = $builder->bills;
 
             $billSum = 0.0;
-            foreach($bills as $bill) {
+            foreach ($bills as $bill) {
                 $billSum = $billSum + $bill->getAmount();
             }
 
-            if($builder->amount != $billSum) {
+            if ($builder->amount != $billSum) {
                 array_push($validationErrors, "The sum of the bill amounts must match the amount to reverse.");
             }
         }
@@ -367,7 +373,8 @@ abstract class BillPayRequestBase
         }
     }
 
-    protected function validateLoadSecurePay(?HostedPaymentData $hostedPaymentData) {
+    protected function validateLoadSecurePay(?HostedPaymentData $hostedPaymentData)
+    {
         /** @var array<string> */
         $validationErrors = array();
 
@@ -377,7 +384,7 @@ abstract class BillPayRequestBase
             if ($hostedPaymentData->bills === null || count($hostedPaymentData->bills) === 0) {
                 array_push($validationErrors, "At least one Bill required to Load Bills.");
             } else {
-                foreach($hostedPaymentData->bills as $bill) { 
+                foreach ($hostedPaymentData->bills as $bill) {
                     if ($bill->getAmount() <= 0) {
                         array_push($validationErrors, "Bills require an amount greater than zero.");
                         break;
@@ -394,7 +401,7 @@ abstract class BillPayRequestBase
             $this->throwBuilderException($validationErrors);
         }
     }
-    
+
     protected function getDateFormatted(DateTime $date): string
     {
         $milliseconds = substr($date->format('u'), 0, 3);
@@ -410,14 +417,14 @@ abstract class BillPayRequestBase
     {
         switch ($billPresentment) {
             case BillPresentment::FULL:
-                    return "Full";
+                return "Full";
             default:
                 throw new UnsupportedTransactionException("Bill Presentment Type of " . $billPresentment . " is not supported");
         }
     }
 
     protected function getDepositType(int $deposit): string
-    {   
+    {
         switch ($deposit) {
             case CheckType::BUSINESS:
                 return "Business";
@@ -437,7 +444,7 @@ abstract class BillPayRequestBase
             case AccountType::SAVINGS:
                 return "Savings";
             default:
-                throw new UnsupportedTransactionException("eCheck Account Type of " . $accountType . " is not supported. ");    
+                throw new UnsupportedTransactionException("eCheck Account Type of " . $accountType . " is not supported. ");
         }
     }
 
@@ -468,7 +475,6 @@ abstract class BillPayRequestBase
                 return "ACH";
             default:
                 throw new UnsupportedTransactionException();
-
         }
     }
 
@@ -488,24 +494,25 @@ abstract class BillPayRequestBase
             default:
                 throw new UnsupportedTransactionException();
         }
-    } 
+    }
 
     protected function serializeBooleanValues(?bool $value): ?string
     {
         if ($value === null) {
             return null;
         }
-        
+
         return $value ? "true" : "false";
     }
 
     /**
      * @param array<String> $messages
      */
-    protected function throwBuilderException(array $messages) {
+    protected function throwBuilderException(array $messages)
+    {
         $messageBuilder = "";
 
-        foreach($messages as $m) {
+        foreach ($messages as $m) {
             $messageBuilder = $messageBuilder . $m . " ";
         }
 

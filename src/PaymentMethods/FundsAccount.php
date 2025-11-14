@@ -10,7 +10,6 @@ use GlobalPayments\Api\PaymentMethods\Interfaces\IPaymentMethod;
 
 class FundsAccount implements IPaymentMethod
 {
-
     /**
      * A unique identifier for the merchant account set by Global Payments
      * @var string

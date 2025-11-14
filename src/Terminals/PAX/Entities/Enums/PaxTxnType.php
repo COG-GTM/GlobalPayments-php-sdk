@@ -6,7 +6,6 @@ use GlobalPayments\Api\Entities\Enum;
 
 class PaxTxnType extends Enum
 {
-
     const MENU = '00';
     const SALE_REDEEM = '01';
     const RETURN_REQUEST = '02';

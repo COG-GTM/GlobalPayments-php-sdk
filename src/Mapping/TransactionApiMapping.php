@@ -39,10 +39,12 @@ class TransactionApiMapping
                     break;
             }
         }
-        if (!empty($response->creditsale_id))
+        if (!empty($response->creditsale_id)) {
             $transaction->transactionId =  $response->creditsale_id;
-        if (!empty($response->creditreturn_id))
+        }
+        if (!empty($response->creditreturn_id)) {
             $transaction->transactionId =  $response->creditreturn_id;
+        }
 
         $transaction->responseMessage = !empty($response->processor_response)
             ? $response->processor_response : null;

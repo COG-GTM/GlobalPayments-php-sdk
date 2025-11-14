@@ -50,7 +50,7 @@ class TransitConfig extends GatewayConfig
     public function validate()
     {
         parent::validate();
-        
+
         if ($this->acceptorConfig == null) {
             throw new ConfigurationException("You must provide a valid AcceptorConfig.");
         } else {

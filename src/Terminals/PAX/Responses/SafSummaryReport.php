@@ -1,4 +1,5 @@
 <?php
+
 namespace GlobalPayments\Api\Terminals\PAX\Responses;
 
 use GlobalPayments\Api\Terminals\PAX\Entities\Enums\PaxMessageId;
@@ -7,7 +8,6 @@ use GlobalPayments\Api\Terminals\PAX\SubGroups\HostResponse;
 
 class SafSummaryReport extends PaxTerminalResponse
 {
-
     public $safTotalCount;
 
     public $safTotalAmount;

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace GlobalPayments\Api\Entities;
 
 use GlobalPayments\Api\Gateways\GatewayResponse;

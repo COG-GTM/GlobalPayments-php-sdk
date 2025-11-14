@@ -1,11 +1,11 @@
 <?php
+
 namespace GlobalPayments\Api\Terminals\Enums;
 
 use GlobalPayments\Api\Entities\Enum;
 
 class SafMode extends Enum
 {
-
     const STAY_ONLINE = "0";
 
     const STAY_OFFLINE = "1";

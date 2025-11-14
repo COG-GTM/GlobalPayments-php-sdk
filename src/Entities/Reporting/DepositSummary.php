@@ -1,8 +1,6 @@
 <?php
 
-
 namespace GlobalPayments\Api\Entities\Reporting;
-
 
 class DepositSummary extends BaseSummary
 {

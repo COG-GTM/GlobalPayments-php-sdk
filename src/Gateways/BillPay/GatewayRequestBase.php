@@ -16,7 +16,7 @@ abstract class GatewayRequestBase extends XmlGateway
      * Creates a SOAP envelope with the necessary namespaces
      * @param ElementTree $et
      * @param string soapAction The method name that is the target of the invocation
-     * 
+     *
      * @return Element The Element that represents the envelope node
      */
     protected function createSOAPEnvelope(ElementTree $et, string $soapAction): Element
@@ -29,7 +29,7 @@ abstract class GatewayRequestBase extends XmlGateway
 
     /**
      * Creates and sets the SOAPAction header using the supplied method name
-     * 
+     *
      * @param string $soapAction The method name that is the target of the invocation
      */
     protected function setSOAPAction(string $soapAction)
@@ -39,7 +39,7 @@ abstract class GatewayRequestBase extends XmlGateway
 
     /**
      * Adds the XML Namespaces necessary to make BillPay SOAP requests
-     * 
+     *
      * @param ElementTree $et The element tree for the SOAP request
      */
     protected function addXMLNS(ElementTree $et)

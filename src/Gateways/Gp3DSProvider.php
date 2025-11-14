@@ -337,8 +337,11 @@ class Gp3DSProvider extends RestGateway implements ISecure3dProvider
                 $request['sdk_information'] = [];
                 $request['sdk_information'] = $this->maybeSetKey($request['sdk_information'], 'application_id', $builder->getApplicationId());
                 $request['sdk_information'] = $this->maybeSetKey($request['sdk_information'], 'ephemeral_public_key', $builder->getEphemeralPublicKey());
-                $request['sdk_information'] = $this->maybeSetKey($request['sdk_information'], 'maximum_timeout',
-                            (!empty($builder->getMaximumTimeout())) ? str_pad($builder->getMaximumTimeout(), 2, '0' , STR_PAD_LEFT) : '');
+                $request['sdk_information'] = $this->maybeSetKey(
+                    $request['sdk_information'],
+                    'maximum_timeout',
+                    (!empty($builder->getMaximumTimeout())) ? str_pad($builder->getMaximumTimeout(), 2, '0', STR_PAD_LEFT) : ''
+                );
                 $request['sdk_information'] = $this->maybeSetKey($request['sdk_information'], 'reference_number', $builder->getReferenceNumber());
                 $request['sdk_information'] = $this->maybeSetKey($request['sdk_information'], 'sdk_trans_id', $builder->getSdkTransactionId());
                 $request['sdk_information'] = $this->maybeSetKey($request['sdk_information'], 'encoded_data', $builder->getEncodedData());
@@ -458,8 +461,7 @@ class Gp3DSProvider extends RestGateway implements ISecure3dProvider
             $secureEcom->payerAuthenticationRequest = isset($doc['encoded_creq']) ? $doc['encoded_creq'] : null;
         }
 
-        if ($secureEcom->authenticationSource == AuthenticationSource::MOBILE_SDK)
-        {
+        if ($secureEcom->authenticationSource == AuthenticationSource::MOBILE_SDK) {
             $secureEcom->payerAuthenticationRequest = $doc['acs_signed_content'] ?? null;
             $secureEcom->acsInterface = $doc['acs_rendering_type']['acs_interface'] ?? null;
             $secureEcom->acsUiTemplate = $doc['acs_rendering_type']['acs_ui_template'] ?? null;

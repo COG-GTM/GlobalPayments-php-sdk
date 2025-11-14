@@ -66,11 +66,11 @@ class UpaSAFResponse extends UpaResponseHandler implements ISAFResponse
                     break;
             }
         }
-     }
+    }
 
     public function getApproved(): array
     {
-       return $this->approved;
+        return $this->approved;
     }
 
     public function getPending(): array

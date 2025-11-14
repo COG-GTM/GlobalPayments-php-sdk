@@ -20,7 +20,7 @@ class ServicesContainer
 
     /** @var IRecurringService */
     private $recurring;
- 
+
     /** @var  array */
     private $secure3dProviders;
     /** @var IPaymentGateway */
@@ -33,18 +33,18 @@ class ServicesContainer
     private static $instance;
 
     private static $configurations = array();
-    
+
     /**
      * ServicesContainer constructor
-     * 
-     * @param null|IPaymentGateway $gateway 
-     * @param null|IRecurringService $recurring 
-     * @param null|IInstallmentService $installmentService 
-     * @return void 
+     *
+     * @param null|IPaymentGateway $gateway
+     * @param null|IRecurringService $recurring
+     * @param null|IInstallmentService $installmentService
+     * @return void
      */
     public function __construct(
-        ?IPaymentGateway $gateway = null, 
-        ?IRecurringService $recurring = null, 
+        ?IPaymentGateway $gateway = null,
+        ?IRecurringService $recurring = null,
         ?IInstallmentService $installmentService = null
     ) {
         $this->gateway = $gateway;
@@ -121,12 +121,12 @@ class ServicesContainer
         }
     }
 
-    public function getDeviceInterface($configName) : IDeviceInterface
+    public function getDeviceInterface($configName): IDeviceInterface
     {
         if (array_key_exists($configName, static::$configurations)) {
             return static::$configurations[$configName]->deviceInterface;
         }
-        
+
         throw new ApiException("The specified configuration has not been configured for terminal interaction.");
     }
 
@@ -135,7 +135,7 @@ class ServicesContainer
         if (array_key_exists($configName, static::$configurations)) {
             return static::$configurations[$configName]->deviceController;
         }
-        
+
         throw new ApiException("The specified configuration has not been configured for terminal interaction.");
     }
 
@@ -144,7 +144,7 @@ class ServicesContainer
         if (array_key_exists($configName, static::$configurations)) {
             return static::$configurations[$configName]->recurringConnector;
         }
-        
+
         throw new ApiException("The specified configuration has not been configured for recurring processing.");
     }
 
@@ -152,12 +152,12 @@ class ServicesContainer
      * @param string $configName
      * @return GpApiConnector
      */
-    public function getInstallmentClient(string $configName) : GpApiConnector
+    public function getInstallmentClient(string $configName): GpApiConnector
     {
         if (array_key_exists($configName, static::$configurations)) {
             return static::$configurations[$configName]->installmentService;
         }
-        
+
         throw new ApiException("The specified configuration has not been configured for installment processing.");
     }
 
@@ -166,7 +166,7 @@ class ServicesContainer
         if (array_key_exists($configName, static::$configurations)) {
             return static::$configurations[$configName]->tableServiceClient;
         }
-        
+
         throw new ApiException("The specified configuration has not been configured for table service.");
     }
 
@@ -175,7 +175,7 @@ class ServicesContainer
         if (array_key_exists($configName, static::$configurations)) {
             return static::$configurations[$configName]->boardingServiceConnector;
         }
-        
+
         return null;
     }
 
@@ -184,7 +184,7 @@ class ServicesContainer
         if (array_key_exists($configName, static::$configurations)) {
             return static::$configurations[$configName]->payrollClient;
         }
-        
+
         throw new ApiException("The specified configuration has not been configured for payroll.");
     }
 
@@ -193,7 +193,7 @@ class ServicesContainer
         if (array_key_exists($configName, static::$configurations)) {
             return static::$configurations[$configName]->reportingService;
         }
-        
+
         throw new ApiException("The specified configuration has not been configured for reporting.");
     }
 
@@ -213,7 +213,7 @@ class ServicesContainer
             throw new ConfigurationException("Secure 3d is not configured on the connector.");
         }
     }
-    
+
     /**
      * @return IPayFacProvider
      */

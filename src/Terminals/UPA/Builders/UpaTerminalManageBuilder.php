@@ -29,7 +29,7 @@ class UpaTerminalManageBuilder extends TerminalManageBuilder
                 ->with(TransactionModifier::NONE)
                 ->check('amount')->isNotNull()
                 ->check('transactionId')->isNotNull();
-        
+
         $this->validations->of(
             TransactionType::VOID
         )

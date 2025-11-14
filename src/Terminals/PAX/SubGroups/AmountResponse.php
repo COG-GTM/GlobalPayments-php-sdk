@@ -1,4 +1,5 @@
 <?php
+
 namespace GlobalPayments\Api\Terminals\PAX\SubGroups;
 
 use GlobalPayments\Api\Terminals\Abstractions\IResponseSubGroup;
@@ -7,7 +8,6 @@ use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 
 class AmountResponse implements IResponseSubGroup
 {
-
     public $approvedAmount;
 
     public $amountDue;

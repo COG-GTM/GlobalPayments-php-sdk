@@ -8,7 +8,8 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class LoadSecurePayRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) {
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 
@@ -28,11 +29,11 @@ class LoadSecurePayRequest extends BillPayRequestBase
 
         /** @var Element */
         $billsElement = $this->et->subElement($requestElement, "bdms:BillData");
-        
+
         if ($hostedPaymentData !== null) {
             $customerIsEditable = $this->serializeBooleanValues($hostedPaymentData->customerIsEditable);
-    
-            foreach($hostedPaymentData->bills as $bill) {
+
+            foreach ($hostedPaymentData->bills as $bill) {
                 /** @var Element */
                 $billElement = $this->et->subElement($billsElement, "bdms:SecurePayBill");
 
@@ -45,8 +46,8 @@ class LoadSecurePayRequest extends BillPayRequestBase
             }
 
             $this->et->subElement(
-                $requestElement, 
-                "bdms:SecurePayPaymentType_ID", 
+                $requestElement,
+                "bdms:SecurePayPaymentType_ID",
                 $this->getHostedPaymentTypeOrdinal($hostedPaymentData->hostedPaymentType)
             );
             $this->et->subElement($requestElement, "bdms:ReturnURL", $hostedPaymentData->merchantResponseUrl);
@@ -55,7 +56,7 @@ class LoadSecurePayRequest extends BillPayRequestBase
             $merchantCustomerId = null;
             if (!$this->isNullOrEmpty($hostedPaymentData->customerKey)) {
                 $merchantCustomerId = $hostedPaymentData->customerKey;
-            } else if (!$this->isNullOrEmpty($hostedPaymentData->customerNumber)) {
+            } elseif (!$this->isNullOrEmpty($hostedPaymentData->customerNumber)) {
                 $merchantCustomerId = $hostedPaymentData->customerNumber;
             }
 

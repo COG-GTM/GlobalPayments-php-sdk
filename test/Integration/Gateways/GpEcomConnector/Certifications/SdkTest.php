@@ -16775,7 +16775,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled015b()
+    public function testverifyenrolled015b(): never
     {
         $this->markTestSkipped();
 
@@ -16800,7 +16800,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled015c()
+    public function testverifyenrolled015c(): never
     {
         $this->markTestSkipped();
 
@@ -16825,7 +16825,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled015d()
+    public function testverifyenrolled015d(): never
     {
         $this->markTestSkipped();
 
@@ -16850,7 +16850,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled015e()
+    public function testverifyenrolled015e(): never
     {
         $this->markTestSkipped();
 
@@ -16875,7 +16875,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled015f()
+    public function testverifyenrolled015f(): never
     {
         $this->markTestSkipped();
 
@@ -16900,7 +16900,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled015g()
+    public function testverifyenrolled015g(): never
     {
         $this->markTestSkipped();
 
@@ -16925,7 +16925,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled015h()
+    public function testverifyenrolled015h(): never
     {
         $this->markTestSkipped();
 
@@ -16950,7 +16950,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled015i()
+    public function testverifyenrolled015i(): never
     {
         $this->markTestSkipped();
 
@@ -16999,7 +16999,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled016b()
+    public function testverifyenrolled016b(): never
     {
         $this->markTestSkipped();
 
@@ -17024,7 +17024,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled016c()
+    public function testverifyenrolled016c(): never
     {
         $this->markTestSkipped();
 
@@ -17049,7 +17049,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled016d()
+    public function testverifyenrolled016d(): never
     {
         $this->markTestSkipped();
 
@@ -17074,7 +17074,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled016e()
+    public function testverifyenrolled016e(): never
     {
         $this->markTestSkipped();
 
@@ -17099,7 +17099,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled016f()
+    public function testverifyenrolled016f(): never
     {
         $this->markTestSkipped();
 
@@ -17124,7 +17124,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled016g()
+    public function testverifyenrolled016g(): never
     {
         $this->markTestSkipped();
 
@@ -17149,7 +17149,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled016h()
+    public function testverifyenrolled016h(): never
     {
         $this->markTestSkipped();
 
@@ -17174,7 +17174,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled016i()
+    public function testverifyenrolled016i(): never
     {
         $this->markTestSkipped();
 
@@ -18446,7 +18446,7 @@ class SdkTest extends TestCase
         $this->assertEquals("00", $response->responseCode);
     }
 
-    public function testverifyenrolled029d()
+    public function testverifyenrolled029d(): never
     {
         $this->markTestSkipped();
 

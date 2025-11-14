@@ -6,7 +6,7 @@ class BillingResponse
 {
     /**
      * Indicates if the action was successful
-     * @var bool 
+     * @var bool
      */
     protected $isSuccessful;
 

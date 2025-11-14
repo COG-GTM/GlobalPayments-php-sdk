@@ -18,25 +18,24 @@ use GlobalPayments\Api\Terminals\HPA\Responses\HpaDiagnosticReportResponse;
  */
 class HpaTcpInterface implements IDeviceCommInterface
 {
-
     /*
      * TCP fsockopen connection object
      */
 
     private $tcpConnection = null;
-    
+
     /*
      * Device configuration details ConnectionConfig object
      *
      */
     public $deviceDetails;
-    
+
     /*
      * Device final response HpaResponse object
      *
      */
     public $deviceResponse;
-    
+
     /*
      * Device request type
      *
@@ -60,7 +59,7 @@ class HpaTcpInterface implements IDeviceCommInterface
         if (is_resource($this->tcpConnection)) {
             return;
         }
-        
+
         $errno = '';
         $errstr = '';
 
@@ -102,11 +101,11 @@ class HpaTcpInterface implements IDeviceCommInterface
         $this->connect();
         $this->requestType = $requestType;
         $out = '';
-        
+
         if ($this->tcpConnection !== null) {
             try {
                 $length = TerminalUtils::findLength($message);
-                
+
                 // Sanitize sensitive data
                 $sanitizedMessage = $this->sanitizeMessage($message);
                 if (false === fwrite($this->tcpConnection, $length . $sanitizedMessage)) {
@@ -120,7 +119,7 @@ class HpaTcpInterface implements IDeviceCommInterface
                         // read from socket
                         $part = fgets($this->tcpConnection);
                         $out .= $part;
-                        
+
                         //break the loop when there is no multiple message
                         if ($part == "<MultipleMessage>0</MultipleMessage>\n") {
                             $multipleMessage = false;
@@ -153,7 +152,7 @@ class HpaTcpInterface implements IDeviceCommInterface
      * @param string $message The original XML message containing sensitive data.
      * @return string The sanitized XML message with sensitive data masked.
      */
-    private function sanitizeMessage(string $message) : string
+    private function sanitizeMessage(string $message): string
     {
         // Define patterns for sensitive fields to be masked
         $patterns = [
@@ -170,7 +169,7 @@ class HpaTcpInterface implements IDeviceCommInterface
         foreach ($patterns as $pattern => $replacement) {
             $message = preg_replace($pattern, $replacement, $message);
         }
-    
+
         return $message;
     }
 
@@ -232,7 +231,7 @@ class HpaTcpInterface implements IDeviceCommInterface
     public function parseResponse($gatewayResponse)
     {
         $responseData = TerminalUtils::xmlParse($gatewayResponse);
-        
+
         if (!empty($responseData)) {
             $this->setBasicResponse($responseData);
 
@@ -271,7 +270,7 @@ class HpaTcpInterface implements IDeviceCommInterface
             }
         }
     }
-    
+
     /*
      * Set transaction based response in $deviceResponse
      *
@@ -287,24 +286,24 @@ class HpaTcpInterface implements IDeviceCommInterface
         $this->setValueInResponse('maskedCardNumber', $response, 'MaskedPAN');
         $this->setValueInResponse('cardType', $response, 'CardType');
         $this->setValueInResponse('signatureStatus', $response, 'SignatureLine');
-        
+
         if (isset($response['TipAdjustAllowed']) && !empty($response['TipAmount'])) {
             $this->deviceResponse->tipAmount = TerminalUtils::reformatAmount(
                 $response['TipAmount']
             );
         }
-        
+
         if (isset($response['AuthorizedAmount'])) {
             $this->deviceResponse->transactionAmount = TerminalUtils::reformatAmount(
                 $response['AuthorizedAmount']
             );
         }
-        
+
         //EBT response
         $this->setValueInResponse('ebtType', $response, 'EBTType');
         $this->setValueInResponse('pinVerified', $response, 'PinVerified');
     }
-    
+
     /*
      * Set transaction based response in $deviceResponse
      *
@@ -318,7 +317,7 @@ class HpaTcpInterface implements IDeviceCommInterface
             $this->deviceResponse->{$propertyName} = $response[$responseKey];
         }
     }
-    
+
     private function setBasicResponse($responseData)
     {
         $this->setValueInResponse('versionNumber', $responseData, 'Version');
@@ -341,13 +340,13 @@ class HpaTcpInterface implements IDeviceCommInterface
         $this->setValueInResponse('cvvResponseCode', $responseData, 'CVV');
         $this->setValueInResponse('cvvResponseText', $responseData, 'CVVResultText');
         $this->setValueInResponse('signatureData', $responseData, 'AttachmentData');
-        
+
         if (isset($responseData['BalanceDueAmount'])) {
             $this->deviceResponse->balanceAmountDue = TerminalUtils::reformatAmount(
                 $responseData['BalanceDueAmount']
             );
         }
-        
+
         if (isset($responseData['AvailableBalance'])) {
             $this->deviceResponse->availableBalance = TerminalUtils::reformatAmount(
                 $responseData['AvailableBalance']
@@ -361,10 +360,10 @@ class HpaTcpInterface implements IDeviceCommInterface
         $this->setValueInResponse('emvCardHolderVerificationMethod', $responseData, 'EMV_TSI');
         $this->setValueInResponse('emvCryptogramType', $responseData, 'EMV_CryptogramType');
         $this->setValueInResponse('emvCryptogram', $responseData, 'EMV_Cryptogram');
-        
+
         //send file response
         $this->setValueInResponse('maxDataSize', $responseData, 'MaxDataSize');
-        
+
         //process transaction based response
         $transactionRequests = [
             HpaMessageId::CREDIT_SALE,
@@ -377,9 +376,11 @@ class HpaTcpInterface implements IDeviceCommInterface
         if (in_array($this->deviceResponse->response, $transactionRequests)) {
             $this->parseTransactionResponse($responseData);
         }
-        
-        if ($this->requestType == HpaMessageId::GET_LAST_RESPONSE &&
-                !empty($responseData['LastResponse'])) {
+
+        if (
+            $this->requestType == HpaMessageId::GET_LAST_RESPONSE &&
+                !empty($responseData['LastResponse'])
+        ) {
             foreach ($responseData['LastResponse'] as $responseKey => $responseValue) {
                 $key = ($responseKey == 'SIPId' || $responseKey == 'ECRId') ?
                         strtolower($responseKey) : lcfirst($responseKey);
@@ -387,7 +388,7 @@ class HpaTcpInterface implements IDeviceCommInterface
             }
         }
     }
-    
+
     private function convertRecordKey($key)
     {
         //convert "APPLICATION MODE" key as "applicationMode"

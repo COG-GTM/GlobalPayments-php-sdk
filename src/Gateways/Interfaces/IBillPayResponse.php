@@ -6,7 +6,7 @@ interface IBillPayResponse
 {
     public function map();
 
-    public function withResponseTagName(String $tagName): IBillPayResponse;
+    public function withResponseTagName(string $tagName): IBillPayResponse;
 
-    public function withResponse(String $response): IBillPayResponse;
+    public function withResponse(string $response): IBillPayResponse;
 }

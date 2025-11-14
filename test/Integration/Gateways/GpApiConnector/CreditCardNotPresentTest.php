@@ -48,7 +48,7 @@ class CreditCardNotPresentTest extends TestCase
 
     private string $currency = 'GBP';
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->card = new CreditCardData();
@@ -683,7 +683,7 @@ class CreditCardNotPresentTest extends TestCase
         }
     }
 
-    public function testCardTokenizationThenDeletion()
+    public function testCardTokenizationThenDeletion(): never
     {
         $this->markTestSkipped('Permission not enabled to execute action for this appId/appKey');
         // process an auto-capture authorization
@@ -1170,7 +1170,6 @@ class CreditCardNotPresentTest extends TestCase
     /**
      * Avs test cards scenario
      *
-     * @dataProvider AvsCardTests
      * @param $cardNumber
      * @param $cvnResponseMessage
      * @param $avsResponseCode
@@ -1181,6 +1180,7 @@ class CreditCardNotPresentTest extends TestCase
      * @param $avsPostcode
      * @param $addressResult
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('AvsCardTests')]
     public function testCreditSale_CVVResult($cardNumber, $cvnResponseMessage, $avsResponseCode, $avsAddressResponse, $status, $transactionStatus, $cvvResult, $avsPostcode, $addressResult)
     {
         $address = new Address();
@@ -1369,7 +1369,7 @@ class CreditCardNotPresentTest extends TestCase
      * AVS test cards
      *
      */
-    public function AvsCardTests(): array
+    public static function AvsCardTests(): array
     {
         return [
             [GpApiAvsCheckTestCards::AVS_MASTERCARD_1, "MATCHED", "NOT_CHECKED", "NOT_CHECKED", 'SUCCESS', TransactionStatus::CAPTURED, "M", "U", "U"],

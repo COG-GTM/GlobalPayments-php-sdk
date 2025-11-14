@@ -51,7 +51,7 @@ class TerminalManageBuilder extends TerminalBuilder
      * @return TerminalResponse
      * @throws \GlobalPayments\Api\Entities\Exceptions\ApiException
      */
-    public function execute($configName = "default") : TerminalResponse
+    public function execute($configName = "default"): TerminalResponse
     {
         parent::execute();
         $client = ServicesContainer::instance()->getDeviceController($configName);
@@ -110,19 +110,19 @@ class TerminalManageBuilder extends TerminalBuilder
      * @param string $value
      * @return TerminalManageBuilder
      */
-    public function withClientTransactionId(string $value) : TerminalManageBuilder
+    public function withClientTransactionId(string $value): TerminalManageBuilder
     {
         $this->clientTransactionId = $value;
         return $this;
     }
 
-    public function withTransactionModifier(string $modifier) : TerminalManageBuilder
+    public function withTransactionModifier(string $modifier): TerminalManageBuilder
     {
         $this->transactionModifier = $modifier;
         return $this;
     }
 
-    public function withEcrId(string $ecrId) : TerminalManageBuilder
+    public function withEcrId(string $ecrId): TerminalManageBuilder
     {
         $this->ecrId = $ecrId;
         return $this;
@@ -162,7 +162,7 @@ class TerminalManageBuilder extends TerminalBuilder
                 ->with(TransactionModifier::NONE)
                 ->check('amount')->isNotNull()
                 ->check('transactionId')->isNotNull();
-        
+
         $this->validations->of(
             TransactionType::VOID
         )

@@ -334,7 +334,7 @@ class HPPUrlGenerationTest extends TestCase
     public function testHPPUrlGenerationWithShippingCharges()
     {
         $reference = 'SHIPPING_' . uniqid();
-        
+
         $builder = HPPBuilder::create()
             ->withName('Shipping Test')
             ->withDescription('Test payment with shipping charges')
@@ -354,14 +354,14 @@ class HPPUrlGenerationTest extends TestCase
 
         // Execute and validate shipping URL generation
         $result = $builder->execute();
-        
+
         $this->assertNotNull($result);
         $this->assertObjectHasProperty('payByLinkResponse', $result);
         $url = $result->payByLinkResponse->url;
-        
+
         $this->assertIsString($url);
         $this->assertTrue(filter_var($url, FILTER_VALIDATE_URL) !== false);
-        
+
         // Test URL contains GlobalPay domain and HPP indicators
         $this->assertStringContainsString('globalpay', $url, 'URL should be from GlobalPay domain');
         $this->assertStringContainsString('hpp', $url, 'URL should contain HPP identifier');
@@ -451,12 +451,12 @@ class HPPUrlGenerationTest extends TestCase
     public function testHPPBuilderValidationWithMissingRequiredFields()
     {
         $this->expectException(ArgumentException::class);
-        
+
         // Create payer with missing required fields to trigger validation
         $invalidPayer = new PayerDetails();
         $invalidPayer->firstName = 'John';
         // Missing lastName and email which should be required
-        
+
         HPPBuilder::create()
             ->withName('Invalid Test')
             ->withPayer($invalidPayer)
@@ -519,7 +519,7 @@ class HPPUrlGenerationTest extends TestCase
     {
         $builder1 = HPPBuilder::create();
         $builder2 = HPPBuilder::create();
-        
+
         $this->assertInstanceOf(HPPBuilder::class, $builder1);
         $this->assertInstanceOf(HPPBuilder::class, $builder2);
         $this->assertNotSame($builder1, $builder2); // Should be different instances

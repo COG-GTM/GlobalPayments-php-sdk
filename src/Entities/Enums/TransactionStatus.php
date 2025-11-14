@@ -15,7 +15,7 @@ class TransactionStatus
     const FUNDED = 'FUNDED';
     const REJECTED = 'REJECTED';
 
-    static public $mapTransactionStatusResponse = [
+    public static $mapTransactionStatusResponse = [
         self::INITIATED => self::INITIATED,
         self::AUTHENTICATED => 'SUCCESS_AUTHENTICATED',
         self::PENDING => self::PENDING,

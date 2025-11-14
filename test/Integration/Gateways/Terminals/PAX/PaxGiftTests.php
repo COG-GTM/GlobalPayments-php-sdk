@@ -19,7 +19,7 @@ class PaxGiftTests extends TestCase
     protected $card;
     protected $address;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->device = DeviceService::create($this->getConfig());
     }

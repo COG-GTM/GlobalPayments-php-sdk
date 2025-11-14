@@ -55,7 +55,7 @@ class BillPayTest extends TestCase
     protected Bill $billLoad;
     protected Bill $blindBill;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->getConfig());
 
@@ -998,7 +998,7 @@ class BillPayTest extends TestCase
             $this->assertNotNull($recur);
             $this->assertFalse($paymentMethod->token === "");
             $this->assertFalse($paymentMethod->token === null);
-        } catch (ApiException $e) {
+        } catch (ApiException) {
             $this->fail('Error test testCreateRecurringPaymentMonthlyPositive');
         }
     }

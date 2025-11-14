@@ -34,7 +34,7 @@ class GpApiCreateInstallmentTest extends TestCase
         return $config;
     }
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->config();
         ServicesContainer::configureService($config);

@@ -37,7 +37,7 @@ abstract class Enum
     public static function getKey($value)
     {
         $reflector = new \ReflectionClass(static::class);
-        $key = array_search($value,$reflector->getConstants());
+        $key = array_search($value, $reflector->getConstants());
 
         return  $key !== false ? $key : null;
     }

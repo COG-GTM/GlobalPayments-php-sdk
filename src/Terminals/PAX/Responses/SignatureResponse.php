@@ -14,7 +14,7 @@ class SignatureResponse extends PaxTerminalResponse implements ISignatureRespons
     public $responseLength;
     public $signatureData;
     private $deviceType;
-    
+
     public function __construct($rawResponse, $messageId, $deviceType = DeviceType::PAX_S300)
     {
         $this->deviceType = $deviceType;
@@ -24,7 +24,7 @@ class SignatureResponse extends PaxTerminalResponse implements ISignatureRespons
     public function parseResponse($messageReader)
     {
         parent::parseResponse($messageReader);
-        
+
         if ($this->resultCode == '000000' && $this->command == PaxMessageId::A09_RSP_GET_SIGNATURE) {
             $this->totalLength = $messageReader->readToCode(ControlCodes::FS);
             $this->responseLength = $messageReader->readToCode(ControlCodes::FS);
@@ -39,7 +39,7 @@ class SignatureResponse extends PaxTerminalResponse implements ISignatureRespons
             $this->signatureData = $this->createSignature($coordinates);
         }
     }
-    
+
     private function createSignature($coordinateString)
     {
         try {
@@ -50,7 +50,7 @@ class SignatureResponse extends PaxTerminalResponse implements ISignatureRespons
                     $width = 350;
                     break;
             }
-            
+
             $coordinates = explode('^', $coordinateString);
             $image = imagecreate($width, 100);
             $backgroundColor = imagecolorallocate($image, 224, 234, 234);

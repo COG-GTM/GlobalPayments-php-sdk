@@ -4,7 +4,6 @@ namespace GlobalPayments\Api\Entities\BillPay;
 
 class LoadHostedPaymentResponse extends BillingResponse
 {
-   
     /**
      * Unique identifier for the hosted payment page
      */

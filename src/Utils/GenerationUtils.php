@@ -12,7 +12,6 @@ use ReflectionClass;
  */
 class GenerationUtils
 {
-
     /**
      * Generate a hash, required for all messages sent to GP-ECOM to prove it
      * was not tampered with.
@@ -205,11 +204,10 @@ class GenerationUtils
      *
      * @return string
      */
-    public static function generateXGPSignature(string $toHash, string $appKey) : string
+    public static function generateXGPSignature(string $toHash, string $appKey): string
     {
         $stringToHash = $toHash . $appKey;
 
         return hash(ShaHashType::SHA512, $stringToHash);
     }
-
 }

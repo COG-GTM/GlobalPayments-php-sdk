@@ -14,13 +14,13 @@ abstract class BillPayResponseBase implements IBillPayResponse
     /** @var string */
     protected $responseTagName;
 
-    public function withResponseTagName(String $tagName): IBillPayResponse
+    public function withResponseTagName(string $tagName): IBillPayResponse
     {
         $this->responseTagName = $tagName;
         return $this;
     }
 
-    public function withResponse(String $response): IBillPayResponse
+    public function withResponse(string $response): IBillPayResponse
     {
         /** @var array<String> */
         $namespaces = [];
@@ -53,9 +53,9 @@ abstract class BillPayResponseBase implements IBillPayResponse
 
         if (strpos($paymentMethod, "Credit") !== false) {
             $paymentMethodType = PaymentMethodType::CREDIT;
-        } else if (strpos($paymentMethod, "Debit") !== false) {
+        } elseif (strpos($paymentMethod, "Debit") !== false) {
             $paymentMethodType = PaymentMethodType::DEBIT;
-        } else if (strpos($paymentMethod, "ACH") !== false) {
+        } elseif (strpos($paymentMethod, "ACH") !== false) {
             $paymentMethodType = PaymentMethodType::ACH;
         }
 
@@ -66,11 +66,11 @@ abstract class BillPayResponseBase implements IBillPayResponse
     {
         if (strpos($cardType, "Visa") !== false) {
             return "VISA";
-        } else if (strpos($cardType, "Mastercard") !== false) {
+        } elseif (strpos($cardType, "Mastercard") !== false) {
             return "MC";
-        } else if (strpos($cardType, "Discover") !== false) {
+        } elseif (strpos($cardType, "Discover") !== false) {
             return "DISC";
-        } else if (strpos($cardType, "AmericanExpress") !== false) {
+        } elseif (strpos($cardType, "AmericanExpress") !== false) {
             return "AMEX";
         } else {
             return "";

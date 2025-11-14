@@ -26,7 +26,7 @@ class DiamondCloudTests extends TestCase
     private string $posID = '1342641186174645';
     private DiamondCloudConfig $config;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->config = $this->getConfig();
         $this->device = DeviceService::create($this->config);
@@ -185,7 +185,7 @@ class DiamondCloudTests extends TestCase
         $this->assertNotNull($authIncreasingResponse->transactionId);
     }
 
-    public function testEbtPurchase()
+    public function testEbtPurchase(): never
     {
         $this->markTestSkipped('This feature is not supported in EU region!');
         $response = $this->device->sale(1)
@@ -197,7 +197,7 @@ class DiamondCloudTests extends TestCase
         $this->assertNotNull($response->transactionId);
     }
 
-    public function testEbtBalance()
+    public function testEbtBalance(): never
     {
         $this->markTestSkipped('This feature is not supported in EU region!');
         $response = $this->device->balance()
@@ -209,7 +209,7 @@ class DiamondCloudTests extends TestCase
         $this->assertNotNull($response->transactionId);
     }
 
-    public function testEbtReturn()
+    public function testEbtReturn(): never
     {
         $this->markTestSkipped('This feature is not supported in EU region!');
         $response = $this->device->refund(5.02)
@@ -221,7 +221,7 @@ class DiamondCloudTests extends TestCase
         $this->assertNotNull($response->transactionId);
     }
 
-    public function testGiftBalance()
+    public function testGiftBalance(): never
     {
         $this->markTestSkipped('This feature is not supported in EU region!');
         $response = $this->device->balance()
@@ -232,7 +232,7 @@ class DiamondCloudTests extends TestCase
         $this->assertNotNull($response->transactionId);
     }
 
-    public function testGiftReload()
+    public function testGiftReload(): never
     {
         $this->markTestSkipped('This feature is not supported in EU region!');
         $response = $this->device->addValue('1.00')
@@ -243,7 +243,7 @@ class DiamondCloudTests extends TestCase
         $this->assertNotNull($response->transactionId);
     }
 
-    public function testGiftRedeem()
+    public function testGiftRedeem(): never
     {
         $this->markTestSkipped('This feature is not supported in EU region!');
 

@@ -6,7 +6,6 @@ use GlobalPayments\Api\Entities\Enum;
 
 class PaxExtData extends Enum
 {
-
     const TABLE_NUMBER = "TABLE";
     const GUEST_NUMBER = "GUEST";
     const SIGNATURE_CAPTURE = "SIGN";

@@ -49,7 +49,7 @@ class GpEcomConfig extends GatewayConfig
     public function configureContainer(ConfiguredServices $services)
     {
         // parent::configureContainer($services); // must implement data services first
-        
+
         if (empty($this->serviceUrl)) {
             $this->serviceUrl = $this->environment == Environment::TEST ? ServiceEndpoints::GLOBAL_ECOM_TEST : ServiceEndpoints::GLOBAL_ECOM_PRODUCTION;
         }
@@ -70,8 +70,10 @@ class GpEcomConfig extends GatewayConfig
             $this->secure3dVersion = Secure3dVersion::TWO;
         }
 
-        if ($this->secure3dVersion == Secure3dVersion::ONE ||
-            $this->secure3dVersion == Secure3dVersion::ANY) {
+        if (
+            $this->secure3dVersion == Secure3dVersion::ONE ||
+            $this->secure3dVersion == Secure3dVersion::ANY
+        ) {
             $services->setSecure3dProvider(Secure3dVersion::ONE, $gateway);
         }
 
@@ -110,7 +112,7 @@ class GpEcomConfig extends GatewayConfig
     public function validate()
     {
         parent::validate();
-        
+
         if (empty($this->merchantId)) {
             throw new ConfigurationException("MerchantId is required for this gateway.");
         }

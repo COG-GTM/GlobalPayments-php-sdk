@@ -11,17 +11,17 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class MakeBlindPaymentRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) 
+    public function __construct(ElementTree $et)
     {
         parent::__construct($et);
     }
 
-    protected function getMethodElementTagName(): string 
+    protected function getMethodElementTagName(): string
     {
         return "bil:MakeBlindPayment";
     }
 
-    protected function getRequestElementTagName() 
+    protected function getRequestElementTagName()
     {
         return "bil:MakeE3PaymentRequest";
     }

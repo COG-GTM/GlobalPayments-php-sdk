@@ -50,7 +50,7 @@ class GpEcomConnector extends XmlGateway implements IPaymentGateway, IRecurringS
         $this->config = $config;
     }
 
-    public function supportsOpenBanking() : bool
+    public function supportsOpenBanking(): bool
     {
         return true;
     }
@@ -188,7 +188,7 @@ class GpEcomConnector extends XmlGateway implements IPaymentGateway, IRecurringS
      */
     public function processSecure3d(Secure3dBuilder $builder)
     {
-        throw new BuilderException(sprintf('3D Secure %s is no longer supported by %s',Secure3dVersion::ONE, GatewayProvider::GP_ECOM));
+        throw new BuilderException(sprintf('3D Secure %s is no longer supported by %s', Secure3dVersion::ONE, GatewayProvider::GP_ECOM));
     }
 
     public function serializeRequest(AuthorizationBuilder $builder)
@@ -199,15 +199,18 @@ class GpEcomConnector extends XmlGateway implements IPaymentGateway, IRecurringS
         }
 
         // check for right transaction types
-        if ($builder->transactionType !== TransactionType::SALE
+        if (
+            $builder->transactionType !== TransactionType::SALE
             && $builder->transactionType !== TransactionType::AUTH
             && $builder->transactionType !== TransactionType::VERIFY
         ) {
             throw new UnsupportedTransactionException("Only Charge and Authorize are supported through HPP.");
         }
 
-        if ($builder->paymentMethod instanceof BankPayment &&
-            $builder->transactionType !== TransactionType::SALE) {
+        if (
+            $builder->paymentMethod instanceof BankPayment &&
+            $builder->transactionType !== TransactionType::SALE
+        ) {
             throw new UnsupportedTransactionException("Only Charge is supported for Bank Payment through HPP.");
         }
 
@@ -253,8 +256,10 @@ class GpEcomConnector extends XmlGateway implements IPaymentGateway, IRecurringS
             $hostedPaymentData = $builder->hostedPaymentData;
             $this->setSerializeData('CUST_NUM', $builder->hostedPaymentData->customerNumber);
 
-            if (!empty($this->hostedPaymentConfig->displaySavedCards) &&
-                !empty($builder->hostedPaymentData->customerKey)) {
+            if (
+                !empty($this->hostedPaymentConfig->displaySavedCards) &&
+                !empty($builder->hostedPaymentData->customerKey)
+            ) {
                 $this->setSerializeData('HPP_SELECT_STORED_CARD', $builder->hostedPaymentData->customerKey);
             }
 
@@ -312,7 +317,6 @@ class GpEcomConnector extends XmlGateway implements IPaymentGateway, IRecurringS
             $this->setSerializeData('CUST_NUM', $builder->customerId);
         }
         if (!empty($builder->shippingAddress)) {
-
             $countryCode = CountryUtils::getCountryCodeByCountry($builder->shippingAddress->country);
             $shippingCode = $this->generateCode($builder->shippingAddress);
 
@@ -350,15 +354,19 @@ class GpEcomConnector extends XmlGateway implements IPaymentGateway, IRecurringS
         }
 
         if (!empty($builder->homePhone)) {
-            $this->setSerializeData('HPP_CUSTOMER_PHONENUMBER_HOME',
+            $this->setSerializeData(
+                'HPP_CUSTOMER_PHONENUMBER_HOME',
                 StringUtils::validateToNumber($builder->homePhone->countryCode) . '|' .
-                StringUtils::validateToNumber($builder->homePhone->number));
+                StringUtils::validateToNumber($builder->homePhone->number)
+            );
         }
 
         if (!empty($builder->workPhone)) {
-            $this->setSerializeData('HPP_CUSTOMER_PHONENUMBER_WORK',
+            $this->setSerializeData(
+                'HPP_CUSTOMER_PHONENUMBER_WORK',
                 StringUtils::validateToNumber($builder->workPhone->countryCode) . '|' .
-                StringUtils::validateToNumber($builder->workPhone->number));
+                StringUtils::validateToNumber($builder->workPhone->number)
+            );
         }
 
         $this->setSerializeData('VAR_REF', $builder->clientTransactionId);
@@ -435,7 +443,8 @@ class GpEcomConnector extends XmlGateway implements IPaymentGateway, IRecurringS
             $builder->currency,
         ];
 
-        if ($this->hostedPaymentConfig->cardStorageEnabled
+        if (
+            $this->hostedPaymentConfig->cardStorageEnabled
             || ($builder->hostedPaymentData != null
                 && $builder->hostedPaymentData->offerToSaveCard)
             || $this->hostedPaymentConfig->displaySavedCards
@@ -551,8 +560,7 @@ class GpEcomConnector extends XmlGateway implements IPaymentGateway, IRecurringS
     private function generateCode(Address $address)
     {
         $countryCode = CountryUtils::getCountryCodeByCountry($address->country);
-        switch ($countryCode)
-        {
+        switch ($countryCode) {
             case 'GB':
                 return filter_var($address->postalCode, FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($address->streetAddress1, FILTER_SANITIZE_NUMBER_INT);
             case 'US':

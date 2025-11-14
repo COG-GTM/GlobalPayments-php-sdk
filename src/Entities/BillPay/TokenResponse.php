@@ -12,7 +12,7 @@ class TokenResponse extends BillingResponse
     public function getToken(): string
     {
         return $this->token;
-    } 
+    }
 
     public function setToken(string $token)
     {

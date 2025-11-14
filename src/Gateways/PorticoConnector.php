@@ -148,12 +148,12 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
 
     /**
      * Indicates the version of this SDK used to send a gateway request.
-     * 
+     *
      * @var string
      */
     public $sdkNameVersion;
 
-    public function supportsOpenBanking() : bool
+    public function supportsOpenBanking(): bool
     {
         return false;
     }
@@ -207,7 +207,8 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
                 );
             }
 
-            if ($builder->paymentMethod->paymentMethodType === PaymentMethodType::CREDIT 
+            if (
+                $builder->paymentMethod->paymentMethodType === PaymentMethodType::CREDIT
                 && $builder->transactionModifier === TransactionModifier::NONE
                 && $builder->amountEstimated !== null
             ) {
@@ -280,7 +281,7 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
             }
             if (!empty($holder)) {
                 $block1->appendChild($holder);
-            }          
+            }
         }
         list($hasToken, $tokenValue) = $this->hasToken($builder->paymentMethod);
 
@@ -965,14 +966,17 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
                 if (!empty($builder->customerId) || !empty($builder->description) || !empty($builder->invoiceNumber)) {
                     $addons = $xml->createElement('AdditionalTxnFields');
 
-                    if (!empty($builder->customerId))
-                    $addons->appendChild($xml->createElement('CustomerID', $builder->customerId));
+                    if (!empty($builder->customerId)) {
+                        $addons->appendChild($xml->createElement('CustomerID', $builder->customerId));
+                    }
 
-                    if (!empty($builder->description))
-                    $addons->appendChild($xml->createElement('Description', htmlentities($builder->description)));
+                    if (!empty($builder->description)) {
+                        $addons->appendChild($xml->createElement('Description', htmlentities($builder->description)));
+                    }
 
-                    if (!empty($builder->invoiceNumber))
-                    $addons->appendChild($xml->createElement('InvoiceNbr', $builder->invoiceNumber));
+                    if (!empty($builder->invoiceNumber)) {
+                        $addons->appendChild($xml->createElement('InvoiceNbr', $builder->invoiceNumber));
+                    }
 
                     $root->appendChild($addons);
                 }
@@ -1004,7 +1008,7 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
         if ($builder instanceof TransactionReportBuilder) {
             /** @var TransactionReportBuilder */
             $trb = $builder;
-            
+
             if (
                 $reportType === ReportType::FIND_TRANSACTIONS
                 || $reportType === ReportType::TRANSACTION_DETAIL
@@ -1289,14 +1293,12 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
      *
      * @return DOMElement
      */
-    protected function buildEnvelope
-    (
-        DOMDocument $xml, 
-        DOMElement $transaction, 
-        $clientTransactionId = null, 
+    protected function buildEnvelope(
+        DOMDocument $xml,
+        DOMElement $transaction,
+        $clientTransactionId = null,
         $builder = null
-    ) : string|false
-    {
+    ): string|false {
         $soapEnvelope = $xml->createElement('soapenv:Envelope');
         $soapEnvelope->setAttribute(
             'xmlns:soapenv',
@@ -1361,7 +1363,7 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
         } else {
             $header->appendChild(
                 $xml->createElement('SDKNameVersion', 'php;version=' . $this->getReleaseVersion())
-            );         
+            );
         }
 
         $version->appendChild($header);
@@ -1403,9 +1405,9 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
         $gatewayRspText = (string)$root->Header->GatewayRspMsg;
 
         if (!in_array($gatewayRspCode, $acceptedCodes)) {
-
-            if (!empty($root->Header->GatewayTxnId))
+            if (!empty($root->Header->GatewayTxnId)) {
                 $gatewayRspText .= '. GatewayTxnId: ' . $root->Header->GatewayTxnId;
+            }
 
             throw new GatewayException(
                 sprintf(
@@ -1558,7 +1560,8 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
         $root = $this->xml2object($rawResponse)->{'Ver1.0'};
         $doc = $root->Transaction->{$this->mapReportType($builder)};
 
-        if ((($builder->reportType === ReportType::ACTIVITY)
+        if (
+            (($builder->reportType === ReportType::ACTIVITY)
                 || ($builder->reportType === ReportType::FIND_TRANSACTIONS))
             && isset($doc->Transactions)
         ) {
@@ -1570,11 +1573,13 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
         }
 
         if ($builder->reportType === ReportType::TRANSACTION_DETAIL) {
-            if (isset($doc->Data))
+            if (isset($doc->Data)) {
                 return $this->hydrateTransactionSummary($doc->Data);
+            }
         }
 
-        if ((
+        if (
+            (
                 $builder->reportType === ReportType::BATCH_DETAIL
                 || $builder->reportType === ReportType::OPEN_AUTH
             )
@@ -2267,7 +2272,7 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
                 );
             }
 
-            // on the off chance more than one phone value is supplied, this 
+            // on the off chance more than one phone value is supplied, this
             // is organized in order of importance
             if (!empty($builder->customerData->homePhone)) {
                 $cardHolderPhone = preg_replace("/[^0-9]/", "", $builder->customerData->homePhone);
@@ -2292,7 +2297,7 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
             }
         }
 
-        // on the off chance more than one phone value is supplied, this 
+        // on the off chance more than one phone value is supplied, this
         // is organized in order of importance
         if (!empty($builder->homePhone->number)) {
             $cardHolderPhone = preg_replace(
@@ -2636,8 +2641,9 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
     {
         $decodedToken = json_decode(preg_replace('/(\\\)(\w)/', '${1}${1}${2}', $token));
         foreach ($decodedToken as $key => $value) {
-            if ($key == 'signedMessage')
+            if ($key == 'signedMessage') {
                 $decodedToken->$key = str_replace('u003d', '\u003d', $value);
+            }
         }
 
         $result = json_encode($decodedToken, JSON_UNESCAPED_SLASHES);
@@ -2666,26 +2672,26 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
 
     /**
      * Parses and returns the release number (version number) from 'metadata.xml'
-     * 
-     * @return string 
+     *
+     * @return string
      */
-    private function getReleaseVersion() : string
+    private function getReleaseVersion(): string
     {
         try {
             $fileContents = file_get_contents(
                 dirname(__DIR__, 2) . '/metadata.xml'
             );
-            
+
             $posOne = strpos($fileContents, "<releaseNumber>");
             $posTwo = strpos($fileContents, "</releaseNumber>");
-            
+
             return substr($fileContents, $posOne + 15, $posTwo - $posOne - 15);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             trigger_error(
                 "Unable to append SDK version to request header. Inner Exception:"
                 . PHP_EOL . $e->getMessage()
             );
-        }        
+        }
     }
 
     /**
@@ -2717,7 +2723,7 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
      */
     private function getSecure3DVersionType($version)
     {
-        switch ($version){
+        switch ($version) {
             case 0:
                 return Secure3dVersion::NONE;
             case 1:

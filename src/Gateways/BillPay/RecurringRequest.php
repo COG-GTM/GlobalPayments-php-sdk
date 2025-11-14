@@ -73,8 +73,7 @@ class RecurringRequest extends GatewayRequestBase
 
     private function customerAccountRequest(RecurringPaymentMethod $paymentMethod, int $transactionType)
     {
-        switch ($transactionType)
-        {
+        switch ($transactionType) {
             case TransactionType::CREATE:
                 return $this->createCustomerAccount($paymentMethod);
             case TransactionType::EDIT:
@@ -106,15 +105,15 @@ class RecurringRequest extends GatewayRequestBase
             ->withResponseTagName("CreateSingleSignOnAccountResponse")
             ->withResponse($response)
             ->map();
-        
+
         if ($result->isSuccessful()) {
             $customer->key = $customer->id;
             return $customer;
         }
 
         throw new GatewayException(
-            "An error occurred while creating the customer", 
-            $result->getResponseCode(), 
+            "An error occurred while creating the customer",
+            $result->getResponseCode(),
             $result->getResponseMessage()
         );
     }
@@ -139,14 +138,14 @@ class RecurringRequest extends GatewayRequestBase
             ->withResponseTagName("UpdateSingleSignOnAccountResponse")
             ->withResponse($response)
             ->map();
-        
+
         if ($result->isSuccessful()) {
             return $customer;
         }
 
         throw new GatewayException(
-            "An error occurred while updating the customer", 
-            $result->getResponseCode(), 
+            "An error occurred while updating the customer",
+            $result->getResponseCode(),
             $result->getResponseMessage()
         );
     }
@@ -161,7 +160,7 @@ class RecurringRequest extends GatewayRequestBase
             $this->credentials,
             $customer
         );
-        
+
         /** @var string */
         $response = $this->doTransaction($request);
         $singleSignOnAccountResponse = new SingleSignOnAccountResponse();
@@ -175,15 +174,15 @@ class RecurringRequest extends GatewayRequestBase
         if ($result->isSuccessful()) {
             return $customer;
         }
-        
+
         throw new GatewayException(
-            "An error occurred while deleting the customer", 
-            $result->getResponseMessage(), 
+            "An error occurred while deleting the customer",
+            $result->getResponseMessage(),
             $result->getResponseMessage()
         );
     }
 
-    private function createCustomerAccount(RecurringPaymentMethod $paymentMethod) 
+    private function createCustomerAccount(RecurringPaymentMethod $paymentMethod)
     {
         $et = new ElementTree();
         $envelope = $this->createSOAPEnvelope($et, "SaveCustomerAccount");
@@ -209,10 +208,10 @@ class RecurringRequest extends GatewayRequestBase
             $paymentMethod->token = $result->getToken();
             return $paymentMethod;
         }
-         
+
         throw new GatewayException(
-            "An error occurred while creating the customer account", 
-            $result->getResponseCode(), 
+            "An error occurred while creating the customer account",
+            $result->getResponseCode(),
             $result->getResponseMessage()
         );
     }
@@ -243,8 +242,8 @@ class RecurringRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred while updating the customer account", 
-            $result->getResponseCode(), 
+            "An error occurred while updating the customer account",
+            $result->getResponseCode(),
             $result->getResponseMessage()
         );
     }
@@ -275,8 +274,8 @@ class RecurringRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred while deleting the customer account", 
-            $result->getResponseMessage(), 
+            "An error occurred while deleting the customer account",
+            $result->getResponseMessage(),
             $result->getResponseMessage()
         );
     }
@@ -287,8 +286,8 @@ class RecurringRequest extends GatewayRequestBase
         $envelope = $this->createSOAPEnvelope($et, "CreateRecurringPayment");
         $createRecurringPaymentRequest = new CreateRecurringPaymentRequest($et);
         $request = $createRecurringPaymentRequest->build(
-            $envelope, 
-            $this->credentials, 
+            $envelope,
+            $this->credentials,
             $schedule
         );
 
@@ -307,8 +306,8 @@ class RecurringRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred while creating the recurring payment", 
-            $result->getResponseMessage(), 
+            "An error occurred while creating the recurring payment",
+            $result->getResponseMessage(),
             $result->getResponseMessage()
         );
     }

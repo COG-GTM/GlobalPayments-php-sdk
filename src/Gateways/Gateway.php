@@ -74,15 +74,15 @@ abstract class Gateway
     {
         return [];
     }
-    
+
     /**
-     * 
-     * @param mixed $verb 
-     * @param mixed $endpoint 
-     * @param mixed $data 
-     * @param null|array $queryStringParams 
-     * @return GatewayResponse 
-     * @throws Exception 
+     *
+     * @param mixed $verb
+     * @param mixed $endpoint
+     * @param mixed $data
+     * @param null|array $queryStringParams
+     * @return GatewayResponse
+     * @throws Exception
      */
     protected function sendRequest(
         $verb,
@@ -101,7 +101,7 @@ abstract class Gateway
                 if (!empty($data) && !empty($this->maskedRequestData) && $this->environment === Environment::PRODUCTION) {
                     $dataLogged = $this->maskSensitiveData($data);
                 }
-                $this->requestLogger->requestSent($verb, $this->serviceUrl . $endpoint . $queryString,  $headers, null,  $dataLogged);
+                $this->requestLogger->requestSent($verb, $this->serviceUrl . $endpoint . $queryString, $headers, null, $dataLogged);
             }
 
             curl_setopt($request, CURLOPT_CONNECTTIMEOUT, $this->timeout);
@@ -167,8 +167,8 @@ abstract class Gateway
         $json = $this->xmlToJson($data, $isXML);
         foreach ($this->maskedRequestData as $key => $value) {
             $val = $json;
-            foreach($fields = explode('.', $key) as $k => $item) {
-                if ($k == count($fields) -1 && isset($val->{$item})) {
+            foreach ($fields = explode('.', $key) as $k => $item) {
+                if ($k == count($fields) - 1 && isset($val->{$item})) {
                     $val->{$item} = $value;
                     break;
                 }
@@ -180,7 +180,6 @@ abstract class Gateway
         }
 
         return $isXML === true ? $json->asXML() : json_encode($json);
-
     }
 
     public function xmlToJson($data, &$isXML = false)
@@ -194,7 +193,7 @@ abstract class Gateway
         return $xml;
     }
 
-    private function prepareHeaders(?string $data) : array
+    private function prepareHeaders(?string $data): array
     {
         $mandatoryHeaders = [
             'Content-Type' => sprintf('%s', $this->contentType),

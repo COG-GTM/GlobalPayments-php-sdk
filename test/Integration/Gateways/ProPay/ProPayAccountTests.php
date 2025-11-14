@@ -14,7 +14,7 @@ use GlobalPayments\Api\Tests\Integration\Gateways\ProPay\TestData\TestAccountDat
 class ProPayAccountTests extends TestCase
 {
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->getConfig());
     }
@@ -186,7 +186,7 @@ class ProPayAccountTests extends TestCase
     {
         $response = PayFacService::editAccount()
             ->withAccountNumber(718138433)
-            ->withPassword('testPwd_' . rand(1, 100))
+            ->withPassword('testPwd_' . random_int(1, 100))
             ->execute();
 
         $this->assertNotNull($response);
@@ -270,7 +270,7 @@ class ProPayAccountTests extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    public function testEditNegativeLimit()
+    public function testEditNegativeLimit(): never
     {
         $this->markTestSkipped('Required additional configurations from Propay');
         // Required additional configurations from Propay
@@ -306,7 +306,7 @@ class ProPayAccountTests extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    public function testUpdateBeneficialOwnerData()
+    public function testUpdateBeneficialOwnerData(): never
     {
         $this->markTestSkipped('Required new account number without owners details | and executed once');
 
@@ -322,7 +322,7 @@ class ProPayAccountTests extends TestCase
         $this->assertNotNull($response->payFacData->beneficialOwnerDataResult);
     }
 
-    public function testDisownAccount()
+    public function testDisownAccount(): never
     {
         //Enter active account number
         $this->markTestSkipped('To run this test you need to enter active account number');
@@ -334,7 +334,7 @@ class ProPayAccountTests extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    public function testUploadChargebackDocument()
+    public function testUploadChargebackDocument(): never
     {
         $this->markTestSkipped('To run this test you need to valid transactionReference number | can be verify on production only');
         // Enter valid transactionReference number
@@ -385,7 +385,7 @@ class ProPayAccountTests extends TestCase
         $this->assertNotNull($response->payFacData->authToken);
     }
 
-    public function testUpdateBankAccountOwnershipInfo()
+    public function testUpdateBankAccountOwnershipInfo(): never
     {
         // This api request is not in scope for the ProPay/Portico US solution.
         $this->markTestSkipped('This api request is not in scope for the ProPay/Portico US solution. ');

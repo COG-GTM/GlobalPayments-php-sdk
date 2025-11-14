@@ -200,7 +200,7 @@ class Schedule extends RecurringEntity
      * @var InitialPaymentMethod
      */
     public $initialPaymentMethod;
-    
+
     /**
      * The schedule's recurring authorization type
      *
@@ -211,9 +211,9 @@ class Schedule extends RecurringEntity
     /** @var ?array */
     public $bills;
 
-    /** 
+    /**
      * The schedule's second instance date
-     * 
+     *
      * @var ?DateTime
      * */
     public $secondInstanceDate;
@@ -503,9 +503,9 @@ class Schedule extends RecurringEntity
 
     /**
      * Set single Bill
-     * 
+     *
      * @param Bill
-     * 
+     *
      * * @return Schedule
      */
     public function withBill(Bill $bill): Schedule
@@ -520,9 +520,9 @@ class Schedule extends RecurringEntity
 
     /**
      * Set multiple Bills
-     * 
+     *
      * @param array<Bill>
-     * 
+     *
      * @return Schedule
      */
     public function withBills(array $bills): Schedule
@@ -531,7 +531,7 @@ class Schedule extends RecurringEntity
             $this->bills = array();
         }
 
-        foreach($bills as $bill) {
+        foreach ($bills as $bill) {
             array_push($this->bills, $bill);
         }
 
@@ -547,21 +547,22 @@ class Schedule extends RecurringEntity
 
     /**
      * Set schedule's token
-     * 
+     *
      * @param string
-     * 
+     *
      * * @return Schedule
      */
-    public function withToken(string $token) {
+    public function withToken(string $token)
+    {
         $this->token = $token;
         return $this;
     }
 
     /**
      * Set the schedule's last primary convenience amount
-     * 
+     *
      * @param @param float|string $amount The tax amount
-     * 
+     *
      * * @return Schedule
      */
     public function withLastPrimaryConvenienceAmount($amount): Schedule
@@ -573,9 +574,9 @@ class Schedule extends RecurringEntity
 
     /**
      * Set the schedule's initial payment method
-     * 
+     *
      * @param @param float|string $amount The tax amount
-     * 
+     *
      * * @return Schedule
      */
     public function withInitialPaymentMethod($initialPaymentMethod): Schedule
@@ -587,9 +588,9 @@ class Schedule extends RecurringEntity
 
     /**
      * Set the schedule's primary convenience amount
-     * 
+     *
      * @param @param float|string $amount The tax amount
-     * 
+     *
      * * @return Schedule
      */
     public function withPrimaryConvenienceAmount($amount): Schedule
@@ -607,10 +608,10 @@ class Schedule extends RecurringEntity
     }
 
     /**
-     * Set `Customer` 
-     * 
+     * Set `Customer`
+     *
      * @param Customer
-     * 
+     *
      * * @return Schedule
      */
     public function withCustomer(Customer $customer): Schedule

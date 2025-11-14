@@ -157,7 +157,7 @@ class User
      * @return User
      * @throws ArgumentException
      */
-    public static function fromId(string $userId,string $userType)
+    public static function fromId(string $userId, string $userType)
     {
         $userType = UserType::validate($userType);
 
@@ -167,7 +167,6 @@ class User
         $user->userReference->userType = $userType;
 
         return $user;
-
     }
 
     public function edit()
@@ -177,7 +176,7 @@ class User
             ->withUserReference($this->userReference);
 
         if ($this->userReference->userType !== null) {
-            $builder = $builder->withModifier(constant( TransactionModifier::class."::{$this->userReference->userType}"));
+            $builder = $builder->withModifier(constant(TransactionModifier::class . "::{$this->userReference->userType}"));
         }
 
         return $builder;

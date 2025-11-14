@@ -9,7 +9,7 @@ use GlobalPayments\Api\Entities\BillPay\Credentials;
 use GlobalPayments\Api\Entities\Exceptions\ConfigurationException;
 use GlobalPayments\Api\Gateways\BillPayProvider;
 
-class BillPayConfig extends Configuration 
+class BillPayConfig extends Configuration
 {
     /** @var string */
     private $apiKey;
@@ -26,57 +26,57 @@ class BillPayConfig extends Configuration
     /** @var bool */
     private $useBillRecordLookup = false;
 
-    public function getApiKey() : string
+    public function getApiKey(): string
     {
         return $this->apiKey;
     }
 
-    public function setApiKey(string $apiKey) : void
+    public function setApiKey(string $apiKey): void
     {
         $this->apiKey = $apiKey;
     }
 
-    public function getMerchantName() : string
+    public function getMerchantName(): string
     {
         return $this->merchantName;
     }
 
-    public function setMerchantName(string $merchantName) : void
+    public function setMerchantName(string $merchantName): void
     {
         $this->merchantName = $merchantName;
     }
 
-    public function getUsername() : string
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    public function setUsername(string $username) : void
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }
 
-    public function getPassword() : string
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password) : void
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    public function getUseBillRecordLookup() : bool
+    public function getUseBillRecordLookup(): bool
     {
         return $this->useBillRecordLookup;
     }
 
-    public function setUseBillRecordLookup(bool $useBillRecordLookup) : void
+    public function setUseBillRecordLookup(bool $useBillRecordLookup): void
     {
         $this->useBillRecordLookup = $useBillRecordLookup;
     }
 
-    public function configureContainer(ConfiguredServices $services) : void
+    public function configureContainer(ConfiguredServices $services): void
     {
         if (empty($this->serviceUrl)) {
             $this->serviceUrl = $this->environment == Environment::TEST ? ServiceEndpoints::BILLPAY_CERTIFICATION : ServiceEndpoints::BILLPAY_PRODUCTION;
@@ -94,7 +94,7 @@ class BillPayConfig extends Configuration
         $gateway->requestLogger = $this->requestLogger;
         $gateway->setTimeout($this->timeout);
         $gateway->setIsBillDataHosted($this->useBillRecordLookup);
-        
+
         $services->gatewayConnector = $gateway;
         $services->setBillingProvider($gateway);
         $services->recurringConnector = $gateway;

@@ -11,12 +11,12 @@ class FileList
         $this->files = $file;
     }
 
-    public function add(FileUploaded $fileUploaded) : void
+    public function add(FileUploaded $fileUploaded): void
     {
         $this->files[] = $fileUploaded;
     }
 
-    public function all() : array
+    public function all(): array
     {
         return $this->files;
     }

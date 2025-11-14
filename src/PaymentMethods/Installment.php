@@ -94,10 +94,10 @@ class Installment implements IInstallmentEntity
      * @var string
      */
     public $entryMode;
-   
+
     /** @var Card */
     public $card;
-    
+
     /** @var CreditCardData */
     public $cardDetails;
 
@@ -110,7 +110,7 @@ class Installment implements IInstallmentEntity
      * @param string $configName
      * @return Installment
      */
-    public function create(string $configName = 'default') : Installment
+    public function create(string $configName = 'default'): Installment
     {
         return InstallmentService::create($this, $configName);
     }

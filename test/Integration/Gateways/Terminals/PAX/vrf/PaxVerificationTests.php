@@ -26,7 +26,7 @@ class PaxVerificationTests extends TestCase
     protected $address;
     private $config;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->device = DeviceService::create($this->getConfig());
         

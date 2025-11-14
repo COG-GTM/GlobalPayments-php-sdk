@@ -7,7 +7,6 @@ use GlobalPayments\Api\Terminals\PAX\Entities\Enums\PaxMessageId;
 
 class DebitResponse extends PaxTerminalResponse
 {
-
     public function __construct($rawResponse)
     {
         parent::__construct($rawResponse, PaxMessageId::T03_RSP_DO_DEBIT);

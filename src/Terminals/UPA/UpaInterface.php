@@ -3,8 +3,8 @@
 namespace GlobalPayments\Api\Terminals\UPA;
 
 use GlobalPayments\Api\Entities\Enums\{
-    PaymentMethodType, 
-    TransactionModifier, 
+    PaymentMethodType,
+    TransactionModifier,
     TransactionType
 };
 use GlobalPayments\Api\Entities\Exceptions\{
@@ -14,8 +14,8 @@ use GlobalPayments\Api\Entities\Exceptions\{
     UnsupportedTransactionException
 };
 use GlobalPayments\Api\Terminals\{
-    DeviceInterface, 
-    TerminalUtils, 
+    DeviceInterface,
+    TerminalUtils,
     DeviceResponse
 };
 use GlobalPayments\Api\Terminals\Abstractions\{
@@ -26,8 +26,8 @@ use GlobalPayments\Api\Terminals\Abstractions\{
     ITerminalReport
 };
 use GlobalPayments\Api\Terminals\Builders\{
-    TerminalAuthBuilder, 
-    TerminalManageBuilder, 
+    TerminalAuthBuilder,
+    TerminalManageBuilder,
     TerminalReportBuilder
 };
 use GlobalPayments\Api\Terminals\Enums\{
@@ -49,14 +49,13 @@ use GlobalPayments\Api\Terminals\Entities\{
     UDData,
     UpaConfigContent
 };
-
 use GlobalPayments\Api\Terminals\UPA\Entities\{
-    SignatureData, 
+    SignatureData,
     POSData,
     TokenInfo
 };
 use GlobalPayments\Api\Terminals\UPA\Entities\Enums\{
-    UpaMessageId, 
+    UpaMessageId,
     UpaSearchCriteria
 };
 use GlobalPayments\Api\Terminals\UPA\Responses\{
@@ -84,7 +83,7 @@ class UpaInterface extends DeviceInterface
 
     #region Admin Messages
 
-    public function batchClose() : IBatchCloseResponse
+    public function batchClose(): IBatchCloseResponse
     {
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::EOD,
@@ -103,7 +102,7 @@ class UpaInterface extends DeviceInterface
         if (!empty($cancelParams->displayOption)) {
             $data['params']['displayOption'] = $cancelParams->displayOption;
         }
-        
+
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::CANCEL,
             $this->upaController->requestIdProvider->getRequestId(),
@@ -114,13 +113,13 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse, UpaMessageId::CANCEL);
     }
 
-    public function authorize($amount = null) : TerminalAuthBuilder
+    public function authorize($amount = null): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder(TransactionType::AUTH, PaymentMethodType::CREDIT))
             ->withAmount($amount);
     }
 
-    public function startTransaction(float $amount, $transactionType = TransactionType::SALE) : TerminalAuthBuilder
+    public function startTransaction(float $amount, $transactionType = TransactionType::SALE): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder($transactionType, PaymentMethodType::CREDIT))
             ->withModifier(TransactionModifier::START_TRANSACTION)
@@ -143,7 +142,7 @@ class UpaInterface extends DeviceInterface
             ->withModifier(TransactionModifier::COMPLETE_TRANSACTION);
     }
 
-    public function processTransaction(float $amount, $transactionType = TransactionType::SALE) : TerminalAuthBuilder
+    public function processTransaction(float $amount, $transactionType = TransactionType::SALE): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder($transactionType, PaymentMethodType::CREDIT))
             ->withModifier(TransactionModifier::PROCESS_TRANSACTION)
@@ -159,19 +158,19 @@ class UpaInterface extends DeviceInterface
         return (new TerminalManageBuilder(TransactionType::REVERSAL, PaymentMethodType::CREDIT));
     }
 
-    public function deletePreAuth() : TerminalManageBuilder
+    public function deletePreAuth(): TerminalManageBuilder
     {
         return (new TerminalManageBuilder(TransactionType::DELETE, PaymentMethodType::CREDIT))
             ->withTransactionModifier(TransactionModifier::DELETE_PRE_AUTH);
     }
-    
-    public function tipAdjust($tipAmount = null) : TerminalManageBuilder
+
+    public function tipAdjust($tipAmount = null): TerminalManageBuilder
     {
         return (new TerminalManageBuilder(TransactionType::EDIT, PaymentMethodType::CREDIT))
             ->withGratuity($tipAmount);
     }
 
-    public function reverse() : TerminalManageBuilder
+    public function reverse(): TerminalManageBuilder
     {
         return (new TerminalManageBuilder(TransactionType::REVERSAL, PaymentMethodType::CREDIT));
     }
@@ -179,11 +178,12 @@ class UpaInterface extends DeviceInterface
     public function tokenize(): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder(
-            TransactionType::TOKENIZE, PaymentMethodType::CREDIT
+            TransactionType::TOKENIZE,
+            PaymentMethodType::CREDIT
         ));
     }
 
-    public function withdrawal($amount = null) : TerminalAuthBuilder
+    public function withdrawal($amount = null): TerminalAuthBuilder
     {
         throw new UnsupportedTransactionException(
             'The selected gateway does not support this transaction type.'
@@ -217,12 +217,12 @@ class UpaInterface extends DeviceInterface
         throw new UnsupportedTransactionException();
     }
 
-    public function addValue($amount = null) : TerminalAuthBuilder
+    public function addValue($amount = null): TerminalAuthBuilder
     {
         throw new UnsupportedTransactionException();
     }
 
-    public function void() : TerminalManageBuilder
+    public function void(): TerminalManageBuilder
     {
         return (new TerminalManageBuilder(TransactionType::VOID, PaymentMethodType::CREDIT));
     }
@@ -232,8 +232,7 @@ class UpaInterface extends DeviceInterface
         string $rightText = null,
         string $runningLeftText = null,
         string $runningRightText = null
-    ): DeviceResponse
-    {
+    ): DeviceResponse {
         if (empty($leftText)) {
             throw new ApiException("Line item left text cannot be null");
         }
@@ -260,7 +259,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function reboot() : DeviceResponse
+    public function reboot(): DeviceResponse
     {
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::REBOOT,
@@ -282,7 +281,7 @@ class UpaInterface extends DeviceInterface
     {
         throw new UnsupportedTransactionException();
     }
-    
+
     #region Reporting Messages
 
     public function localDetailReport()
@@ -291,9 +290,9 @@ class UpaInterface extends DeviceInterface
     }
 
     #endregion
-    
+
     #region Saf
-    public function sendStoreAndForward() : ISAFResponse
+    public function sendStoreAndForward(): ISAFResponse
     {
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::SEND_SAF,
@@ -305,28 +304,28 @@ class UpaInterface extends DeviceInterface
 
         return new UpaSAFResponse($rawResponse);
     }
-    
+
     public function setSafMode($paramValue)
     {
         throw new UnsupportedTransactionException();
     }
-    
+
     public function safSummaryReport($param = null)
     {
         throw new UnsupportedTransactionException();
     }
-    
+
     public function safDelete($safIndicator)
     {
         throw new UnsupportedTransactionException();
     }
 
-    public function getSAFReport() : TerminalReportBuilder
+    public function getSAFReport(): TerminalReportBuilder
     {
         return new TerminalReportBuilder(TerminalReportType::GET_SAF_REPORT);
     }
 
-    public function getBatchReport() : TerminalReportBuilder
+    public function getBatchReport(): TerminalReportBuilder
     {
         return new TerminalReportBuilder(TerminalReportType::GET_BATCH_REPORT);
     }
@@ -341,19 +340,19 @@ class UpaInterface extends DeviceInterface
     {
         $data = [];
         $data['params']['batch'] = $batchId;
-        
+
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::GET_BATCH_REPORT,
             $this->upaController->requestIdProvider->getRequestId(),
             $this->ecrId,
             $data
         );
-        
+
         $rawResponse = $this->upaController->send($message, UpaMessageId::GET_BATCH_REPORT);
         return new UpaBatchReport($rawResponse, UpaMessageId::GET_BATCH_REPORT);
     }
 
-    public function getBatchDetails(?string $batchId = null, bool $printReport = false, string|BatchReportType $reportType = null) : ITerminalReport
+    public function getBatchDetails(?string $batchId = null, bool $printReport = false, string|BatchReportType $reportType = null): ITerminalReport
     {
         $builder = (new TerminalReportBuilder(TerminalReportType::GET_BATCH_DETAILS))
             ->where(UpaSearchCriteria::ECR_ID, "1");
@@ -376,12 +375,12 @@ class UpaInterface extends DeviceInterface
         return $builder->execute();
     }
 
-    public function findBatches() : TerminalReportBuilder
+    public function findBatches(): TerminalReportBuilder
     {
         return (new TerminalReportBuilder(TerminalReportType::FIND_BATCHES));
     }
-    
-    public function getOpenTabDetails() : TerminalReportBuilder
+
+    public function getOpenTabDetails(): TerminalReportBuilder
     {
         return (new TerminalReportBuilder(TerminalReportType::GET_OPEN_TAB_DETAILS));
     }
@@ -474,7 +473,7 @@ class UpaInterface extends DeviceInterface
      * @param string $timezone Time zone to which the device will be set. This is in the tz database name format.
      * @return DeviceResponse
      */
-    public function setTimeZone(string $timezone) : DeviceResponse
+    public function setTimeZone(string $timezone): DeviceResponse
     {
         $data = [];
         $data['params']['timeZone'] = $timezone;
@@ -515,7 +514,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function communicationCheck() : DeviceResponse
+    public function communicationCheck(): DeviceResponse
     {
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::COMMUNICATION_CHECK,
@@ -527,7 +526,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function injectCarouselLogo(UDData $data) : DeviceResponse
+    public function injectCarouselLogo(UDData $data): DeviceResponse
     {
         if (empty($data->fileName) || empty($data->localFile)) {
             throw new MessageException(
@@ -544,7 +543,7 @@ class UpaInterface extends DeviceInterface
 
         if (mime_content_type($data->localFile) != 'text/html') {
             $encodedFile = base64_encode(file_get_contents($data->localFile));
-            $fileContent = 'data:' . mime_content_type($data->localFile) . ';base64,' . $encodedFile; 
+            $fileContent = 'data:' . mime_content_type($data->localFile) . ';base64,' . $encodedFile;
         } else {
             $fileContent = trim(preg_replace('/\s+/', ' ', file_get_contents($data->localFile)));
         }
@@ -566,7 +565,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function removeCarouselLogo(UDData $data) : DeviceResponse
+    public function removeCarouselLogo(UDData $data): DeviceResponse
     {
         if (empty($data->fileName)) {
             throw new MessageException(
@@ -575,16 +574,16 @@ class UpaInterface extends DeviceInterface
         }
 
          // Validate the FileName using regex
-         if (!preg_match('/^[^\\\\\/:*?"<>|]+\.[a-zA-Z0-9]+$/', $data->fileName)) {
+        if (!preg_match('/^[^\\\\\/:*?"<>|]+\.[a-zA-Z0-9]+$/', $data->fileName)) {
             throw new UnsupportedTransactionException(
                 "FileName must include a file extension and must not contain a file path."
             );
         }
-    
+
         $dataParam['params'] = [
             'fileName' => $data->fileName
         ];
-    
+
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::REMOVECAROUSELLOGO,
             $this->upaController->requestIdProvider->getRequestId(),
@@ -593,11 +592,11 @@ class UpaInterface extends DeviceInterface
         );
 
         $rawResponse = $this->upaController->send($message, UpaMessageId::REMOVECAROUSELLOGO);
-              
+
         return new TransactionResponse($rawResponse);
     }
 
-    public function manageToken(TokenInfo $tokenInfo) : DeviceResponse
+    public function manageToken(TokenInfo $tokenInfo): DeviceResponse
     {
         $dataParam['params'] = [
             'tokenValue' => $tokenInfo->token,
@@ -611,23 +610,23 @@ class UpaInterface extends DeviceInterface
             $this->ecrId,
             $dataParam
         );
-       
+
         $rawResponse = $this->upaController->send($message, UpaMessageId::MANAGETOKEN);
 
         return new TransactionResponse($rawResponse);
     }
 
-    public function deleteSAF(String $referenceNumber, String $transactionNumber) : DeviceResponse
+    public function deleteSAF(string $referenceNumber, string $transactionNumber): DeviceResponse
     {
         if ($transactionNumber != null || $referenceNumber != null) {
             $params = [
                 'transaction' => []
             ];
-        
+
             if ($transactionNumber != null) {
                 $params['transaction']['tranNo'] = $transactionNumber;
             }
-        
+
             if ($referenceNumber != null) {
                 $params['transaction']['referenceNumber'] = $referenceNumber;
             }
@@ -638,18 +637,18 @@ class UpaInterface extends DeviceInterface
             $this->ecrId,
             $params
         );
-    
+
         $rawResponse = $this->upaController->send($message, UpaMessageId::DELETE_SAF);
-    
+
         return new TransactionResponse($rawResponse);
     }
 
     public function saveConfigFile(UpaConfigContent $upaConfigContent): DeviceResponse
     {
         if (
-            empty($upaConfigContent->configType) || 
-            empty($upaConfigContent->fileContents) || 
-            $upaConfigContent->length < 0 || 
+            empty($upaConfigContent->configType) ||
+            empty($upaConfigContent->fileContents) ||
+            $upaConfigContent->length < 0 ||
             $upaConfigContent->length > 999999
         ) {
             throw new ApiException("Invalid UpaConfigContent: null or missing required fields.");
@@ -673,7 +672,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function setLogoCarouselInterval(int $intervalTime, bool $isFullScreen) : DeviceResponse
+    public function setLogoCarouselInterval(int $intervalTime, bool $isFullScreen): DeviceResponse
     {
         if ($intervalTime < 0 || $intervalTime > 9) {
             throw new ApiException("Interval time must be between 0 to 9 seconds.");
@@ -699,7 +698,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function getBatteryPercentage() : DeviceResponse
+    public function getBatteryPercentage(): DeviceResponse
     {
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::GET_BATTERY_PERCENTAGE,
@@ -711,7 +710,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function logon() : DeviceResponse
+    public function logon(): DeviceResponse
     {
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::LOGON,
@@ -724,7 +723,7 @@ class UpaInterface extends DeviceInterface
     }
     #endregion
 
-    public function getSignatureFile(SignatureData $signatureData = null) : ISignatureResponse
+    public function getSignatureFile(SignatureData $signatureData = null): ISignatureResponse
     {
         $data['params'] = [
             'prompt1' => $signatureData->prompts->prompt1 ?? null,
@@ -744,7 +743,7 @@ class UpaInterface extends DeviceInterface
         return new SignatureResponse($rawResponse);
     }
 
-    public function registerPOS(POSData $POSData) : DeviceResponse
+    public function registerPOS(POSData $POSData): DeviceResponse
     {
         if (!empty($POSData)) {
             $data['params'] = [
@@ -779,7 +778,7 @@ class UpaInterface extends DeviceInterface
      * @param bool $enable
      * @return DeviceResponse
      */
-    public function broadcastConfiguration(bool $enable) : DeviceResponse
+    public function broadcastConfiguration(bool $enable): DeviceResponse
     {
         $data['params'] = [
             'enable' => (string) ((int) $enable),
@@ -796,7 +795,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function setDebugLevel(array $debugLevels,string $logOutput = null) : DeviceResponse
+    public function setDebugLevel(array $debugLevels, string $logOutput = null): DeviceResponse
     {
         $debugLevel = '';
         array_walk($debugLevels, function ($v) use (&$debugLevel) {
@@ -822,7 +821,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function getDebugLevel() : DeviceResponse
+    public function getDebugLevel(): DeviceResponse
     {
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::GET_DEBUG_LEVEL,
@@ -834,7 +833,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function getDebugInfo(string $logDirectory, string $fileIndicator = null) : DeviceResponse
+    public function getDebugInfo(string $logDirectory, string $fileIndicator = null): DeviceResponse
     {
         $data['params'] = [
             'logFile' => $fileIndicator,
@@ -851,10 +850,10 @@ class UpaInterface extends DeviceInterface
         $parsedResponse = new TransactionResponse($rawResponse);
         if ($parsedResponse->debugFileContents) {
             $logDirectory = rtrim($logDirectory, DIRECTORY_SEPARATOR);
-            if( !is_dir($logDirectory) ) {
+            if (!is_dir($logDirectory)) {
                 mkdir($logDirectory, 0777, true);
             }
-            $logFilePath = $logDirectory . DIRECTORY_SEPARATOR . 'Debuglog'.($fileIndicator ?? '').'.log';
+            $logFilePath = $logDirectory . DIRECTORY_SEPARATOR . 'Debuglog' . ($fileIndicator ?? '') . '.log';
             file_put_contents(
                 $logFilePath,
                 $parsedResponse->debugFileContents
@@ -876,7 +875,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function loadUDData(UDData $screen) : IDeviceScreen
+    public function loadUDData(UDData $screen): IDeviceScreen
     {
         $data['params'] = [
             'fileType' => $screen->fileType,
@@ -896,7 +895,7 @@ class UpaInterface extends DeviceInterface
         return new UDScreenResponse($rawResponse);
     }
 
-    public function removeUDData(UDData $screen) : IDeviceScreen
+    public function removeUDData(UDData $screen): IDeviceScreen
     {
         $data['params'] = [
             'fileType' => $screen->fileType,
@@ -915,7 +914,7 @@ class UpaInterface extends DeviceInterface
         return new UDScreenResponse($rawResponse);
     }
 
-    public function executeUDData(UDData $screen) : IDeviceScreen
+    public function executeUDData(UDData $screen): IDeviceScreen
     {
         $data['params'] = [
             'fileType' => $screen->fileType,
@@ -942,7 +941,7 @@ class UpaInterface extends DeviceInterface
      * @return IDeviceScreen
      * @throws MessageException
      */
-    public function injectUDData(UDData $screen) : IDeviceScreen
+    public function injectUDData(UDData $screen): IDeviceScreen
     {
         if (empty($screen->fileType) || empty($screen->fileName) || empty($screen->localFile)) {
             throw new MessageException(
@@ -981,7 +980,7 @@ class UpaInterface extends DeviceInterface
      * @param ScanData $data
      * @return DeviceResponse
      */
-    public function scan(ScanData $data) : DeviceResponse
+    public function scan(ScanData $data): DeviceResponse
     {
         $params['params'] = [
             'header' => $data->header ?? null,
@@ -1031,7 +1030,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function getDeviceConfig(string|DeviceConfigType $configType) : DeviceResponse
+    public function getDeviceConfig(string|DeviceConfigType $configType): DeviceResponse
     {
         $params['params'] = [
             'configType' => $configType
@@ -1048,9 +1047,9 @@ class UpaInterface extends DeviceInterface
         return new TerminalSetupResponse($rawResponse);
     }
 
-    public function enterPIN(PromptMessages $promptMessages, bool $canBypass, string $accountNumber) : DeviceResponse
+    public function enterPIN(PromptMessages $promptMessages, bool $canBypass, string $accountNumber): DeviceResponse
     {
-        $params =[
+        $params = [
             'params' => [
                 'prompt1' => $promptMessages->prompt1,
                 'prompt2' => $promptMessages->prompt2,
@@ -1085,7 +1084,7 @@ class UpaInterface extends DeviceInterface
         ];
         if (!empty($promptData->buttons)) {
             foreach ($promptData->buttons->all() as $index => $button) {
-                $key = $index+1;
+                $key = $index + 1;
                 $params['params']["button{$key}"] = [
                     'text' => $button->text,
                     'color' => $button->color
@@ -1168,7 +1167,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    public function displayMessage(MessageLines $messageLines) :DeviceResponse
+    public function displayMessage(MessageLines $messageLines): DeviceResponse
     {
         $request['params'] = [
             'line1' => $messageLines->line1,
@@ -1196,7 +1195,7 @@ class UpaInterface extends DeviceInterface
      * @param string|DisplayOption $option
      * @return DeviceResponse
      */
-    public function returnDefaultScreen(string $option) : DeviceResponse
+    public function returnDefaultScreen(string $option): DeviceResponse
     {
         $params['params'] = [
             'displayOption' => $option
@@ -1218,7 +1217,7 @@ class UpaInterface extends DeviceInterface
      *
      * @return DeviceResponse
      */
-    public function getEncryptionType() : DeviceResponse
+    public function getEncryptionType(): DeviceResponse
     {
         $message = TerminalUtils::buildUPAMessage(
             UpaMessageId::GET_ENCRYPTION_TYPE,
@@ -1230,7 +1229,7 @@ class UpaInterface extends DeviceInterface
         return new TransactionResponse($rawResponse);
     }
 
-    private function validateMandatoryParams(&$request,array $mandatoryParams)
+    private function validateMandatoryParams(&$request, array $mandatoryParams)
     {
         $this->validations->setMandatoryParams($mandatoryParams);
         $request = ArrayUtils::array_remove_empty($request);

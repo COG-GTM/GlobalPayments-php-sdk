@@ -11,12 +11,12 @@ final class BatchTransactionList
         $this->list = $transaction;
     }
 
-    public function add(BatchTransaction $transactionSummary) : void
+    public function add(BatchTransaction $transactionSummary): void
     {
         $this->list[] = $transactionSummary;
     }
 
-    public function all() : array
+    public function all(): array
     {
         return $this->list;
     }

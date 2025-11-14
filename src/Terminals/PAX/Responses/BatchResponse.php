@@ -16,7 +16,7 @@ class BatchResponse extends PaxTerminalResponse implements IBatchCloseResponse
     public $mid;
     public $batchNumber;
     public $sequenceNumber;
-    
+
     public function __construct($rawResponse)
     {
         parent::__construct($rawResponse, PaxMessageId::B01_RSP_BATCH_CLOSE);
@@ -24,16 +24,16 @@ class BatchResponse extends PaxTerminalResponse implements IBatchCloseResponse
 
     public function parseResponse($messageReader)
     {
-        
+
         parent::parseResponse($messageReader);
-        
+
         $hostResponse = new HostResponse($messageReader);
         $this->totalCount = $messageReader->readToCode(ControlCodes::FS);
         $this->totalAmount = $messageReader->readToCode(ControlCodes::FS);
         $this->timeStamp = $messageReader->readToCode(ControlCodes::FS);
         $this->tid = $messageReader->readToCode(ControlCodes::FS);
         $this->mid = $messageReader->readToCode(ControlCodes::FS);
-        
+
         if (!empty($hostResponse->batchNumber)) {
             $this->batchNumber = $hostResponse->batchNumber;
         }

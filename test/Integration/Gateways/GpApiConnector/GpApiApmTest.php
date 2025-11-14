@@ -31,7 +31,7 @@ class GpApiApmTest extends TestCase
     private string $currency;
     private Address $shippingAddress;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
 
@@ -74,7 +74,7 @@ class GpApiApmTest extends TestCase
      * printed message like this: { "success": true }. This has to be done within a 25 seconds timeframe.
      * In case you need more time update the sleep() to what you need.
      */
-    public function testPayPalCharge_fullCycle()
+    public function testPayPalCharge_fullCycle(): never
     {
         $this->markTestSkipped('To run this test you need to login to your Paypal account and access the link printed and continue the transaction');
         $response = $this->paymentMethod->charge(1.34)
@@ -114,7 +114,7 @@ class GpApiApmTest extends TestCase
         $this->assertEquals(TransactionStatus::CAPTURED, $response->responseMessage);
     }
 
-    public function testPayPalCapture_fullCycle()
+    public function testPayPalCapture_fullCycle(): never
     {
         $this->markTestSkipped('To run this test you need to login to your Paypal account and access the link printed and continue the transaction');
         $response = $this->paymentMethod->authorize(1.34)
@@ -162,7 +162,7 @@ class GpApiApmTest extends TestCase
         $this->assertEquals(TransactionStatus::CAPTURED, $capture->responseMessage);
     }
 
-    public function testPayPalFullCycle_Refund()
+    public function testPayPalFullCycle_Refund(): never
     {
         $this->markTestSkipped('To run this test you need to login to your Paypal account and access the link printed and continue the transaction');
         $trn = $this->paymentMethod->charge(1.22)
@@ -208,7 +208,7 @@ class GpApiApmTest extends TestCase
 
     }
 
-    public function testPayPalFullCycle_Reverse()
+    public function testPayPalFullCycle_Reverse(): never
     {
         $this->markTestSkipped('To run this test you need to login to your Paypal account and access the link printed and continue the transaction');
         $trn = $this->paymentMethod->charge(1.22)
@@ -255,7 +255,7 @@ class GpApiApmTest extends TestCase
         $this->assertEquals(TransactionStatus::REVERSED, $trnReverse->responseMessage);
     }
 
-    public function testPayPalMultiCapture_fullCycle()
+    public function testPayPalMultiCapture_fullCycle(): never
     {
         $this->markTestSkipped('To run this test you need to login to your Paypal account and access the link printed and continue the transaction');
         $response = $this->paymentMethod->authorize(3)

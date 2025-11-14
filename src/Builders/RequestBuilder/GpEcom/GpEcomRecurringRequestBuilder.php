@@ -142,26 +142,26 @@ class GpEcomRecurringRequestBuilder implements IRequestBuilder
                     );
 
                     $request->appendChild($xml->createElement("scheduleref", $schedule->id ?? ''));
-                    $request->appendChild($xml->createElement("alias",$schedule->name ?? ''));
-                    $request->appendChild($xml->createElement("orderidstub",$schedule->orderPrefix ?? ''));
-                    $request->appendChild($xml->createElement("transtype","auth"));
+                    $request->appendChild($xml->createElement("alias", $schedule->name ?? ''));
+                    $request->appendChild($xml->createElement("orderidstub", $schedule->orderPrefix ?? ''));
+                    $request->appendChild($xml->createElement("transtype", "auth"));
                     $request->appendChild($xml->createElement("schedule", $frequency ?? ''));
                     if (!empty($schedule->startDate)) {
-                        $request->appendChild($xml->createElement("startdate",$schedule->startDate->format('Ymd')));
+                        $request->appendChild($xml->createElement("startdate", $schedule->startDate->format('Ymd')));
                     }
-                    $request->appendChild($xml->createElement("numtimes",$schedule->numberOfPaymentsRemaining ?? ''));
+                    $request->appendChild($xml->createElement("numtimes", $schedule->numberOfPaymentsRemaining ?? ''));
                     if (!empty($schedule->endDate)) {
-                        $request->appendChild($xml->createElement("enddate",$schedule->endDate->format('Ymd')));
+                        $request->appendChild($xml->createElement("enddate", $schedule->endDate->format('Ymd')));
                     }
-                    $request->appendChild($xml->createElement("payerref",$schedule->customerKey ?? ''));
-                    $request->appendChild($xml->createElement("paymentmethod",$schedule->paymentKey ?? ''));
+                    $request->appendChild($xml->createElement("payerref", $schedule->customerKey ?? ''));
+                    $request->appendChild($xml->createElement("paymentmethod", $schedule->paymentKey ?? ''));
                     $amount = $xml->createElement("amount", $amount);
                     $amount->setAttribute("currency", $schedule->currency ?? '');
                     $request->appendChild($amount);
-                    $request->appendChild($xml->createElement("prodid",$schedule->productId ?? ''));
-                    $request->appendChild($xml->createElement("varref",$schedule->poNumber ?? ''));
-                    $request->appendChild($xml->createElement("custno",$schedule->customerNumber ?? ''));
-                    $request->appendChild($xml->createElement("comment",$schedule->description ?? ''));
+                    $request->appendChild($xml->createElement("prodid", $schedule->productId ?? ''));
+                    $request->appendChild($xml->createElement("varref", $schedule->poNumber ?? ''));
+                    $request->appendChild($xml->createElement("custno", $schedule->customerNumber ?? ''));
+                    $request->appendChild($xml->createElement("comment", $schedule->description ?? ''));
                 }
 
                 //set hash value
@@ -208,8 +208,8 @@ class GpEcomRecurringRequestBuilder implements IRequestBuilder
                         $scheduleRef = $builder->entity->key;
                         $request->appendChild($xml->createElement(
                             'scheduleref',
-                            $scheduleRef ?? '')
-                        );
+                            $scheduleRef ?? ''
+                        ));
                         $hash = GenerationUtils::generateHash(
                             $config->sharedSecret,
                             implode('.', [
@@ -229,15 +229,15 @@ class GpEcomRecurringRequestBuilder implements IRequestBuilder
                         $customerKey = $builder->searchCriteria[SearchCriteria::CUSTOMER_ID];
                         $request->appendChild($xml->createElement(
                             'payerref',
-                            $customerKey)
-                        );
+                            $customerKey
+                        ));
                     }
                     if (isset($builder->searchCriteria[SearchCriteria::PAYMENT_METHOD_KEY])) {
                         $paymentKey = $builder->searchCriteria[SearchCriteria::PAYMENT_METHOD_KEY];
                         $request->appendChild($xml->createElement(
                             'paymentmethod',
-                            $paymentKey)
-                        );
+                            $paymentKey
+                        ));
                     }
                     $hash = GenerationUtils::generateHash(
                         $config->sharedSecret,

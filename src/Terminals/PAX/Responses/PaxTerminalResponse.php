@@ -90,7 +90,7 @@ class PaxTerminalResponse extends PaxBaseResponse implements IDeviceResponseHand
      * The results of the terminals attempt to verify the cards authenticity.
      */
     public $terminalVerificationResults;
-    
+
     public $clerkId;
     public $shiftId;
     public $saleType;
@@ -130,7 +130,7 @@ class PaxTerminalResponse extends PaxBaseResponse implements IDeviceResponseHand
             $commercialResponse = new CommercialResponse($messageReader);
             $ecomResponse = new EcomSubGroupResponse($messageReader);
             $extDataResponse = new ExtDataSubGroupResponse($messageReader);
-            
+
             $this->mapAvsResponse($avsResponse);
             $this->mapCommercialResponse($commercialResponse);
         } else {
@@ -151,7 +151,7 @@ class PaxTerminalResponse extends PaxBaseResponse implements IDeviceResponseHand
         $this->edcType = $messageReader->readToCode(ControlCodes::FS);
         $this->mapTransactionType($messageReader->readToCode(ControlCodes::FS));
         $this->originalTransactionType = $messageReader->readToCode(ControlCodes::FS);
-        
+
         $amountResponse = new AmountResponse($messageReader);
         $accountResponse = new AccountResponse($messageReader);
         $traceResponse = new TraceResponse($messageReader);
@@ -254,7 +254,7 @@ class PaxTerminalResponse extends PaxBaseResponse implements IDeviceResponseHand
             $this->taxExemptId = $commercialResponse->taxExemptId;
         }
     }
-    
+
     private function mapCashierResponse($cashierResponse)
     {
         if (!empty($cashierResponse)) {
@@ -262,7 +262,7 @@ class PaxTerminalResponse extends PaxBaseResponse implements IDeviceResponseHand
             $this->shiftId = $cashierResponse->shiftId;
         }
     }
-    
+
     private function mapCheckResponse($checkResponse)
     {
         if (!empty($checkResponse)) {
@@ -278,7 +278,7 @@ class PaxTerminalResponse extends PaxBaseResponse implements IDeviceResponseHand
             $this->zipCode = $checkResponse->zipCode;
         }
     }
-    
+
     private function mapTransactionType($transactionType)
     {
         $transactionTypeValue = EnumUtils::parse(new TerminalTransactionType(), $transactionType);

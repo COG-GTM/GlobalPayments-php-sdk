@@ -9,11 +9,6 @@ use GlobalPayments\Api\Utils\StringUtils;
 
 class ThreeDSecureAcsClient
 {
-    /**
-     * @var string
-     */
-    private $serviceUrl;
-
     private $gatewayProvider;
 
     public $authenticationResultCode;
@@ -28,9 +23,11 @@ class ThreeDSecureAcsClient
         $this->gatewayProvider = $value;
     }
 
-    public function __construct($url)
+    /**
+     * @param string $url
+     */
+    public function __construct(private $serviceUrl)
     {
-        $this->serviceUrl = $url;
     }
 
     public function authenticate_v2(ThreeDSecure $secureEcom)
@@ -94,7 +91,7 @@ class ThreeDSecureAcsClient
                     "cache-control: no-cache"
                 ];
                 $verb = 'POST';
-                array_push($kvps, ['key' => 'TermUrl', 'value' => urlencode($secureEcom->challengeReturnUrl)]);
+                array_push($kvps, ['key' => 'TermUrl', 'value' => urlencode((string) $secureEcom->challengeReturnUrl)]);
                 array_push($kvps, ['key' => $secureEcom->sessionDataFieldName , 'value' => $secureEcom->serverTransactionId]);
                 array_push($kvps, ['key' => $secureEcom->messageType, 'value' => urlencode($secureEcom->payerAuthenticationRequest)]);
                 array_push($kvps, ['key' => 'AuthenticationResultCode', 'value' => $this->authenticationResultCode]);
@@ -133,9 +130,9 @@ class ThreeDSecureAcsClient
         switch ($this->gatewayProvider)
         {
             case GatewayProvider::GP_ECOM:
-                array_push($kvps, array('key'=>'PaReq', 'value'=> urlencode($payerAuthRequest)));
-                array_push($kvps, array('key'=>'TermUrl', 'value'=> urlencode('https://www.mywebsite.com/process3dSecure')));
-                array_push($kvps, array('key'=>'MD', 'value'=> urlencode($merchantData)));
+                array_push($kvps, ['key'=>'PaReq', 'value'=> urlencode((string) $payerAuthRequest)]);
+                array_push($kvps, ['key'=>'TermUrl', 'value'=> urlencode('https://www.mywebsite.com/process3dSecure')]);
+                array_push($kvps, ['key'=>'MD', 'value'=> urlencode((string) $merchantData)]);
                 $postData = $this->buildData($kvps);
                 $header = [
                     "Content-Type: application/x-www-form-urlencoded",
@@ -232,14 +229,14 @@ class ThreeDSecureAcsClient
         if (!empty($formName)) {
             $searchString = sprintf('name="%s" action="', $formName);
         }
-        $index = strpos($raw, $searchString);
+        $index = strpos((string) $raw, $searchString);
 
         if ($index > -1) {
             $index = $index + strlen($searchString);
 
-            $length = strpos(substr($raw, $index), '"');
+            $length = strpos(substr((string) $raw, $index), '"');
 
-            return substr($raw, $index, $length);
+            return substr((string) $raw, $index, $length);
         }
         return null;
     }

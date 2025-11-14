@@ -29,7 +29,7 @@ class ReportingDisputesTest extends TestCase
     private DateTime $startDate;
     private DateTime $endDate;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->startDate = (new DateTime())->modify('-30 days')->setTime(0, 0, 0);
@@ -122,7 +122,7 @@ class ReportingDisputesTest extends TestCase
 
     public function testReportFindDisputes_By_Status()
     {
-        $disputeStatus = array("UNDER_REVIEW", "WITH_MERCHANT", "CLOSED");
+        $disputeStatus = ["UNDER_REVIEW", "WITH_MERCHANT", "CLOSED"];
         foreach ($disputeStatus as $value) {
             $disputes = ReportingService::findDisputesPaged(1, 10)
                 ->where(DataServiceCriteria::START_STAGE_DATE, $this->startDate)
@@ -195,9 +195,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($disputes);
         $this->assertInstanceOf(PagedResult::class, $disputes);
         $disputesList = $disputes->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->caseId, $b->caseId);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->caseId, $b->caseId));
         /**
          * @var DisputeSummary $dispute
          */
@@ -218,9 +216,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($disputes);
         $this->assertInstanceOf(PagedResult::class, $disputes);
         $disputesList = $disputes->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->transactionARN, $b->transactionARN);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->transactionARN, $b->transactionARN));
         /**
          * @var DisputeSummary $dispute
          */
@@ -239,9 +235,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($disputes);
         $this->assertInstanceOf(PagedResult::class, $disputes);
         $disputesList = $disputes->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->transactionCardType, $b->transactionCardType);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->transactionCardType, $b->transactionCardType));
         /**
          * @var DisputeSummary $dispute
          */
@@ -260,9 +254,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($disputes);
         $this->assertInstanceOf(PagedResult::class, $disputes);
         $disputesList = $disputes->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->caseStatus, $b->caseStatus);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->caseStatus, $b->caseStatus));
         /**
          * @var DisputeSummary $dispute
          */
@@ -281,9 +273,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($disputes);
         $this->assertInstanceOf(PagedResult::class, $disputes);
         $disputesList = $disputes->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->caseStage, $b->caseStage);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->caseStage, $b->caseStage));
         /**
          * @var DisputeSummary $dispute
          */
@@ -303,9 +293,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($disputes);
         $this->assertInstanceOf(PagedResult::class, $disputes);
         $disputesList = $disputes->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->caseId, $b->caseId);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->caseId, $b->caseId));
         /**
          * @var DisputeSummary $dispute
          */
@@ -326,9 +314,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($disputes);
         $this->assertInstanceOf(PagedResult::class, $disputes);
         $disputesList = $disputes->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->caseId, $b->caseId);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->caseId, $b->caseId));
         /**
          * @var DisputeSummary $dispute
          */
@@ -487,9 +473,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($summary);
         $this->assertInstanceOf(PagedResult::class, $summary);
         $disputesList = $summary->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->caseId, $b->caseId);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->caseId, $b->caseId));
         /**
          * @var DisputeSummary $dispute
          */
@@ -508,9 +492,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($summary);
         $this->assertInstanceOf(PagedResult::class, $summary);
         $disputesList = $summary->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->transactionARN, $b->transactionARN);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->transactionARN, $b->transactionARN));
         /**
          * @var DisputeSummary $dispute
          */
@@ -529,9 +511,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($summary);
         $this->assertInstanceOf(PagedResult::class, $summary);
         $disputesList = $summary->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->transactionCardType, $b->transactionCardType);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->transactionCardType, $b->transactionCardType));
         /**
          * @var DisputeSummary $dispute
          */
@@ -550,9 +530,7 @@ class ReportingDisputesTest extends TestCase
         $this->assertNotNull($summary);
         $this->assertInstanceOf(PagedResult::class, $summary);
         $disputesList = $summary->result;
-        uasort($disputesList, function ($a, $b) {
-            return strcmp($a->caseStage, $b->caseStage);
-        });
+        uasort($disputesList, fn($a, $b) => strcmp($a->caseStage, $b->caseStage));
         /**
          * @var DisputeSummary $dispute
          */

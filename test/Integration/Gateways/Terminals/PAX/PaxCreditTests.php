@@ -20,7 +20,7 @@ class PaxCreditTests extends TestCase
     protected $card;
     protected $address;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->device = DeviceService::create($this->getConfig());
 
@@ -324,7 +324,7 @@ class PaxCreditTests extends TestCase
         $this->assertNotNull($response->transactionId);
     }
 
-    public function testCreditSaleWithMerchantFee()
+    public function testCreditSaleWithMerchantFee(): never
     {
         $this->markTestSkipped('Merchant fee needs to be enabled in the device for this test case');
         $response = $this->device->sale(10)

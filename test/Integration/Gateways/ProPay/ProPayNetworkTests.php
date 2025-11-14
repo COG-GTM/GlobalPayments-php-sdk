@@ -10,7 +10,7 @@ use GlobalPayments\Api\ServiceConfigs\Gateways\PorticoConfig;
 
 class ProPayNetworkTests extends TestCase
 {
-    public function setup() : void
+    public function setUp(): void : void
     {
         ServicesContainer::configureService($this->getConfig());
     }

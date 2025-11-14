@@ -29,7 +29,7 @@ class TransactionApiReportingTest extends TestCase
     private CreditCardData $card;
     private Address $address;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->setUpConfig();
         ServicesContainer::configureService($this->config);
@@ -188,7 +188,7 @@ class TransactionApiReportingTest extends TestCase
             CountryUtils::getNumericCodeByCountry('US')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->routingNumber = '112000066';
 
         $this->customer->id = null;
@@ -226,7 +226,7 @@ class TransactionApiReportingTest extends TestCase
             CountryUtils::getNumericCodeByCountry('US')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->routingNumber = '112000066';
 
         $this->customer->id = null;
@@ -264,7 +264,7 @@ class TransactionApiReportingTest extends TestCase
             CountryUtils::getNumericCodeByCountry('US')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->routingNumber = '112000066';
 
         $this->customer->id = null;
@@ -301,7 +301,7 @@ class TransactionApiReportingTest extends TestCase
             CountryUtils::getNumericCodeByCountry('US')
         );
 
-        $this->eCheck->checkNumber = (string)rand();
+        $this->eCheck->checkNumber = (string)random_int(0, mt_getrandmax());
         $this->eCheck->routingNumber = '112000066';
 
         $this->customer->id = null;
@@ -331,9 +331,9 @@ class TransactionApiReportingTest extends TestCase
     private function getTransactionData($region, $countryCode = null, $lang = null)
     {
         $transData = new TransactionApiData();
-        $transData->countryCode = isset($countryCode) ? $countryCode : CountryUtils::getNumericCodeByCountry('US');
+        $transData->countryCode = $countryCode ?? CountryUtils::getNumericCodeByCountry('US');
         $transData->ecommerceIndicator = EcommerceIndicator::ECOMMERCE_INDICATOR_2;
-        $transData->language = isset($lang) ? $lang : TransactionLanguage::EN_US;
+        $transData->language = $lang ?? TransactionLanguage::EN_US;
         $transData->softDescriptor = "soft";
         $transData->region = $region;
         return $transData;

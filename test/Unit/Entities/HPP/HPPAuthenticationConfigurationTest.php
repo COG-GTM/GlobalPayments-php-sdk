@@ -88,7 +88,7 @@ class HPPAuthenticationConfigurationTest extends TestCase
         $this->config->preference = '';
         $this->config->exemptStatus = '';
         $this->config->billingAddressRequired = '';
-        
+
         $errors = $this->config->validate();
         // Empty strings will fail enum validation and boolean validation
         $this->assertCount(2, $errors); // preference and billingAddressRequired should fail

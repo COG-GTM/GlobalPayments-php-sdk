@@ -24,7 +24,7 @@ class FileProcessingBuilder extends BaseBuilder
         $this->transactionType = $transactionType;
     }
 
-    public function execute(string $configName = 'default') : FileProcessor
+    public function execute(string $configName = 'default'): FileProcessor
     {
         $this->validate();
         $client = ServicesContainer::instance()->getFileProcessingClient($configName);
@@ -32,7 +32,7 @@ class FileProcessingBuilder extends BaseBuilder
         return $client->processFileUpload($this);
     }
 
-    public function withResourceId(string $resourceId) : FileProcessingBuilder
+    public function withResourceId(string $resourceId): FileProcessingBuilder
     {
         $this->resourceId = $resourceId;
         return $this;

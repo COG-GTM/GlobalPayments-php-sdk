@@ -37,7 +37,7 @@ class UpaFullyIntegratedCommandsTests extends TestCase
     private IDeviceInterface $device;
     private CreditCardData $card;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->device = DeviceService::create($this->getConfig());
 

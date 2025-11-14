@@ -36,7 +36,7 @@ class GeniusConnector extends XmlGateway implements IPaymentGateway
     const CREDIT_SERVICE_END_POINT = 'RetailTransaction/v45/Credit.asmx';
     const GIFT_SERVICE_END_POINT = 'ExtensionServices/v46/Giftcard.asmx';
 
-    public function supportsOpenBanking() : bool
+    public function supportsOpenBanking(): bool
     {
         return false;
     }
@@ -81,7 +81,7 @@ class GeniusConnector extends XmlGateway implements IPaymentGateway
         }
         $request->appendChild($xml->createElement('Amount', $builder->amount ?? ''));
         $request->appendChild($xml->createElement('CashbackAmount', $builder->cashBackAmount ?? ''));
-        $request->appendChild($xml->createElement('SurchargeAmount', $builder->convenienceAmount?? ''));
+        $request->appendChild($xml->createElement('SurchargeAmount', $builder->convenienceAmount ?? ''));
         $request->appendChild($xml->createElement('AuthorizationCode', $builder->offlineAuthCode ?? ''));
 
         if ($builder->autoSubstantiation != null) {

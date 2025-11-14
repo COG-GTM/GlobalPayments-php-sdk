@@ -1,8 +1,6 @@
 <?php
 
-
 namespace GlobalPayments\Api\Entities\Enums;
-
 
 use GlobalPayments\Api\Entities\Enum;
 
@@ -20,5 +18,4 @@ class MerchantInitiatedRequestType extends Enum
     const WHITELIST_STATUS_CHECK = "WHITELIST_STATUS_CHECK";
     const OTHER_PAYMENT = "OTHER_PAYMENT";
     const BILLING_AGREEMENT = "BILLING_AGREEMENT";
-
 }

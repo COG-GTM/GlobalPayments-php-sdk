@@ -81,7 +81,7 @@ final class RecurringTest extends TestCase
         return $config;
     }
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->config());
 
@@ -94,9 +94,9 @@ final class RecurringTest extends TestCase
     }
 
     /**
-     * @doesNotPerformAssertions
-     * @return void 
+     * @return void
      */
+    #[\PHPUnit\Framework\Attributes\DoesNotPerformAssertions]
     public function test000CleanUp() : void
     {
         try {
@@ -120,7 +120,7 @@ final class RecurringTest extends TestCase
             foreach ($results as $customer) {
                 $customer->delete(true);
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
     }
 
@@ -672,8 +672,9 @@ final class RecurringTest extends TestCase
     {
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://cert.api2-c.heartlandportico.com/Hps.Exchange.PosGateway.Hpf.v1/api/token?api_key=pkapi_cert_jKc1FtuyAydZhZfbB3', #gitleaks:allow
+        curl_setopt_array($curl, [
+            CURLOPT_URL => 'https://cert.api2-c.heartlandportico.com/Hps.Exchange.PosGateway.Hpf.v1/api/token?api_key=pkapi_cert_jKc1FtuyAydZhZfbB3',
+            #gitleaks:allow
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -691,10 +692,8 @@ final class RecurringTest extends TestCase
                     "exp_year": ' . $expYear . '
                 }
             }',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            )
-        ));
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+        ]);
 
         $response = curl_exec($curl);
 

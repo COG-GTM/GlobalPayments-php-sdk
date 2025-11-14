@@ -13,7 +13,7 @@ class TransferFundsAccountCollection extends \ArrayObject
         $this->offsetSet($id, $transfer);
     }
 
-    public function get(string $id) : FundsAccountDetails
+    public function get(string $id): FundsAccountDetails
     {
         return $this->offsetGet($id);
     }

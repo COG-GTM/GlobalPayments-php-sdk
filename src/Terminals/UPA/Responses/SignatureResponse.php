@@ -26,5 +26,4 @@ class SignatureResponse extends UpaResponseHandler implements ISignatureResponse
                 break;
         }
     }
-
 }

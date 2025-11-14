@@ -27,7 +27,7 @@ class CreditTest extends TestCase
     protected CreditTrackData $track;
     private bool $enableCryptoUrl = true;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->card = new CreditCardData();
         $this->card->number = '4111111111111111';
@@ -62,7 +62,7 @@ class CreditTest extends TestCase
 
     public function testCreditAuthorization()
     {
-        $clientTxnID = rand(10,100000);
+        $clientTxnID = random_int(10,100000);
 
         $authorization = $this->card->authorize(14)
             ->withClientTransactionId($clientTxnID)
@@ -255,7 +255,7 @@ class CreditTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    public function testCreditSwipeAddValue()
+    public function testCreditSwipeAddValue(): never
     {
         $this->markTestSkipped('GSB not configured');
 
@@ -414,7 +414,7 @@ class CreditTest extends TestCase
 
     public function testRefundWithAllowDup()
     {
-        $data = array();
+        $data = [];
         for ($i = 0; $i < 2; $i++) {
             $response = $this->card->charge(10)->withCurrency('USD')->withAllowDuplicates(true)->execute();
             $data[] = $response;

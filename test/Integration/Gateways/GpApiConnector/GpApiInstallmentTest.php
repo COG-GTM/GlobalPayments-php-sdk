@@ -72,7 +72,7 @@ class GpApiInstallmentTest extends TestCase
     private string $currency = 'MXN';
     private float $amount = 2.02;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->startDate = (new DateTime())->modify('-30 days')->setTime(0, 0, 0);

@@ -55,7 +55,7 @@ class UpaMicTests extends TestCase
     /**
      * @throws ApiException
      */
-    public function setup(): void
+    public function setUp(): void
     {
         $this->device = DeviceService::create($this->getConfig());
     }
@@ -495,7 +495,7 @@ class UpaMicTests extends TestCase
         $this->assertEquals(UpaMessageId::LOGON, $response->command);
     }
 
-    public function testReturnDefaultScreen()
+    public function testReturnDefaultScreen(): never
     {
         $this->markTestSkipped("APP005 - COMMAND NOT ALLOWED IN THE CURRENT APP MODE");
         $response = $this->device->returnDefaultScreen(DisplayOption::RETURN_TO_IDLE_SCREEN);
@@ -505,7 +505,7 @@ class UpaMicTests extends TestCase
         $this->assertEquals('COMPLETE', $response->status);
     }
 
-    public function testGetEncryptionType()
+    public function testGetEncryptionType(): never
     {
         $this->markTestSkipped("APP005 - COMMAND NOT ALLOWED IN THE CURRENT APP MODE");
         /** @var TransactionResponse $response */
@@ -517,7 +517,7 @@ class UpaMicTests extends TestCase
         $this->assertNotEmpty($response->dataEncryptionType);
     }
 
-    public function testLoadUDDataFile()
+    public function testLoadUDDataFile(): never
     {
         $this->markTestSkipped("UD006 - CANNOT LOAD USER-DEFINED FILE");
         $screen = new UDData();
@@ -531,7 +531,7 @@ class UpaMicTests extends TestCase
         $this->assertEquals('00', $response->deviceResponseCode);
         $this->assertEquals('COMPLETE', $response->status);
     }
-    public function testRemoveUDDataFile()
+    public function testRemoveUDDataFile(): never
     {
         $this->markTestSkipped("UD005 - CANNOT DELETE USER-DEFINED FILE");
         $screen = new UDData();
@@ -547,7 +547,7 @@ class UpaMicTests extends TestCase
         $this->assertEquals('COMPLETE', $response->status);
     }
 
-    public function testExecuteUDDataFile()
+    public function testExecuteUDDataFile(): never
     {
         $this->markTestSkipped("UD001 - INVALID SLOT NUMBER");
         $screen = new UDData();
@@ -564,7 +564,7 @@ class UpaMicTests extends TestCase
         $this->assertEquals('COMPLETE', $response->status);
     }
 
-    public function testInjectUDDataFile()
+    public function testInjectUDDataFile(): never
     {
         $this->markTestSkipped("INVALID_REQUEST_DATA - Request contains unexpected data");
         $screen = new UDData();
@@ -591,7 +591,7 @@ class UpaMicTests extends TestCase
         $this->assertNotNull($response);
         $this->assertEquals('Success', $response->status);
         $this->assertIsArray($response->batchIds);
-        $this->assertGreaterThan(0, $this->count($response->batchIds));
+        $this->assertGreaterThan(0, $this->count());
     }
 
     public function testGetBatchDetails()

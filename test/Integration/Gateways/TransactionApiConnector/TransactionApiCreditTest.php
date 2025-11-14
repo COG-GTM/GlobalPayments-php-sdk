@@ -29,7 +29,7 @@ class TransactionApiCreditTest extends TestCase
     private $card;
     private $address;
     private $addressCa;
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->card = new CreditCardData();
@@ -106,7 +106,7 @@ class TransactionApiCreditTest extends TestCase
         $this->assertEquals("approved", $transaction->responseCode);
     }
 
-    public function test100CreditAuthorizationWithSingleTokenUS()
+    public function test100CreditAuthorizationWithSingleTokenUS(): never
     {
         $this->markTestSkipped('To run this test you need to generate single use token');
 
@@ -173,7 +173,7 @@ class TransactionApiCreditTest extends TestCase
         $this->assertEquals("approved", $transaction->responseCode);
     }
 
-    public function test101CreditAuthorizationWithSingleTokenCA()
+    public function test101CreditAuthorizationWithSingleTokenCA(): never
     {
         $this->markTestSkipped('To run this test you need to generate single use token');
 
@@ -209,7 +209,7 @@ class TransactionApiCreditTest extends TestCase
         $transData->addressVerificationService = true;
         $transData->generateReceipt = true;
 
-        $transaction = $this->card->verify('0.0')
+        $transaction = $this->card->verify()
             ->withCurrency('840')
             ->withAllowPartialAuth(true)
             ->withTransactionData($transData)
@@ -225,7 +225,7 @@ class TransactionApiCreditTest extends TestCase
         $transData->addressVerificationService = true;
         $transData->generateReceipt = true;
 
-        $transaction = $this->card->verify('0.0')
+        $transaction = $this->card->verify()
             ->withCurrency('840')
             ->withRequestMultiUseToken(true)
             ->withPaymentMethodUsageMode(PaymentMethodUsageMode::MULTIPLE)
@@ -244,7 +244,7 @@ class TransactionApiCreditTest extends TestCase
         $transData->addressVerificationService = true;
         $transData->generateReceipt = true;
 
-        $transaction = $this->card->verify('0.0')
+        $transaction = $this->card->verify()
             ->withCurrency('840')
             ->withAllowPartialAuth(true)
             ->withTransactionData($transData)
@@ -264,7 +264,7 @@ class TransactionApiCreditTest extends TestCase
             TransactionLanguage::EN_CA
         );
 
-        $transaction = $this->card->verify('0.0')
+        $transaction = $this->card->verify()
             ->withCurrency('124')
             ->withRequestMultiUseToken(true)
             ->withPaymentMethodUsageMode(PaymentMethodUsageMode::MULTIPLE)
@@ -919,9 +919,9 @@ class TransactionApiCreditTest extends TestCase
     private function getTransactionData($region, $countryCode = null, $lang = null)
     {
         $transData = new TransactionApiData();
-        $transData->countryCode = isset($countryCode) ? $countryCode : CountryUtils::getNumericCodeByCountry('US');
+        $transData->countryCode = $countryCode ?? CountryUtils::getNumericCodeByCountry('US');
         $transData->ecommerceIndicator = EcommerceIndicator::ECOMMERCE_INDICATOR_2;
-        $transData->language = isset($lang) ? $lang : TransactionLanguage::EN_US;
+        $transData->language = $lang ?? TransactionLanguage::EN_US;
         $transData->softDescriptor = "soft";
         $transData->region = $region;
         return $transData;

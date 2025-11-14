@@ -25,14 +25,10 @@ use GlobalPayments\Api\Utils\Logging\SampleRequestLogger;
 
 class GpEcomHppClient
 {
-    private $sharedSecret;
     private $paymentData;
-    private $shaHashType;
 
-    public function __construct($sharedSecret, $shaHashType = ShaHashType::SHA1)
+    public function __construct(private $sharedSecret, private $shaHashType = ShaHashType::SHA1)
     {
-        $this->sharedSecret = $sharedSecret;
-        $this->shaHashType = $shaHashType;
     }
 
     public function sendRequest($jsonData, $hppVersion = '')
@@ -78,7 +74,7 @@ class GpEcomHppClient
 
         // create the card/APM/LPM/OB object
         if (!empty($this->getValue('PM_METHODS'))) {
-            $apmTypes = explode("|", $this->getValue('PM_METHODS'));
+            $apmTypes = explode("|", (string) $this->getValue('PM_METHODS'));
             if (in_array(HostedPaymentMethods::OB, $apmTypes)) {
                 $card = new BankPayment();
                 $card->sortCode = $this->getValue('HPP_OB_DST_ACCOUNT_SORT_CODE');
@@ -169,7 +165,7 @@ class GpEcomHppClient
             //handle fraud management
             $this->addFraudManagementInfo($gatewayRequest, $orderId);
             if (!empty($this->getValue('BLOCK_CARD_TYPE'))) {
-                $cardTypes = explode("|", $this->getValue('BLOCK_CARD_TYPE'));
+                $cardTypes = explode("|", (string) $this->getValue('BLOCK_CARD_TYPE'));
                 $cardTypesBlocking = new BlockedCardType();
                 foreach ($cardTypes as $cardType) {
                     if (property_exists($cardTypesBlocking, $cardType)) {
@@ -203,10 +199,7 @@ class GpEcomHppClient
 
     public function getValue($value)
     {
-        if (isset($this->paymentData[$value])) {
-            return $this->paymentData[$value];
-        }
-        return null;
+        return $this->paymentData[$value] ?? null;
     }
 
     public function addDCCInfo($gatewayRequest, $orderId)
@@ -271,9 +264,7 @@ class GpEcomHppClient
 
     public function getFraudRules()
     {
-        $hppFraudRules = array_filter($this->paymentData, function($key) {
-            return strpos($key, 'HPP_FRAUDFILTER_RULE_') === 0;
-        }, ARRAY_FILTER_USE_KEY);
+        $hppFraudRules = array_filter($this->paymentData, fn($key) => str_starts_with((string) $key, 'HPP_FRAUDFILTER_RULE_'), ARRAY_FILTER_USE_KEY);
         if (!empty($hppFraudRules)) {
             $fraudFilterRules = new FraudRuleCollection();
             foreach ($hppFraudRules as $hppFraudRuleKey => $hppFraudRuleMode) {

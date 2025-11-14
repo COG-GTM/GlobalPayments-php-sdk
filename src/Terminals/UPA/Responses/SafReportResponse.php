@@ -75,7 +75,7 @@ class SafReportResponse extends UpaResponseHandler
         }
     }
 
-    private function mapSummaryType(string $safType) : string
+    private function mapSummaryType(string $safType): string
     {
         switch ($safType) {
             case self::AUTHORIZED:

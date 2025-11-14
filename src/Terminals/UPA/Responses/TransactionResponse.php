@@ -333,11 +333,10 @@ class TransactionResponse extends UpaResponseHandler implements IBatchCloseRespo
                 $diff = $diff - $v ;
                 $debugLevel .= $k . '|';
                 if ($diff >= 0) {
-                   $arr = array_filter($arr, function ($v) use ($diff) {
+                    $arr = array_filter($arr, function ($v) use ($diff) {
                         return $v > 0 && $v <= $diff;
                     });
                 }
-
             });
             $debugLevel = rtrim($debugLevel, '|');
         }

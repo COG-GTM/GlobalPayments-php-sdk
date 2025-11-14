@@ -16,7 +16,7 @@ class SendFileType extends Enum
      *  240x320 (iPP350)
      */
     const IDLELOGO = 'IDLELOGO.JPG';
-    
+
     /*
      * Displayed at the top of the SIP device screen at all times during POS driven activities.
      * It is not shown when doing HeartSIP driven activities such as auto EOD processing

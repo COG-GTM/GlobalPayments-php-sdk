@@ -7,7 +7,6 @@ use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 
 class CashierResponse implements IResponseSubGroup
 {
-
     public $clerkId;
     public $shiftId;
 

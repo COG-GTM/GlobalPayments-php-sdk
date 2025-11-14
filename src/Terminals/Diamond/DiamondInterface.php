@@ -20,31 +20,31 @@ class DiamondInterface extends DeviceInterface
         parent::__construct($deviceController);
     }
 
-    public function tipAdjust($tipAmount = null) : TerminalManageBuilder
+    public function tipAdjust($tipAmount = null): TerminalManageBuilder
     {
         return (new TerminalManageBuilder(TransactionType::EDIT, PaymentMethodType::CREDIT))
             ->withGratuity($tipAmount);
     }
 
-    public function localDetailReport() : TerminalReportBuilder
+    public function localDetailReport(): TerminalReportBuilder
     {
         return new TerminalReportBuilder(TerminalReportType::LOCAL_DETAIL_REPORT);
     }
 
-    public function deletePreAuth() : TerminalManageBuilder
+    public function deletePreAuth(): TerminalManageBuilder
     {
         return (new TerminalManageBuilder(TransactionType::DELETE, PaymentMethodType::CREDIT))
             ->withModifier(TransactionModifier::DELETE_PRE_AUTH);
     }
 
-    public function increasePreAuth($amount) : TerminalManageBuilder
+    public function increasePreAuth($amount): TerminalManageBuilder
     {
         return (new TerminalManageBuilder(TransactionType::AUTH, PaymentMethodType::CREDIT))
             ->withModifier(TransactionModifier::INCREMENTAL)
             ->withAmount($amount);
     }
 
-    public function batchClose() : IBatchCloseResponse
+    public function batchClose(): IBatchCloseResponse
     {
         return (new TerminalAuthBuilder(TransactionType::BATCH_CLOSE))
             ->execute();
@@ -56,4 +56,3 @@ class DiamondInterface extends DeviceInterface
             ->withAmount($amount);
     }
 }
-

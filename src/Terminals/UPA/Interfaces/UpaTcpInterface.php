@@ -14,26 +14,25 @@ use GlobalPayments\Api\Terminals\UPA\UpaMessageType;
  */
 class UpaTcpInterface implements IDeviceCommInterface
 {
-    
     /*
      * TCP fsockopen connection object
      */
     private $tcpConnection = null;
-    
+
     /*
      * Device configuration details ConnectionConfig object
      *
      */
     public $deviceDetails;
-    
+
     /*
      * Device request type
      *
      */
     private $requestType;
-    
+
     private $nakCount = 0;
-    
+
     /*
      * @param ConnectionConfig object $config device configuration details
      */
@@ -51,10 +50,10 @@ class UpaTcpInterface implements IDeviceCommInterface
         if (is_resource($this->tcpConnection)) {
             return;
         }
-        
+
         $errno = '';
         $errstr = '';
-        
+
         // open socket
         try {
             $this->tcpConnection = pfsockopen(
@@ -72,7 +71,7 @@ class UpaTcpInterface implements IDeviceCommInterface
             );
         }
     }
-    
+
     /*
      * Close TCP socket connection with device
      */
@@ -83,7 +82,7 @@ class UpaTcpInterface implements IDeviceCommInterface
             fclose($this->tcpConnection);
         }
     }
-    
+
     /*
      * Send request message to device using socket connection
      * @param string $message XML request string
@@ -93,12 +92,12 @@ class UpaTcpInterface implements IDeviceCommInterface
         $this->connect();
         $this->requestType = $requestType;
         $out = '';
-                        
+
         TerminalUtils::manageLog(
             $this->deviceDetails->logManagementProvider,
             "$requestType Request Message\n: {$message->toString()}"
         );
-        
+
         if ($this->tcpConnection !== null) {
             try {
                 if (false === ($bytes_written = fwrite($this->tcpConnection, $message->toString()))) {
@@ -112,7 +111,7 @@ class UpaTcpInterface implements IDeviceCommInterface
                         // read from socket
                         $part = fgets($this->tcpConnection);
                         $out .= $part;
-                        
+
                         if (strpos($part, chr(ControlCodes::ETX)) !== false) {
                             $etxCount++;
                             if ($etxCount === 2) {
@@ -122,7 +121,7 @@ class UpaTcpInterface implements IDeviceCommInterface
                                 ];
                                 $ackMessage = chr(ControlCodes::STX) . chr(ControlCodes::LF);
                                 $ackMessage .= json_encode($requestMessage);
-                                $ackMessage .= chr(ControlCodes::LF) . chr(ControlCodes::ETX). chr(ControlCodes::LF);
+                                $ackMessage .= chr(ControlCodes::LF) . chr(ControlCodes::ETX) . chr(ControlCodes::LF);
                                 fwrite($this->tcpConnection, $ackMessage);
                             } elseif ($etxCount === 3) {
                                 break;
@@ -148,7 +147,7 @@ class UpaTcpInterface implements IDeviceCommInterface
         }
         return;
     }
-    
+
     public function parseResponse($gatewayResponse)
     {
         $responseList = explode(chr(ControlCodes::ETX), $gatewayResponse);
@@ -161,10 +160,10 @@ class UpaTcpInterface implements IDeviceCommInterface
                 }
             }
         }
-        
+
         return '';
     }
-        
+
     public function __destruct()
     {
         $this->disconnect();

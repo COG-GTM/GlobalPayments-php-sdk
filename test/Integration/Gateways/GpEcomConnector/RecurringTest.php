@@ -87,7 +87,7 @@ class RecurringTest extends TestCase
         ServicesContainer::configureService($config);
     }
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->config();
         ServicesContainer::configureService($config);
@@ -945,10 +945,10 @@ class RecurringTest extends TestCase
     public function testGetListOfPaymentSchedules_RandomDetails()
     {
         $exceptionCaught = false;
-        $customerId = substr(GenerationUtils::getGuid(), 20);
+        $customerId = substr((string) GenerationUtils::getGuid(), 20);
         try {
             RecurringService::search(Schedule::class)
-                ->addSearchCriteria(SearchCriteria::PAYMENT_METHOD_KEY, substr(GenerationUtils::getGuid(), 20))
+                ->addSearchCriteria(SearchCriteria::PAYMENT_METHOD_KEY, substr((string) GenerationUtils::getGuid(), 20))
                 ->addSearchCriteria(SearchCriteria::CUSTOMER_ID, $customerId)
                 ->execute();
         } catch (GatewayException $e) {
@@ -965,7 +965,7 @@ class RecurringTest extends TestCase
         $exceptionCaught = false;
         try {
             RecurringService::search(Schedule::class)
-                ->addSearchCriteria(SearchCriteria::PAYMENT_METHOD_KEY, substr(GenerationUtils::getGuid(), 20))
+                ->addSearchCriteria(SearchCriteria::PAYMENT_METHOD_KEY, substr((string) GenerationUtils::getGuid(), 20))
                 ->execute();
         } catch (GatewayException $e) {
             $exceptionCaught = true;
@@ -982,7 +982,7 @@ class RecurringTest extends TestCase
 
         try {
             RecurringService::search(Schedule::class)
-                ->addSearchCriteria(SearchCriteria::CUSTOMER_ID, substr(GenerationUtils::getGuid(), 20))
+                ->addSearchCriteria(SearchCriteria::CUSTOMER_ID, substr((string) GenerationUtils::getGuid(), 20))
                 ->execute();
         } catch (GatewayException $e) {
             $exceptionCaught = true;
@@ -1017,7 +1017,7 @@ class RecurringTest extends TestCase
     public function testDelete_RandomSchedule()
     {
         $schedule = new Schedule();
-        $schedule->key = substr(GenerationUtils::getGuid(), 20);
+        $schedule->key = substr((string) GenerationUtils::getGuid(), 20);
         $exceptionCaught = false;
         try {
             $schedule->delete();
@@ -1043,7 +1043,7 @@ class RecurringTest extends TestCase
     public function testGetPaymentScheduleById_RandomId()
     {
         $schedule = new Schedule();
-        $schedule->key = substr(GenerationUtils::getGuid(), 20);
+        $schedule->key = substr((string) GenerationUtils::getGuid(), 20);
         $exceptionCaught = false;
 
         try {
@@ -1154,7 +1154,7 @@ class RecurringTest extends TestCase
             $customer->key = sprintf("%s-Realex", (new \DateTime())->format("YmdHms"));
             $customer->Create();
             return $customer->id;
-        } catch (GatewayException $e) {
+        } catch (GatewayException) {
         }
     }
 
@@ -1171,7 +1171,7 @@ class RecurringTest extends TestCase
             /** @var RecurringPaymentMethod $paymentMethod */
             $paymentMethod = $this->newCustomer->addPaymentMethod($paymentId, $card)->create();
             return $paymentMethod->id;
-        } catch (GatewayException $exc) {
+        } catch (GatewayException) {
             return  null;
         }
     }

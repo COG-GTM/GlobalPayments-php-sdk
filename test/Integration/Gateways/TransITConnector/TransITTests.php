@@ -21,7 +21,7 @@ class CreditTest extends TestCase
     protected $tokenizedCard;
     protected $track;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         ServicesContainer::configureService($this->getConfig());
 
@@ -33,7 +33,7 @@ class CreditTest extends TestCase
 
         $this->track = new CreditTrackData();
         $this->track->setValue('<E1050711%4012002000060016^VI TEST CREDIT^25121011803939600000?|LO04K0WFOmdkDz0um+GwUkILL8ZZOP6Zc4rCpZ9+kg2T3JBT4AEOilWTI|+++++++Dbbn04ekG|11;4012002000060016=25121011803939600000?|1u2F/aEhbdoPixyAPGyIDv3gBfF|+++++++Dbbn04ekG|00|||/wECAQECAoFGAgEH2wYcShV78RZwb3NAc2VjdXJlZXhjaGFuZ2UubmV0PX50qfj4dt0lu9oFBESQQNkpoxEVpCW3ZKmoIV3T93zphPS3XKP4+DiVlM8VIOOmAuRrpzxNi0TN/DWXWSjUC8m/PI2dACGdl/hVJ/imfqIs68wYDnp8j0ZfgvM26MlnDbTVRrSx68Nzj2QAgpBCHcaBb/FZm9T7pfMr2Mlh2YcAt6gGG1i2bJgiEJn8IiSDX5M2ybzqRT86PCbKle/XCTwFFe1X|>;');
-        
+
         $this->tokenizedCard = new CreditCardData();
         $this->tokenizedCard->token = '5RpF5t9Asb9U6527'; #gitleaks:allow
     }

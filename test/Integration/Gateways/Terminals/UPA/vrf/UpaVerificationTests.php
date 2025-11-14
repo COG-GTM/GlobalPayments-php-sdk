@@ -19,7 +19,7 @@ class UpaVerificationTests extends TestCase
     private $device;
     private $config;
 
-    public function setup() : void
+    public function setUp(): void : void
     {
         $this->device = DeviceService::create($this->getConfig());
     }
@@ -218,15 +218,15 @@ class UpaVerificationTests extends TestCase
         $response = $this->device->sale(2)
         ->withRequestId(22)
         ->execute();
-        
+
         $this->assertNotNull($response);
         $this->assertEquals('00', $response->deviceResponseCode);
         $this->printReceipt($response, 'test006DuplicateTransaction creditSale $2');
-        
+
         $response = $this->device->sale(2)
         ->withRequestId(22)
         ->execute();
-        
+
         $this->assertNotNull($response);
         $this->assertEquals('2', $response->deviceResponseCode);
         $this->printReceipt($response, 'test006DuplicateTransaction creditSale $2'); // if cancelled via device prompt
@@ -349,19 +349,19 @@ class UpaVerificationTests extends TestCase
     {
         $response = $this->device->sale(15.12)
         ->execute();
-        
+
         $this->assertNotNull($response);
         $this->assertEquals('00', $response->deviceResponseCode);
         $this->printReceipt($response, 'test010aAdjustment Tip Sale');
-        
+
         $response = $this->device->tipAdjust(3)
         ->withTerminalRefNumber($response->terminalRefNumber)
         ->execute();
-        
+
         $this->assertNotNull($response);
         $this->assertEquals('00', $response->deviceResponseCode);
         $this->printReceipt($response, 'test010aAdjustment Tip Adjust');
-        
+
         /* Note - Confirmed there is a bug in V1.30 regarding how the tip adjust amount is handled; that amount
          * isn't correctly added to the total transaction amount; earlier software versions did not have this bug
          */

@@ -26,7 +26,7 @@ use GlobalPayments\Api\Gateways\BillPay\{
 class BillPayProvider implements IBillingProvider, IPaymentGateway, IRecurringService
 {
     private Credentials $credentials;
-    
+
     public bool $isBillDataHosted;
     public int $timeout;
     public string $serviceUrl;
@@ -57,7 +57,7 @@ class BillPayProvider implements IBillingProvider, IPaymentGateway, IRecurringSe
     {
         return $this->timeout;
     }
-    
+
     public function setTimeout(int $timeout)
     {
         $this->timeout = $timeout;
@@ -75,20 +75,20 @@ class BillPayProvider implements IBillingProvider, IPaymentGateway, IRecurringSe
 
     /**
      * Invokes a request against the BillPay gateway using the AuthorizationBuilder
-     * 
+     *
      * @param AuthorizationBuilder $builder The transaction's builder
-     * 
+     *
      * @return Transaction
      */
     public function processAuthorization(AuthorizationBuilder $builder): Transaction
     {
         $authorizationRequest = new AuthorizationRequest(
-            $this->credentials, 
-            $this->serviceUrl, 
-            $this->timeout, 
+            $this->credentials,
+            $this->serviceUrl,
+            $this->timeout,
             $this->requestLogger
         );
-        
+
         return $authorizationRequest->execute($builder, $this->isBillDataHosted);
     }
 
@@ -124,8 +124,8 @@ class BillPayProvider implements IBillingProvider, IPaymentGateway, IRecurringSe
     public function processBillingRequest(BillingBuilder $builder): BillingResponse
     {
         $billingRequest = new BillingRequest(
-            $this->credentials, 
-            $this->serviceUrl, 
+            $this->credentials,
+            $this->serviceUrl,
             $this->timeout,
             $this->requestLogger,
         );
@@ -133,7 +133,7 @@ class BillPayProvider implements IBillingProvider, IPaymentGateway, IRecurringSe
         return $billingRequest->execute($builder);
     }
 
-    public function supportsOpenBanking() : bool
+    public function supportsOpenBanking(): bool
     {
         return false;
     }
@@ -143,7 +143,7 @@ class BillPayProvider implements IBillingProvider, IPaymentGateway, IRecurringSe
         return true;
     }
 
-    public function supportsRetrieval() : bool
+    public function supportsRetrieval(): bool
     {
         return false;
     }
@@ -163,8 +163,8 @@ class BillPayProvider implements IBillingProvider, IPaymentGateway, IRecurringSe
     public function processReport(ReportBuilder $builder): TransactionSummary
     {
         $reportRequest = new ReportRequest(
-            $this->credentials, 
-            $this->serviceUrl, 
+            $this->credentials,
+            $this->serviceUrl,
             $this->timeout,
             $this->requestLogger,
         );
@@ -180,8 +180,8 @@ class BillPayProvider implements IBillingProvider, IPaymentGateway, IRecurringSe
     public function processRecurring(RecurringBuilder $builder)
     {
         $recurringRequest = new RecurringRequest(
-            $this->credentials, 
-            $this->serviceUrl, 
+            $this->credentials,
+            $this->serviceUrl,
             $this->timeout,
             $this->requestLogger
         );

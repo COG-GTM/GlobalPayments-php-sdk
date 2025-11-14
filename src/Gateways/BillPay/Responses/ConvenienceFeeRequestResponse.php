@@ -6,7 +6,7 @@ use GlobalPayments\Api\Entities\BillPay\ConvenienceFeeResponse;
 
 class ConvenienceFeeRequestResponse extends BillPayResponseBase
 {
-    function map() 
+    function map()
     {
         $result = new ConvenienceFeeResponse();
 

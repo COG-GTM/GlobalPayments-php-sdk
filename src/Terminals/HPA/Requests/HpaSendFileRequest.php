@@ -8,7 +8,6 @@ use GlobalPayments\Api\Entities\Exceptions\BuilderException;
 
 class HpaSendFileRequest
 {
-
     public $deviceConfig;
 
     public function __construct($deviceConfig)
@@ -18,8 +17,10 @@ class HpaSendFileRequest
 
     public function validate($sendFileInfo)
     {
-        if (empty($sendFileInfo) || empty($sendFileInfo->imageLocation) ||
-                empty($sendFileInfo->imageType)) {
+        if (
+            empty($sendFileInfo) || empty($sendFileInfo->imageLocation) ||
+                empty($sendFileInfo->imageType)
+        ) {
             throw new BuilderException("Input error: Image location / type missing");
         }
 
@@ -28,19 +29,27 @@ class HpaSendFileRequest
 
         //validate image size
         if ($sendFileInfo->imageType == SendFileType::BANNER) {
-            if ($this->deviceConfig->deviceType == DeviceType::HPA_ISC250 &&
-                    ($height > 60 || $width > 480)) {
+            if (
+                $this->deviceConfig->deviceType == DeviceType::HPA_ISC250 &&
+                    ($height > 60 || $width > 480)
+            ) {
                 throw new BuilderException("Incorrect file height and width");
-            } elseif ($this->deviceConfig->deviceType == DeviceType::HPA_IPP350 &&
-                    ($height > 40 || $width > 320)) {
+            } elseif (
+                $this->deviceConfig->deviceType == DeviceType::HPA_IPP350 &&
+                    ($height > 40 || $width > 320)
+            ) {
                 throw new BuilderException("Incorrect file height and width");
             }
         } elseif ($sendFileInfo->imageType == SendFileType::IDLELOGO) {
-            if ($this->deviceConfig->deviceType == DeviceType::HPA_ISC250 &&
-                    ($height > 272 || $width > 480)) {
+            if (
+                $this->deviceConfig->deviceType == DeviceType::HPA_ISC250 &&
+                    ($height > 272 || $width > 480)
+            ) {
                 throw new BuilderException("Incorrect file height and width");
-            } elseif ($this->deviceConfig->deviceType == DeviceType::HPA_IPP350 &&
-                    ($height > 240 || $width > 320)) {
+            } elseif (
+                $this->deviceConfig->deviceType == DeviceType::HPA_IPP350 &&
+                    ($height > 240 || $width > 320)
+            ) {
                 throw new BuilderException("Incorrect file height and width");
             }
         }

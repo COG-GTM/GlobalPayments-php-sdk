@@ -29,5 +29,5 @@ interface IPaymentGateway
 
     public function processReport(ReportBuilder $builder);
     public function serializeRequest(AuthorizationBuilder $builder);
-    public function supportsOpenBanking() : bool;
+    public function supportsOpenBanking(): bool;
 }

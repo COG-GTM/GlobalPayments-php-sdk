@@ -7,7 +7,6 @@ use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 
 class TraceResponse implements IResponseSubGroup
 {
-
     public $transactionNumber;
     public $referenceNumber;
     public $timeStamp;

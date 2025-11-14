@@ -36,7 +36,7 @@ class FraudManagementTest extends TestCase
     /** @var string */
     private string $currency = 'USD';
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->card = new CreditCardData();
@@ -732,7 +732,7 @@ class FraudManagementTest extends TestCase
 
         $this->assertGreaterThan(0, count($response->result));
         /** @var TransactionSummary $trnSummary */
-        $trnSummary = $response->result[rand(0, count($response->result) - 1)];
+        $trnSummary = $response->result[random_int(0, count($response->result) - 1)];
         $this->assertNotNull($trnSummary->fraudManagementResponse);
         $this->assertEquals(FraudFilterResult::PASS, $trnSummary->fraudManagementResponse->fraudResponseResult);
     }
