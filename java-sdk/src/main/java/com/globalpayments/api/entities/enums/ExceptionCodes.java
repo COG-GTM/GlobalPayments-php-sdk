@@ -1,0 +1,60 @@
+package com.globalpayments.api.entities.enums;
+
+public enum ExceptionCodes {
+    AUTHENTICATION_ERROR(0),
+    INVALID_CONFIGURATION(1),
+    INVALID_AMOUNT(2),
+    MISSING_CURRENCY(3),
+    INVALID_CURRENCY(4),
+    INVALID_DATE(5),
+    MISSING_CHECK_NAME(28),
+    INVALID_PHONE_NUMBER(33),
+    INVALID_ZIP_CODE(34),
+    INVALID_EMAIL_ADDRESS(35),
+    INVALID_INPUT_LENGTH(36),
+    UNKNOWN_GATEWAY_ERROR(6),
+    INVALID_ORIGINAL_TRANSACTION(7),
+    NO_OPEN_BATCH(8),
+    INVALID_CPC_DATA(9),
+    INVALID_CARD_DATA(10),
+    INVALID_NUMBER(11),
+    GATEWAY_TIMEOUT(12),
+    UNEXPECTED_GATEWAY_RESPONSE(13),
+    GATEWAY_TIMEOUT_REVERSAL_ERROR(14),
+    GATEWAY_ERROR(31),
+    UNEXPECTED_GATEWAY_ERROR(32),
+    INCORRECT_NUMBER(15),
+    EXPIRED_CARD(16),
+    INVALID_PIN(17),
+    PIN_ENTRIES_EXCEEDED(18),
+    INVALID_EXPIRY(19),
+    PIN_VERIFICATION(20),
+    ISSUER_TIMEOUT(21),
+    INCORRECT_CVC(22),
+    CARD_DECLINED(23),
+    PROCESSING_ERROR(24),
+    ISSUER_TIMEOUT_REVERSAL_ERROR(25),
+    UNKNOWN_CREDIT_ERROR(26),
+    POSSIBLE_FRAUD_DETECTED(27),
+    UNKNOWN_GIFT_ERROR(29),
+    PARTIAL_APPROVAL(30);
+
+    private final int value;
+
+    ExceptionCodes(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public static ExceptionCodes fromValue(int value) {
+        for (ExceptionCodes item : values()) {
+            if (item.value == value) {
+                return item;
+            }
+        }
+        throw new IllegalArgumentException("Unknown value: " + value);
+    }
+}
