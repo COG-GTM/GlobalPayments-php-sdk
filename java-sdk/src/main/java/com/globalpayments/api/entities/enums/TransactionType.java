@@ -62,8 +62,8 @@ public class TransactionType {
     public static final long PAYBYLINK_UPDATE = 144115188075855872L;
     public static final long TRANSFER_FUNDS = 288230376151711744L;
     public static final long DEVICE_ORDER = 576460752303423488L;
-    public static final long GET_TOKEN_INFO = 4461637978905770969L;
-    public static final long HOSTED_PAYMENT_PAGE = 8935141660703064064L;
+    public static final long GET_TOKEN_INFO = 1152921504606846976L; // 1 << 60
+    public static final long HOSTED_PAYMENT_PAGE = 2305843009213693952L; // 1 << 61
 
     private TransactionType() {
     }
