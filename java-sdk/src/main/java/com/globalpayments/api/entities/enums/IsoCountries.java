@@ -1,5 +1,6 @@
 package com.globalpayments.api.entities.enums;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -780,14 +781,14 @@ public class IsoCountries {
     }
 
     public static Map<String, String> getCountryCodeMap() {
-        return COUNTRY_CODE_MAP;
+        return Collections.unmodifiableMap(COUNTRY_CODE_MAP);
     }
 
     public static Map<String, String> getCountryNumericMap() {
-        return COUNTRY_NUMERIC_MAP;
+        return Collections.unmodifiableMap(COUNTRY_NUMERIC_MAP);
     }
 
     public static Map<String, String> getCountryAlpha3Map() {
-        return COUNTRY_ALPHA3_MAP;
+        return Collections.unmodifiableMap(COUNTRY_ALPHA3_MAP);
     }
 }

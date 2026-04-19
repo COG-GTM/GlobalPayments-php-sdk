@@ -37,7 +37,7 @@ public final class Enum {
             for (E constant : enumClass.getEnumConstants()) {
                 try {
                     Object backingValue = getValueMethod.invoke(constant);
-                    if (value.equals(backingValue) || valueStr.equals(String.valueOf(backingValue))) {
+                    if ((value != null && value.equals(backingValue)) || valueStr.equals(String.valueOf(backingValue))) {
                         return constant;
                     }
                 } catch (ReflectiveOperationException ignored) {
@@ -73,7 +73,7 @@ public final class Enum {
             for (E constant : enumClass.getEnumConstants()) {
                 try {
                     Object backingValue = getValueMethod.invoke(constant);
-                    if (value.equals(backingValue) || valueStr.equals(String.valueOf(backingValue))) {
+                    if ((value != null && value.equals(backingValue)) || valueStr.equals(String.valueOf(backingValue))) {
                         return constant.name();
                     }
                 } catch (ReflectiveOperationException ignored) {
