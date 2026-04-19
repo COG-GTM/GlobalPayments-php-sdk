@@ -76,7 +76,7 @@ public enum AlternativePaymentType {
     INTERNATIONAL_PAY_OUT("intpayout"),
     ITAU_BRAZIL("itaubrazil"),
     ITAU_CHILE("itauchile"),
-    O("latvianbt"),
+    LATVIAN_ONLINE_BANK_TRANSFER("latvianbt"),
     LINK("link"),
     LITHUANIAN_ONLINE_BANK_TRANSFER("lituanianbt"),
     MAGNA("magna"),
