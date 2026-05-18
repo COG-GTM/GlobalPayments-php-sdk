@@ -31,7 +31,7 @@ use GlobalPayments\Api\Entities\Enums\HPPAllowedPaymentMethods;
 use GlobalPayments\Api\Builders\Enums\HPPDisplayConfiguration;
 
 //This Demo page URL
-$demo_page_url = "https://".$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$demo_page_url = "https://" . filter_var($_SERVER['HTTP_HOST'], FILTER_SANITIZE_URL) . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
 
 // Configuration for the GPApiConfig
 $config = new GpApiConfig();
