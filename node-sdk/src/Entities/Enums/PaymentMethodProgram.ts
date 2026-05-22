@@ -1,0 +1,6 @@
+export enum PaymentMethodProgram {
+  ASSURED_RESERVATION = "ASSURED_RESERVATION",
+  CARD_DEPOSIT = "CARD_DEPOSIT",
+  PURCHASE = "PURCHASE",
+  OTHER = "OTHER",
+}

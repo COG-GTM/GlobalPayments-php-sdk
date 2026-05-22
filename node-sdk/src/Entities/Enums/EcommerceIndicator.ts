@@ -1,0 +1,7 @@
+export enum EcommerceIndicator {
+  ECOMMERCE_INDICATOR_1 = "1",
+  ECOMMERCE_INDICATOR_2 = "2",
+  ECOMMERCE_INDICATOR_3 = "3",
+  ECOMMERCE_INDICATOR_5 = "5",
+  ECOMMERCE_INDICATOR_7 = "7",
+}

@@ -1,0 +1,12 @@
+export enum PaymentEntryMode {
+  MOTO = "MOTO",
+  ECOM = "ECOM",
+  IN_APP = "IN_APP",
+  CHIP = "CHIP",
+  SWIPE = "SWIPE",
+  MANUAL = "MANUAL",
+  CONTACTLESS_CHIP = "CONTACTLESS_CHIP",
+  CONTACTLESS_SWIPE = "CONTACTLESS_SWIPE",
+  PHONE = "PHONE",
+  MAIL = "MAIL",
+}

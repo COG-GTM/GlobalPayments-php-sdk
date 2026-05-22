@@ -1,0 +1,7 @@
+export enum TerminalOutputCapability {
+  NONE = "NONE",
+  PRINT_ONLY = "PRINT_ONLY",
+  DISPLAY_ONLY = "DISPLAY_ONLY",
+  PRINT_AND_DISPLAY = "PRINT_AND_DISPLAY",
+  UNKNOWN = "UNKNOWN",
+}

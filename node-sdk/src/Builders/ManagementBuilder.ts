@@ -1,0 +1,37 @@
+export class ManagementBuilder extends TransactionBuilder {
+  public amount?: any;
+  public authAmount?: any;
+  public cardType?: any;
+  public commercialData?: any;
+  public convenienceAmount?: any;
+  public currency?: any;
+  public customerId?: any;
+  public customerIpAddress?: any;
+  public description?: any;
+  public gratuity?: any;
+  public invoiceNumber?: any;
+  public originalTransactionType?: any;
+  public poNumber?: any;
+  public reasonCode?: any;
+  public taxAmount?: any;
+  public taxType?: any;
+  public paymentMethod?: any;
+  public alternativePaymentType?: any;
+  public disputeId?: any;
+  public disputeDocuments?: any;
+  public payerAuthenticationResponse?: any;
+  public idempotencyKey?: any;
+  public batchReference?: any;
+  public bills?: any;
+  public dynamicDescriptor?: any;
+  public bankTransferDetails?: any;
+  public dccRateData?: any;
+  public lodgingData?: any;
+  public tagData?: any;
+  public transactionData?: any;
+  public paymentMethodUsageMode?: any;
+  public reference?: any;
+  public fundsData?: any;
+  public surchargeAmount: number | null = null;
+  public creditDebitIndicator: string | null = null;
+}

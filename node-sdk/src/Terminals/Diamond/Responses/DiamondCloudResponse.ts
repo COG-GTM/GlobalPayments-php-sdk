@@ -1,0 +1,31 @@
+export class DiamondCloudResponse extends TerminalResponse {
+  public aosa: string | null = null;
+  public authorizationMessage: string | null = null;
+  public authorizationMethod: string | null = null;
+  public authorizationType: string | null = null;
+  public cardBrandName: string | null = null;
+  public cardSource: string | null = null;
+  public date: string | null = null;
+  public currencyExchangeRate: number | null = null;
+  public dccCurrencyExponent: number | null = null;
+  public dccText1: string | null = null;
+  public dccText2: string | null = null;
+  public errorMessage: string | null = null;
+  public merchantId: string | null = null;
+  public clientTransactionId: string | null = null;
+  public terminalCurrency: string | null = null;
+  public terminalId: string | null = null;
+  public terminalPrintingIndicator: string | null = null;
+  public time: string | null = null;
+  public transactionAmountInTerminalCurrency: number | null = null;
+  public transactionCurrency: string | null = null;
+  public transactionTitle: string | null = null;
+  public emvApplicationId: string | null = null;
+  public emvTerminalVerificationResults: string | null = null;
+  public emvTransactionStatusInfo: string | null = null;
+  public emvCryptogram: string | null = null;
+  public emvCardTransactionCounter: string | null = null;
+  public invoiceNumber: string | null = null;
+  public resultId: string | null = null;
+  public batchNumber: string | null = null;
+}

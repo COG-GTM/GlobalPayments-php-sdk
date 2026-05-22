@@ -1,0 +1,2 @@
+export class MakeQuickPayBlindPaymentReturnTokenRequest extends MakeQuickPayBlindPaymentRequest {
+}

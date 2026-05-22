@@ -1,0 +1,6 @@
+export enum ExemptionReason {
+  APPLY_EXEMPTION = "APPLY_EXEMPTION",
+  EOS_CONTINUE = "CONTINUE",
+  FORCE_SECURE = "FORCE_SECURE",
+  BLOCK = "BLOCK",
+}

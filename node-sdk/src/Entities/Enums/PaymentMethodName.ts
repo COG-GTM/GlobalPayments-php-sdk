@@ -1,0 +1,8 @@
+export enum PaymentMethodName {
+  APM = "APM",
+  DIGITAL_WALLET = "DIGITAL WALLET",
+  CARD = "CARD",
+  BANK_TRANSFER = "BANK_TRANSFER",
+  BANK_PAYMENT = "BANK PAYMENT",
+  BNPL = "BNPL",
+}

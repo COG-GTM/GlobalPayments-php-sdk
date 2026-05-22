@@ -1,0 +1,30 @@
+export class RequestTransactionFields {
+  public baseAmount: any = null;
+  public taxAmount: any = null;
+  public tipAmount: any = null;
+  public taxIndicator: any = null;
+  public cashBackAmount: any = null;
+  public tippableAmount: any = null;
+  public preAuthAmount: any = null;
+  public invoiceNbr: any = null;
+  public tranNo: any = null;
+  public totalAmount: any = null;
+  public amount: any = null;
+  public referenceNumber: any = null;
+  public cardIsHSAFSA: any = null;
+  public prescriptionAmount: any = null;
+  public clinicAmount: any = null;
+  public dentalAmount: any = null;
+  public visionOpticalAmount: any = null;
+  public processCPC: number = null;
+  public authorizedAmount: string | null = null;
+  public cardAcquisition: string | null = null;
+  public allowDuplicate: number | null = null;
+  public HSAFSATokenTran: number | null = null;
+  public purchaseOrder: string | null = null;
+  public clerkId: number | null = null;
+  public confirmAmount: string | null = null;
+  public transactionType: string | null = null;
+  public tranDate: string | null = null;
+  public tranTime: string | null = null;
+}
