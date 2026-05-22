@@ -1,0 +1,30 @@
+export class AuthorizationRecord {
+  public addToBatchReferenceNumber: string | null = null;
+  public amount: number | null = null;
+  public authCode: string | null = null;
+  public authorizationType: string | null = null;
+  public avsResultCode: string | null = null;
+  public avsResultText: string | null = null;
+  public cardEntryMethod: string | null = null;
+  public cvvResultCode: string | null = null;
+  public cvvResultText: string | null = null;
+  public emvApplicationCryptogram: string | null = null;
+  public emvApplicationCryptogramType: string | null = null;
+  public emvApplicationID: string | null = null;
+  public emvApplicationName: string | null = null;
+  public emvCardholderVerificationMethod: string | null = null;
+  public emvIssuerResponse: string | null = null;
+  public emvSignatureRequired: string | null = null;
+  public gateway: string | null = null;
+  public gatewayBatchID: string | null = null;
+  public gatewayDescription: string | null = null;
+  public maskedAccountNumber: string | null = null;
+  public maskedRoutingNumber: string | null = null;
+  public paymentMethod: string | null = null;
+  public referenceAuthorizationID: number | null = null;
+  public referenceNumber: string | null = null;
+  public routingNumber: string | null = null;
+  public authorizationID: number | null = null;
+  public netAmount: number | null = null;
+  public originalAuthorizationID: number | null = null;
+}

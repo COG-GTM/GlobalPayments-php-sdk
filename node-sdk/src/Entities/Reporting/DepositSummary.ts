@@ -1,0 +1,30 @@
+export class DepositSummary extends BaseSummary {
+  public depositId?: any;
+  public depositDate?: any;
+  public reference?: any;
+  public type?: any;
+  public routingNumber?: any;
+  public accountNumber?: any;
+  public mode?: any;
+  public summaryModel?: any;
+  public salesTotalCount?: any;
+  public salesTotalAmount?: any;
+  public salesTotalCurrency?: any;
+  public refundsTotalCount?: any;
+  public refundsTotalAmount?: any;
+  public refundsTotalCurrency?: any;
+  public chargebackTotalCount?: any;
+  public chargebackTotalAmount?: any;
+  public chargebackTotalCurrency?: any;
+  public representmentTotalCount?: any;
+  public representmentTotalAmount?: any;
+  public representmentTotalCurrency?: any;
+  public feesTotalAmount?: any;
+  public feesTotalCurrency?: any;
+  public adjustmentTotalCount?: any;
+  public adjustmentTotalAmount?: any;
+  public adjustmentTotalCurrency?: any;
+  public status?: any;
+  public taxTotalCount: number = null;
+  public taxTotalAmount: string = null;
+}

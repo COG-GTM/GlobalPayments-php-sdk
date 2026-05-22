@@ -1,0 +1,68 @@
+{
+  "name": "@globalpayments/node-sdk",
+  "version": "0.1.0",
+  "description": "GlobalPayments Node.js/TypeScript SDK - Payment processing library supporting GP-API, GP-Ecom, Portico, TransIT, and terminal integrations",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/cjs/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
+    "test": "jest",
+    "test:unit": "jest --testPathPattern=test/Unit",
+    "test:integration": "jest --testPathPattern=test/Integration",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "globalpayments",
+    "payment",
+    "credit-card",
+    "gateway",
+    "gp-api",
+    "portico",
+    "heartland",
+    "realex",
+    "terminal",
+    "upa",
+    "pax"
+  ],
+  "author": "Global Payments",
+  "license": "GPL-2.0",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.3.0",
+    "ts-jest": "^29.1.4",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.0",
+    "fast-xml-parser": "^4.4.0",
+    "xmlbuilder2": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

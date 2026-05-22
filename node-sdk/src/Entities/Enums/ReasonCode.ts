@@ -1,0 +1,8 @@
+export enum ReasonCode {
+  FRAUD = "FRAUD",
+  FALSE_POSITIVE = "FALSEPOSITIVE",
+  OUT_OF_STOCK = "OUTOFSTOCK",
+  IN_STOCK = "INSTOCK",
+  OTHER = "OTHER",
+  NOT_GIVEN = "NOTGIVEN",
+}

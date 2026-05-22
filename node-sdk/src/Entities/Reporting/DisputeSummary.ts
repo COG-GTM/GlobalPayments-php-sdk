@@ -1,0 +1,36 @@
+export class DisputeSummary extends BaseSummary {
+  public depositDate?: any;
+  public depositReference?: any;
+  public caseAmount?: any;
+  public caseCurrency?: any;
+  public caseStage: string | null = null;
+  public caseStatus?: any;
+  public transactionTime?: any;
+  public transactionType?: any;
+  public transactionAmount?: any;
+  public transactionCurrency?: any;
+  public caseId: string | null = null;
+  public caseIdTime?: any;
+  public caseMerchantId?: any;
+  public transactionARN?: any;
+  public transactionReferenceNumber?: any;
+  public transactionAuthCode?: any;
+  public transactionCardType?: any;
+  public transactionMaskedCardNumber?: any;
+  public reason?: any;
+  public reasonCode?: any;
+  public result?: any;
+  public issuerComment: any[] = [];
+  public issuerCaseNumber: any[] = [];
+  public disputeCustomerAmount?: any;
+  public disputeCustomerCurrency: string | null = null;
+  public lastAdjustmentAmount?: any;
+  public lastAdjustmentCurrency?: any;
+  public lastAdjustmentFunding?: any;
+  public lastAdjustmentTimeCreated: string | null = null;
+  public documents?: any;
+  public transactionBrandReference: string | null = null;
+  public fundingType: string | null = null;
+  public orderId: string | null = null;
+  public responseCode: string | null = null;
+}

@@ -1,0 +1,30 @@
+export class TerminalResponse extends DeviceResponse {
+  public responseCode?: any;
+  public responseText?: any;
+  public transactionId?: any;
+  public terminalRefNumber?: any;
+  public token?: any;
+  public signatureStatus?: any;
+  public signatureData?: any;
+  public transactionType?: any;
+  public entryMethod?: any;
+  public authorizationCode?: any;
+  public cardType: string | null = null;
+  public cardGroup: string | null = null;
+  public cardPresent?: any;
+  public expirationDate?: any;
+  public cashBackAmount?: any;
+  public avsResponseText?: any;
+  public cvvResponseCode?: any;
+  public cvvResponseText?: any;
+  public taxExempt?: any;
+  public taxExemptId?: any;
+  public ticketNumber?: any;
+  public applicationLabel?: any;
+  public applicationCryptogram?: any;
+  public cardHolderVerificationMethod?: any;
+  public terminalVerificationResults?: any;
+  public ecrId: string | null = null;
+  public requestId: string | null = null;
+  public multipleMessage: string | null = null;
+}

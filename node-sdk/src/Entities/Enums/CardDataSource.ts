@@ -1,0 +1,12 @@
+export enum CardDataSource {
+  SWIPE = "SWIPE",
+  NFC = "NFC",
+  EMV = "EMV",
+  EMV_CONTACTLESS = "EMV_CONTACTLESS",
+  FALLBACK_SWIPE = "FALLBACK_SWIPE",
+  BAR_CODE = "BAR_CODE",
+  MANUAL = "MANUAL",
+  PHONE = "PHONE",
+  MAIL = "MAIL",
+  INTERNET = "INTERNET",
+}

@@ -1,0 +1,7 @@
+export enum SdkUiType {
+  TEXT = "TEXT",
+  SINGLE_SELECT = "SINGLE_SELECT",
+  MULTI_SELECT = "MULTI_SELECT",
+  OOB = "OOB",
+  HTML_OTHER = "HTML_OTHER",
+}

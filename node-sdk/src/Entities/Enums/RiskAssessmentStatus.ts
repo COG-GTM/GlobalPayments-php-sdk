@@ -1,0 +1,6 @@
+export enum RiskAssessmentStatus {
+  ACCEPTED = "ACCEPTED",
+  REJECTED = "REJECTED",
+  CHALLENGE = "CHALLENGE",
+  PENDING_REVIEW = "PENDING_REVIEW",
+}

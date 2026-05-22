@@ -1,0 +1,8 @@
+export enum DepositStatus {
+  FUNDED = "FUNDED",
+  SPLIT_FUNDING = "SPLIT_FUNDING",
+  DELAYED = "DELAYED",
+  RESERVED = "RESERVED",
+  IRREG = "IRREG",
+  RELEASED = "RELEASED",
+}

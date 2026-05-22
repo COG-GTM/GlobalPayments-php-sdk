@@ -1,0 +1,9 @@
+export enum LodgingItemType {
+  RESTAURANT = "RESTAURANT",
+  GIFT_SHOP = "GIFT_SHOP",
+  MINI_BAR = "MINI_BAR",
+  PHONE = "PHONE",
+  LAUNDRY = "LAUNDRY",
+  OTHER = "OTHER",
+  NO_SHOW = "NO_SHOW",
+}
