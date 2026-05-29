@@ -38,4 +38,6 @@ class ServiceEndpoints extends Enum
     const BILLPAY_TEST = "https://testing.heartlandpaymentservices.net";
     const BILLPAY_CERTIFICATION = "https://staging.heartlandpaymentservices.net";
     const BILLPAY_PRODUCTION = "https://heartlandpaymentservices.net";
+    const PAYPAL_PRODUCTION = "https://api-m.paypal.com";
+    const PAYPAL_TEST = "https://api-m.sandbox.paypal.com";
 }
