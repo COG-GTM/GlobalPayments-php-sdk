@@ -58,6 +58,9 @@
     <testsuite name="hpp-integration">
       <file>./test/Integration/Gateways/GpApiConnector/HPPIntegrationTest.php</file>
     </testsuite>
+    <testsuite name="paypal">
+      <directory>./test/Integration/Gateways/PayPalConnector/</directory>
+    </testsuite>
   </testsuites>
 </phpunit>
 <!-- vim: set ft=xml -->
