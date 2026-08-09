@@ -26,7 +26,7 @@ class PayerTest extends TestCase
     private Address $billingAddress;
     private Address $shippingAddress;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
 

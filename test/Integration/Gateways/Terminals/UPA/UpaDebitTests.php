@@ -28,7 +28,7 @@ class UpaDebitTests extends TestCase
     private IDeviceInterface $device;
     private float $amount;
 
-   public function setup() : void
+   public function setUp() : void
     {
         $this->device = DeviceService::create($this->getConfig());
         $this->amount = $this->generateRandomAmount(1, 10, 2);

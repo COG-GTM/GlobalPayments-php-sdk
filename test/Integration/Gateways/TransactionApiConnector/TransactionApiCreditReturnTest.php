@@ -26,7 +26,7 @@ class TransactionApiCreditReturnTest extends TestCase
     private Address $addressCa;
 
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->card = new CreditCardData();

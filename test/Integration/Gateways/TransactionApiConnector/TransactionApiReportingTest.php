@@ -29,7 +29,7 @@ class TransactionApiReportingTest extends TestCase
     private CreditCardData $card;
     private Address $address;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->setUpConfig();
         ServicesContainer::configureService($this->config);

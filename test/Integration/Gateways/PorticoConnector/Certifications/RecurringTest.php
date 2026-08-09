@@ -81,7 +81,7 @@ final class RecurringTest extends TestCase
         return $config;
     }
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->config());
 

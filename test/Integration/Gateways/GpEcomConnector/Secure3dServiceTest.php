@@ -34,7 +34,7 @@ class Secure3dServiceTest extends TestCase
     private BrowserData $browserData;
     private GatewayProvider|string $gatewayProvider;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->getConfig();
         ServicesContainer::configureService($config);

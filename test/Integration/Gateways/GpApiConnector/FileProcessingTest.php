@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 class FileProcessingTest  extends TestCase
 {
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
     }

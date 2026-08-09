@@ -21,7 +21,7 @@ class PorticoReportingTests extends TestCase
     /** @var ReportingService */
     private ReportingService $reportingService;
 
-    public function setup() : void
+    public function setUp() : void
     {
         $this->card = new CreditCardData();
         $this->card->number = '4111111111111111';

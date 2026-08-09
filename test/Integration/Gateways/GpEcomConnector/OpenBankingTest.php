@@ -24,7 +24,7 @@ class OpenBankingTest extends TestCase
     private string $remittanceReferenceValue = 'Nike Bounce Shoes';
     private bool $runAuto = true;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->getConfig();
         ServicesContainer::configureService($config);

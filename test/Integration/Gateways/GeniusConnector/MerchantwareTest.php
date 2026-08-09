@@ -21,7 +21,7 @@ class MerchantwareTest extends TestCase
     protected $tokenizedCard;
     protected $track;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->getConfig());
 

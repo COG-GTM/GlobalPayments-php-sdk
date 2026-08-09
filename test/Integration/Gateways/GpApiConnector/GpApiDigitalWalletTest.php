@@ -24,7 +24,7 @@ class GpApiDigitalWalletTest extends TestCase
     private string $googlePayToken;
     private string $clickToPayToken;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->card = new CreditCardData();

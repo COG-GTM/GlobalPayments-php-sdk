@@ -29,7 +29,7 @@ class ReportingDisputesTest extends TestCase
     private DateTime $startDate;
     private DateTime $endDate;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->startDate = (new DateTime())->modify('-30 days')->setTime(0, 0, 0);

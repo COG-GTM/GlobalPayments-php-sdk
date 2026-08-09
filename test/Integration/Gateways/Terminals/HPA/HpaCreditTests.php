@@ -15,7 +15,7 @@ class HpaCreditTests extends TestCase
 
     private $device;
 
-    public function setup() : void
+    public function setUp() : void
     {
         $this->device = DeviceService::create($this->getConfig());
 
@@ -135,11 +135,11 @@ class HpaCreditTests extends TestCase
     }
 
     /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage amount cannot be null for this transaction type
      */
     public function testAuthWithoutAmount()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('amount cannot be null for this transaction type');
         $response = $this->device->authorize()
                 ->execute();
 

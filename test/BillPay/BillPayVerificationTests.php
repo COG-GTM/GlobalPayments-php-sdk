@@ -50,7 +50,7 @@ class BillPayVerificationTests extends TestCase
     protected Bill $billLoad;
     protected Bill $blindBill;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->getConfig());
 

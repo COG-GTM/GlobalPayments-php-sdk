@@ -22,7 +22,7 @@ class CreditTest extends TestCase
 {
     protected CreditCardData $card;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $card = new CreditCardData();
         $card->number = '4111111111111111';

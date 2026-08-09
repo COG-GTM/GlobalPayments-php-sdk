@@ -13,7 +13,7 @@ class HpaVerificationTests extends TestCase
 {
     private $device;
 
-    public function setup() : void
+    public function setUp() : void
     {
         $this->device = DeviceService::create($this->getConfig());
         
@@ -222,10 +222,10 @@ class HpaVerificationTests extends TestCase
     */
     
     /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\UnsupportedTransactionException
      */
     public function testCase07()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\UnsupportedTransactionException::class);
         $response = $this->device->debitSale(10)
           ->execute();
 

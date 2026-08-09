@@ -81,7 +81,7 @@ class ApmTest extends TestCase
         return $config;
     }
 
-    public function setup() : void
+    public function setUp() : void
     {
         ServicesContainer::configureService($this->config());
         ServicesContainer::configureService($this->blikConfig(), 'blikConfig');

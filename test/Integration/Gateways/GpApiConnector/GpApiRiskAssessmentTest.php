@@ -47,7 +47,7 @@ class GpApiRiskAssessmentTest extends TestCase
     /** @var CreditCardData */
     private CreditCardData $card;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->setUpConfig();
         ServicesContainer::configureService($config);

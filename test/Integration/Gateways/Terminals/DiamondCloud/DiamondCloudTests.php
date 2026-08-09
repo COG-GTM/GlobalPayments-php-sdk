@@ -26,7 +26,7 @@ class DiamondCloudTests extends TestCase
     private string $posID = '1342641186174645';
     private DiamondCloudConfig $config;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->config = $this->getConfig();
         $this->device = DeviceService::create($this->config);

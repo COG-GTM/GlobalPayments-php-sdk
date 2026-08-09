@@ -19,7 +19,7 @@ class UpaVerificationTests extends TestCase
     private $device;
     private $config;
 
-    public function setup() : void
+    public function setUp() : void
     {
         $this->device = DeviceService::create($this->getConfig());
     }
@@ -208,13 +208,11 @@ class UpaVerificationTests extends TestCase
      *
      */
     
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\GatewayException
-     * @expectedExceptionMessage Unexpected Gateway Response: HOST001 - HOST ERROR
-     */
-    
     public function test006DuplicateTransaction()
     {
+        $this->expectException(GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
+        $this->expectExceptionMessage('Unexpected Gateway Response: HOST001 - HOST ERROR');
+
         $response = $this->device->sale(2)
         ->withRequestId(22)
         ->execute();

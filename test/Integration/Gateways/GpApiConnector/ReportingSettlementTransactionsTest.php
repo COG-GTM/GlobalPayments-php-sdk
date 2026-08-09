@@ -24,7 +24,7 @@ use ReflectionClass;
 
 class ReportingSettlementTransactionsTest extends TestCase
 {
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
     }

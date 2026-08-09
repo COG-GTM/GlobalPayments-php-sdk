@@ -15,7 +15,7 @@ class MerchantwareGiftTests extends TestCase
     protected $card;
     protected $track;
 
-    public function setup() : void
+    public function setUp() : void
     {
         ServicesContainer::configureService($this->getConfig());
 

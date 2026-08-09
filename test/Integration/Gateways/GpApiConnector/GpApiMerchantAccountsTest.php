@@ -39,7 +39,7 @@ class GpApiMerchantAccountsTest extends TestCase
     /** @var GpApiConfig */
     private GpApiConfig $config;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->setUpConfig();
         ServicesContainer::configureService($this->config);

@@ -15,7 +15,7 @@ class PaxEBTTests extends TestCase
 
     private $device;
 
-    public function setup() : void
+    public function setUp() : void
     {
         $this->device = DeviceService::create($this->getConfig());
     }
@@ -94,11 +94,11 @@ class PaxEBTTests extends TestCase
     }
 
     /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage Property `currency`is equal to the expected value `VOUCHER`
      */
     public function testEbtBalanceInquiryWithVoucher()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('Property `currency`is equal to the expected value `VOUCHER`');
         $this->device->balance()
             ->withPaymentMethodType(PaymentMethodType::EBT)
             ->withCurrency(CurrencyType::VOUCHER)
@@ -127,11 +127,11 @@ class PaxEBTTests extends TestCase
     }
 
     /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage amount cannot be null for this transaction type
      */
     public function testEbtRefundAllowDup()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('amount cannot be null for this transaction type');
         $this->device->refund()
             ->withPaymentMethodType(PaymentMethodType::EBT)
             ->withAllowDuplicates(true)
@@ -148,11 +148,11 @@ class PaxEBTTests extends TestCase
     }
 
     /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage currency cannot be null for this transaction type
      */
     public function testEbtBenefitWithdrawalAllowDup()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('currency cannot be null for this transaction type');
         $this->device->withdrawal(10)
             ->withAllowDuplicates(true)
             ->execute();

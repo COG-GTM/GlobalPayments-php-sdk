@@ -26,7 +26,7 @@ class ApiCaseTest extends TestCase
 {
     /* 01. Process Payment Authorisation */
 
-    public function setup() : void
+    public function setUp() : void
     {
         $config = new GpEcomConfig();
         $config->merchantId = 'heartlandgpsandbox';

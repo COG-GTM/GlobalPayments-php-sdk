@@ -84,7 +84,7 @@ class HppTest extends TestCase
     /**
      * @throws ApiException
      */
-    public function setup(): void
+    public function setUp(): void
     {
         $this->service = new HostedService($this->config());
     }

@@ -19,7 +19,7 @@ class GeniusTests extends TestCase
      */
     public $device;
 
-    public function setup() : void
+    public function setUp() : void
     {
         $this->device = DeviceService::create($this->getConfig());
     }
