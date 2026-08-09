@@ -1,0 +1,9 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 3
+    paths:
+        - src
+    # The baseline will drift as COG-884 fixes src/; stale entries should not fail the run.
+    reportUnmatchedIgnoredErrors: false

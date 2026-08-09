@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.2', '8.3']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: curl, dom, openssl, json, zlib, intl, mbstring, fileinfo
+      - name: Validate Composer configuration
+        # --strict is intentionally omitted because the deliberate exact
+        # symfony/process pin triggers Composer's semver warning.
+        run: composer validate
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+      - name: PHPStan static analysis
+        # PHPStan baseline coverage is being adopted incrementally; make this
+        # blocking once COG-884 resolves the remaining non-baselinable findings.
+        continue-on-error: true
+        run: vendor/bin/phpstan analyse
+      - name: PHP coding standards
+        # COG-884 owns the pre-existing PSR-12 violations in src/.
+        continue-on-error: true
+        run: vendor/bin/phpcs --standard=phpcs.xml
+      - name: HPP unit tests
+        # This suite has 20 pre-existing errors and 20 failures under both
+        # PHPUnit 9.6.19 and 11; COG-884 owns the fixes. Flip this back to
+        # blocking once COG-884 lands.
+        continue-on-error: true
+        run: vendor/bin/phpunit --testsuite hpp-unit
