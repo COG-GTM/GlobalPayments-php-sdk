@@ -88,7 +88,6 @@ class PayFacService
      *
      */
     // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
-    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     public static function UploadDocument()
     {
         return new PayFacBuilder(TransactionType::UPLOAD_DOCUMENT);

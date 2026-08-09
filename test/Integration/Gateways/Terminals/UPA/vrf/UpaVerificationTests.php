@@ -210,7 +210,7 @@ class UpaVerificationTests extends TestCase
     
     public function test006DuplicateTransaction()
     {
-        $this->expectException(GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
         $this->expectExceptionMessage('Unexpected Gateway Response: HOST001 - HOST ERROR');
 
         $response = $this->device->sale(2)

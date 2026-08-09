@@ -125,7 +125,7 @@ class HpaCreditTests extends TestCase
 
     public function testSaleWithoutAmount()
     {
-        $this->expectException(GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
         $this->expectExceptionMessage("amount cannot be null for this transaction type");
         $response = $this->device->sale()
                 ->execute();
@@ -147,7 +147,7 @@ class HpaCreditTests extends TestCase
 
     public function testCaptureWithoutAmount()
     {
-        $this->expectException(GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
         $this->expectExceptionMessage("amount cannot be null for this transaction type");
         $response = $this->device->capture()
                 ->withTransactionId(1234)
@@ -159,7 +159,7 @@ class HpaCreditTests extends TestCase
 
     public function testRefundWithoutAmount()
     {
-        $this->expectException(GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
         $this->expectExceptionMessage("amount cannot be null for this transaction type");
         $response = $this->device->refund()
                 ->withTransactionId(1234)
@@ -169,7 +169,7 @@ class HpaCreditTests extends TestCase
     public function testCaptureWithoutTransactionId()
     {
         $this->expectExceptionMessage("transactionId cannot be null for this transaction type");
-        $this->expectException(GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
         $response = $this->device->capture(10)
                 ->execute();
     }

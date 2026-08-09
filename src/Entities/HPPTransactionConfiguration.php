@@ -107,11 +107,6 @@ class HPPTransactionConfiguration
             }
         }
 
-        // Validate currencyConversionMode
-        if (!is_null($this->currencyConversionMode) && !is_bool($this->currencyConversionMode)) {
-            $errors[] = 'currencyConversionMode must be a boolean value';
-        }
-
         // Validate usageMode
         if (!empty($this->usageMode)) {
             try {
