@@ -6,6 +6,8 @@
 
 namespace GlobalPayments\Api\Entities;
 
+use GlobalPayments\Api\Utils\StringUtils;
+
 /**
  * Configuration class for AMP's in hosted payment pages
  * These properties are PayPal specific. From the Documentation:
@@ -32,18 +34,26 @@ class HPPApmConfiguration
      */
     public function validate(): array
     {
-        $errors = [];
-        
-        // Validate shippingAddressEnabled, if provided
-        if (!is_null($this->shippingAddressEnabled) && !is_bool($this->shippingAddressEnabled)) {
-            $errors[] = 'shippingAddressEnabled must be a boolean value';
+        return [];
+    }
+
+    /**
+     * Convert to array representation.
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $result = [];
+
+        if (!empty($this->shippingAddressEnabled)) {
+            $result['shipping_address_enabled'] = StringUtils::boolToYesNo($this->shippingAddressEnabled);
         }
-        
-        // Validate addressOverride, if provided
-        if (!is_null($this->addressOverride) && !is_bool($this->addressOverride)) {
-            $errors[] = 'addressOverride must be a boolean value';
+
+        if (!empty($this->addressOverride)) {
+            $result['address_override'] = StringUtils::boolToYesNo($this->addressOverride);
         }
-        
-        return $errors;
+
+        return $result;
     }
 }

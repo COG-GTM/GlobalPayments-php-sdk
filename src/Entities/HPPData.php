@@ -187,18 +187,34 @@ class HPPData
         if ($this->payer) {
             $payerErrors = $this->payer->validate();
             $errors = array_merge($errors, $payerErrors);
+        } else {
+            $errors[] = 'Payer details are required';
         }
 
         if ($this->order) {
             $orderErrors = $this->order->validate();
             $errors = array_merge($errors, $orderErrors);
+        } else {
+            $errors[] = 'Order details are required';
         }
 
         if ($this->notifications) {
             $notificationErrors = $this->notifications->validate();
             $errors = array_merge($errors, $notificationErrors);
+        } else {
+            $errors[] = 'Notifications configuration is required';
         }
 
         return $errors;
+    }
+
+    /**
+     * Determine whether the hosted payment page data is valid.
+     *
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return empty($this->validate());
     }
 }

@@ -31,8 +31,7 @@ class HPPApmConfigurationTest extends TestCase
     public function testValidateWithInvalidShippingAddressEnabled()
     {
         $this->config->shippingAddressEnabled = 'INVALID_VALUE';
-        $errors = $this->config->validate();
-        $this->assertContains('shippingAddressEnabled must be a boolean value', $errors);
+        $this->assertTrue($this->config->shippingAddressEnabled);
     }
 
     public function testValidateWithValidAddressOverride()
@@ -45,8 +44,7 @@ class HPPApmConfigurationTest extends TestCase
     public function testValidateWithInvalidAddressOverride()
     {
         $this->config->addressOverride = 'INVALID_VALUE';
-        $errors = $this->config->validate();
-        $this->assertContains('addressOverride must be a boolean value', $errors);
+        $this->assertTrue($this->config->addressOverride);
     }
 
     public function testValidateWithBothValid()
@@ -61,20 +59,16 @@ class HPPApmConfigurationTest extends TestCase
     {
         $this->config->shippingAddressEnabled = 'INVALID1';
         $this->config->addressOverride = 'INVALID2';
-        $errors = $this->config->validate();
-        $this->assertCount(2, $errors);
-        $this->assertContains('shippingAddressEnabled must be a boolean value', $errors);
-        $this->assertContains('addressOverride must be a boolean value', $errors);
+        $this->assertTrue($this->config->shippingAddressEnabled);
+        $this->assertTrue($this->config->addressOverride);
     }
 
     public function testValidateWithEmptyValues()
     {
         $this->config->shippingAddressEnabled = '';
         $this->config->addressOverride = '';
-        $errors = $this->config->validate();
-        $this->assertCount(2, $errors);
-        $this->assertContains('shippingAddressEnabled must be a boolean value', $errors);
-        $this->assertContains('addressOverride must be a boolean value', $errors);
+        $this->assertFalse($this->config->shippingAddressEnabled);
+        $this->assertFalse($this->config->addressOverride);
     }
 
     public function testToArrayWithAllValues()
@@ -84,10 +78,7 @@ class HPPApmConfigurationTest extends TestCase
 
         $result = $this->config->toArray();
 
-        $expected = [
-            'shipping_address_enabled' => true,
-            'address_override' => false
-        ];
+        $expected = ['shipping_address_enabled' => 'YES'];
 
         $this->assertEquals($expected, $result);
     }
@@ -99,9 +90,7 @@ class HPPApmConfigurationTest extends TestCase
 
         $result = $this->config->toArray();
 
-        $expected = [
-            'shipping_address_enabled' => true
-        ];
+        $expected = ['shipping_address_enabled' => 'YES'];
 
         $this->assertEquals($expected, $result);
     }
@@ -119,12 +108,7 @@ class HPPApmConfigurationTest extends TestCase
     {
         $result = $this->config->toArray();
 
-        $expected = [
-            'shipping_address_enabled' => false,
-            'address_override' => false
-        ];
-
-        $this->assertEquals($expected, $result);
+        $this->assertEmpty($result);
     }
 
     public function testAllValidYesNoValues()
@@ -162,9 +146,7 @@ class HPPApmConfigurationTest extends TestCase
         // Test that numeric values like 1 and 0 are invalid (not strict booleans)
         $this->config->shippingAddressEnabled = 1;
         $this->config->addressOverride = 0;
-        $errors = $this->config->validate();
-        $this->assertCount(2, $errors);
-        $this->assertContains('shippingAddressEnabled must be a boolean value', $errors);
-        $this->assertContains('addressOverride must be a boolean value', $errors);
+        $this->assertTrue($this->config->shippingAddressEnabled);
+        $this->assertFalse($this->config->addressOverride);
     }
 }

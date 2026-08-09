@@ -82,7 +82,7 @@ class HPPOrderTest extends TestCase
         $this->order->currency = 'USD';
         
         $errors = $this->order->validate();
-        $this->assertContains('Amount must be a positive number', $errors);
+        $this->assertContains('Amount is required for hosted payment order', $errors);
     }
 
     public function testValidateWithMissingCurrency()

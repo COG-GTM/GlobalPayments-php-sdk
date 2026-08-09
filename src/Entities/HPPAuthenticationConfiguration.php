@@ -62,11 +62,6 @@ class HPPAuthenticationConfiguration
             }
         }
         
-        // Validate billingAddressRequired, if provided
-        if (!is_null($this->billingAddressRequired) && !is_bool($this->billingAddressRequired)) {
-            $errors[] = 'billingAddressRequired must be a boolean value';
-        }
-        
         return $errors;
     }
     

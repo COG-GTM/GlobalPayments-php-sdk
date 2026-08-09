@@ -31,10 +31,18 @@ class HPPUrlGenerationTest extends TestCase
 
     public function setUp(): void
     {
+        $appId = getenv('GP_API_APP_ID');
+        $appKey = getenv('GP_API_APP_KEY');
+        if (empty($appId) || empty($appKey)) {
+            $this->markTestSkipped(
+                'HPP URL generation requires GP_API_APP_ID and GP_API_APP_KEY environment variables.'
+            );
+        }
+
         // Set up test configuration
         $this->config = new GpApiConfig();
-        $this->config->appId = 'YOUR_APP_ID';
-        $this->config->appKey = 'YOUR_APP_KEY';
+        $this->config->appId = $appId;
+        $this->config->appKey = $appKey;
         $this->config->environment = Environment::TEST;
         $this->config->country = 'GB';
         $this->config->channel = Channel::CardNotPresent;
