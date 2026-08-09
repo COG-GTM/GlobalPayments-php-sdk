@@ -197,7 +197,7 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                 ];
                 break;
             case TransactionType::HOSTED_PAYMENT_PAGE:
-                // P.M: Similar to TransactionType::CREATE, but with more data in the request some of which is required 
+                // P.M: Similar to TransactionType::CREATE, but with more data in the request some of which is required
                 // for the 3DS challange.
                 if ($builder->hostedPaymentData) {
                     $endpoint = GpApiRequest::PAYBYLINK_ENDPOINT;
@@ -209,34 +209,34 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                     $requestData['name'] = $builder->hostedPaymentData->name;
                     $requestData['description'] = $builder->hostedPaymentData->description;
                     $requestData['reference'] = $builder->hostedPaymentData->reference;
-                    if(property_exists($builder->hostedPaymentData, 'expirationDate') && !empty($builder->hostedPaymentData->expirationDate)) {
+                    if (property_exists($builder->hostedPaymentData, 'expirationDate') && !empty($builder->hostedPaymentData->expirationDate)) {
                         $requestData['expiration_date'] = (new \DateTime($builder->hostedPaymentData->expirationDate))->format('Y-m-d\TH:i:s\Z');
                     }
-                    if(property_exists($builder->hostedPaymentData, "images") && !empty($builder->hostedPaymentData->images)) {
+                    if (property_exists($builder->hostedPaymentData, "images") && !empty($builder->hostedPaymentData->images)) {
                         $requestData['images'] = $builder->hostedPaymentData->images;
                     }
 
                     $shippable = $builder->hostedPaymentData->shippable ?? false;
-                    $requestData['shippable'] = is_bool($shippable) 
-                        ? StringUtils::boolToYesNo($shippable) 
+                    $requestData['shippable'] = is_bool($shippable)
+                        ? StringUtils::boolToYesNo($shippable)
                         : "NO";
-                    
+
                     // Add shipping_amount if shippable is YES and amount is provided
                     if ($requestData['shippable'] === 'YES' && !empty($builder->hostedPaymentData->shippingAmount)) {
                         $requestData['shipping_amount'] = StringUtils::toNumeric($builder->hostedPaymentData->shippingAmount);
                     }
-                    
+
                     // Add usage_mode and usage_limit
                     if ($builder->hostedPaymentData->order && $builder->hostedPaymentData->order->HPPTransactionConfiguration) {
                         if (!empty($builder->hostedPaymentData->order->HPPTransactionConfiguration->usageMode)) {
                             $requestData['usage_mode'] = $builder->hostedPaymentData->order->HPPTransactionConfiguration->usageMode;
                         }
-                        
+
                         if (!empty($builder->hostedPaymentData->order->HPPTransactionConfiguration->usageLimit)) {
                             $requestData['usage_limit'] = $builder->hostedPaymentData->order->HPPTransactionConfiguration->usageLimit;
                         }
                     }
-                    
+
                     // Payer information - Already validation in place for this data
                     if ($builder->hostedPaymentData->payer) {
                         $payer = $builder->hostedPaymentData->payer;
@@ -249,10 +249,10 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                             'language' => $payer->language ?? 'en',
                             'email' => $payer->email ?? ""
                         ];
-                        if(property_exists($payer, 'id') && !empty($payer->id)) {
+                        if (property_exists($payer, 'id') && !empty($payer->id)) {
                             $requestData['payer']['id'] = $payer->id;
                         }
-                        
+
                         // Mobile phone - Allready validation in place for this data
                         if ($payer->mobilePhone) {
                             $requestData['payer']['mobile_phone'] = [
@@ -260,7 +260,7 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                                 'subscriber_number' => $payer->mobilePhone->number ?? null
                             ];
                         }
-                        
+
                         // Billing address - Allready validation in place for this data
                         if ($payer->billingAddress) {
                             $requestData['payer']['billing_address'] = [
@@ -273,19 +273,19 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                                 'country' => $payer->billingAddress->countryCode ?? null,
                                 'type' => $payer->billingAddress->type ?? AddressType::BILLING
                             ];
-                            if(property_exists($payer->billingAddress, 'phone') && !empty($payer->billingAddress->phone)) {
+                            if (property_exists($payer->billingAddress, 'phone') && !empty($payer->billingAddress->phone)) {
                                 $requestData['payer']['billing_address']['phone'] = $payer->billingAddress->phone;
                             }
                         }
-                        
+
                         // Address match indicator
                         if (!empty($payer->addressMatchIndicator)) {
-                            $requestData['payer']['address_match_indicator'] = is_bool($payer->addressMatchIndicator) 
-                                ? StringUtils::boolToYesNo($payer->addressMatchIndicator) 
+                            $requestData['payer']['address_match_indicator'] = is_bool($payer->addressMatchIndicator)
+                                ? StringUtils::boolToYesNo($payer->addressMatchIndicator)
                                 : "NO";
                         }
                     }
-                    
+
                     // Order information
                     if ($builder->hostedPaymentData->order) {
                         $order = $builder->hostedPaymentData->order;
@@ -293,12 +293,12 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                             'amount' => StringUtils::toNumeric($order->amount),
                             'currency' => $order->currency
                         ];
-                        
+
                         // Add order reference if available
                         if (!empty($order->reference)) {
                             $requestData['order']['reference'] = $order->reference;
                         }
-                        
+
                         // Order Transaction configuration
                         if ($order->HPPTransactionConfiguration) {
                             $transactionConfig = $order->HPPTransactionConfiguration;
@@ -307,20 +307,20 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                                 'country' => $config->country,
                                 'allowed_payment_methods' => $transactionConfig->allowedPaymentMethods ?? ["CARD"],
                             ];
-                            
+
                             // Add capture mode if available
                             if (!empty($transactionConfig->captureMode)) {
                                 $requestData['order']['transaction_configuration']['capture_mode'] = $transactionConfig->captureMode;
                             }
-                            
+
                             // Add currency conversion mode if available
                             if (!empty($transactionConfig->currencyConversionMode)) {
-                                $requestData['order']['transaction_configuration']['currency_conversion_mode'] = is_bool($transactionConfig->currencyConversionMode) 
-                                    ? StringUtils::boolToYesNo($transactionConfig->currencyConversionMode) 
+                                $requestData['order']['transaction_configuration']['currency_conversion_mode'] = is_bool($transactionConfig->currencyConversionMode)
+                                    ? StringUtils::boolToYesNo($transactionConfig->currencyConversionMode)
                                     : "NO";
                             }
                         }
-                        
+
                         // Payment method configuration
                         if ($order->HPPPaymentMethodConfiguration) {
                             $paymentMethodConfig = $order->HPPPaymentMethodConfiguration;
@@ -331,8 +331,8 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                                 $requestData['order']['payment_method_configuration']['authentications'] = [
                                     'preference' => $auth->preference ?? "CHALLENGE_PREFERRED",
                                     'exempt_status' => $auth->exemptStatus ?? "LOW_VALUE",
-                                    'billing_address_required' => is_bool($auth->billingAddressRequired) 
-                                        ? StringUtils::boolToYesNo($auth->billingAddressRequired) 
+                                    'billing_address_required' => is_bool($auth->billingAddressRequired)
+                                        ? StringUtils::boolToYesNo($auth->billingAddressRequired)
                                         : 'NO'
                                 ];
                             }
@@ -340,11 +340,11 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                             if ($paymentMethodConfig->apm) {
                                 $apm = $paymentMethodConfig->apm;
                                 $requestData['order']['payment_method_configuration']['apm'] = [
-                                    'shipping_address_enabled' => is_bool($apm->shippingAddressEnabled) 
-                                        ? StringUtils::boolToYesNo($apm->shippingAddressEnabled) 
+                                    'shipping_address_enabled' => is_bool($apm->shippingAddressEnabled)
+                                        ? StringUtils::boolToYesNo($apm->shippingAddressEnabled)
                                         : 'NO',
-                                    'address_override' => is_bool($apm->addressOverride) 
-                                        ? StringUtils::boolToYesNo($apm->addressOverride) 
+                                    'address_override' => is_bool($apm->addressOverride)
+                                        ? StringUtils::boolToYesNo($apm->addressOverride)
                                         : 'NO',
                                 ];
                             }
@@ -357,8 +357,8 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                                 $requestData['order']['payment_method_configuration']['digital_wallets'] = $paymentMethodConfig->digitalWallets;
                             }
                         }
-                        
-                        // Shipping address 
+
+                        // Shipping address
                         if ($builder->hostedPaymentData->payer && $builder->hostedPaymentData->payer->shippingAddress) {
                             $shippingAddr = $builder->hostedPaymentData->payer->shippingAddress;
                             $requestData['order']['shipping_address'] = [
@@ -371,12 +371,12 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                                 'country' => $shippingAddr->countryCode ?? "",
                                 'type' => $shippingAddr->type ?? AddressType::SHIPPING
                             ];
-                            if(property_exists($shippingAddr, 'phone') && !empty($shippingAddr->phone)) {
+                            if (property_exists($shippingAddr, 'phone') && !empty($shippingAddr->phone)) {
                                 $requestData['order']['shipping_address']['phone'] = $shippingAddr->phone;
                             }
                         }
-                        
-                        // Shipping phone 
+
+                        // Shipping phone
                         if ($builder->hostedPaymentData->payer && $builder->hostedPaymentData->payer->shippingPhone) {
                             $shippingPhone = $builder->hostedPaymentData->payer->shippingPhone;
                             $requestData['order']['shipping_phone'] = [
@@ -385,7 +385,7 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                             ];
                         }
                     }
-                    
+
                     // Notifications
                     if ($builder->hostedPaymentData->notifications) {
                         $requestData['notifications'] = [
@@ -394,22 +394,22 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                             'cancel_url' => $builder->hostedPaymentData->notifications->cancelUrl ?? ""
                         ];
                     }
-                    
+
                     //Configuration for iframe callbacks
                     if (!empty($builder->hostedPaymentData->HPPDisplayConfiguration)) {
                         $requestData['display_configuration'] = $builder->hostedPaymentData->HPPDisplayConfiguration;
                     }
-                    
-                    // Hosted payment page functionality   
+
+                    // Hosted payment page functionality
                     if (!empty($builder->hostedPaymentData->function)) {
                         $requestData['function'] = $builder->hostedPaymentData->function;
                     }
-                    
+
                     //Referrer URL for hosted payment page
                     if (!empty($builder->hostedPaymentData->referrerUrl)) {
                         $requestData['referrer_url'] = $builder->hostedPaymentData->referrerUrl;
                     }
-                    
+
                     //IP address and subnet mask for hosted payment page
                     if (!empty($builder->hostedPaymentData->ipAddress)) {
                         $requestData['ip_address'] = $builder->hostedPaymentData->ipAddress;
@@ -417,12 +417,12 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                             $requestData['ip_subnet_mask'] = $builder->hostedPaymentData->ipSubnetMask;
                         }
                     }
-                    
+
                     //App email and app IDs for credential exchange functionality
                     if (!empty($builder->hostedPaymentData->appEmail)) {
                         $requestData['app_email'] = $builder->hostedPaymentData->appEmail;
                     }
-                    
+
                     if (!empty($builder->hostedPaymentData->appIds)) {
                         $requestData['app_ids'] = $builder->hostedPaymentData->appIds;
                     }
@@ -505,7 +505,8 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
         if ($builder->paymentMethod instanceof AlternativePaymentMethod || $builder->paymentMethod instanceof BNPL) {
             $this->setOrderInformation($builder, $requestBody);
         }
-        if ($builder->paymentMethod instanceof AlternativePaymentMethod ||
+        if (
+            $builder->paymentMethod instanceof AlternativePaymentMethod ||
             $builder->paymentMethod instanceof BNPL ||
             $builder->paymentMethod instanceof BankPayment
         ) {
@@ -537,12 +538,12 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
             'reason' => !empty($storedCredential->reason) ? strtoupper((string) $storedCredential->reason) : null,
             'sequence' => !empty($storedCredential->sequence) ? strtoupper((string) $storedCredential->sequence) : null
         ];
-        
+
         // Add contract reference if provided in StoredCredential and both currency is MXN and country is MX (Mexico)
-         if (
-            !empty($storedCredential->contract_reference)
-            && (!empty($builder->currency) && strtoupper($builder->currency) === 'MXN')
-            && (!empty($config->country) && strtoupper($config->country) === 'MX')
+        if (
+             !empty($storedCredential->contract_reference)
+             && (!empty($builder->currency) && strtoupper($builder->currency) === 'MXN')
+             && (!empty($config->country) && strtoupper($config->country) === 'MX')
         ) {
             $request['stored_credential']['contract_reference'] = $storedCredential->contract_reference;
         }
@@ -551,7 +552,7 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
     /**
      * Sets the information related to the payer
      *
-     * 
+     *
      * @param AuthorizationBuilder $builder
      * @return mixed
      */
@@ -590,7 +591,7 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                     $payer['date_of_birth'] = $builder->customerData->dateOfBirth;
                 }
                 list($phoneNumber, $phoneCountryCode) = $this->getPhoneNumber($builder, PhoneNumberType::HOME);
-                $payer['landline_phone'] = $phoneCountryCode . $phoneNumber;;
+                $payer['landline_phone'] = $phoneCountryCode . $phoneNumber;
                 list($phoneNumber, $phoneCountryCode) = $this->getPhoneNumber($builder, PhoneNumberType::MOBILE);
                 $payer['mobile_phone'] = $phoneCountryCode . $phoneNumber;
                 break;
@@ -701,7 +702,7 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
             }
         }
         switch (get_class($paymentMethodContainer)) {
-            case CreditCardData::class;
+            case CreditCardData::class:
                 $paymentMethod->fingerprint_mode =
                     (!empty($builder->customerData) & !empty($builder->customerData->deviceFingerPrint) ?
                         $builder->customerData->deviceFingerPrint : null);
@@ -808,10 +809,12 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                 break;
         }
 
-        if (!in_array(
-            $builder->transactionModifier,
-            [TransactionModifier::ENCRYPTED_MOBILE, TransactionModifier::DECRYPTED_MOBILE]
-        )) {
+        if (
+            !in_array(
+                $builder->transactionModifier,
+                [TransactionModifier::ENCRYPTED_MOBILE, TransactionModifier::DECRYPTED_MOBILE]
+            )
+        ) {
             if ($paymentMethodContainer instanceof ITokenizable && !empty($paymentMethodContainer->token)) {
                 $paymentMethod->id = $paymentMethodContainer->token;
                 if (!empty($paymentMethodContainer->cvn)) {
@@ -827,7 +830,7 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
             /* digital wallet */
             switch ($builder->transactionModifier) {
                 case TransactionModifier::ENCRYPTED_MOBILE:
-                    switch ($paymentMethodContainer->mobileType){
+                    switch ($paymentMethodContainer->mobileType) {
                         case EncyptedMobileType::CLICK_TO_PAY:
                             $paymentToken = ['data' => $paymentMethodContainer->token];
                             break;

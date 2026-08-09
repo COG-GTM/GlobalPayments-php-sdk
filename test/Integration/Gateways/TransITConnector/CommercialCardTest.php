@@ -20,7 +20,7 @@ use GlobalPayments\Api\Tests\Data\TestCards;
 use PHPUnit\Framework\TestCase;
 
 final class CommercialCardTest extends TestCase {
-    public function setup() : void {
+    public function setUp() : void {
         ServicesContainer::configureService($this->getConfig());
     }
 

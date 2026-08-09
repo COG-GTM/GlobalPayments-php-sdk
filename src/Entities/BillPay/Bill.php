@@ -64,35 +64,42 @@ class Bill
      */
     public $dueDate;
 
-    public function getBillType() {
+    public function getBillType()
+    {
         return $this->billType;
     }
 
-    public function getIdentifier1() {
+    public function getIdentifier1()
+    {
         return $this->identifier1;
     }
 
-    public function getIdentifier2() {
+    public function getIdentifier2()
+    {
         return $this->identifier2;
     }
 
-    public function getIdentifier3() {
+    public function getIdentifier3()
+    {
         return $this->identifier3;
     }
 
-    public function getIdentifier4() {
+    public function getIdentifier4()
+    {
         return $this->identifier4;
     }
 
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 
-    public function getCustomer() {
+    public function getCustomer()
+    {
         return $this->customer;
     }
 
-    public function getBillPresentment() 
+    public function getBillPresentment()
     {
         return $this->billPresentment;
     }
@@ -110,7 +117,7 @@ class Bill
     {
         $this->identifier1 = $identifier1;
     }
-    
+
     public function setIdentifier2(string $identifier2)
     {
         $this->identifier2 = $identifier2;
@@ -148,5 +155,4 @@ class Bill
     {
         $this->dueDate = $dueDate;
     }
-
 }

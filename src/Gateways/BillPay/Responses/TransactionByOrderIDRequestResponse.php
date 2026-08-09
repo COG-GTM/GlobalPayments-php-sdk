@@ -13,7 +13,7 @@ use GlobalPayments\Api\Utils\Element;
 
 class TransactionByOrderIDRequestResponse extends BillPayResponseBase
 {
-    function map()
+    public function map()
     {
         $acceptedCodes = ['00', '0'];
         $responseCode = $this->response->getString('a:ResponseCode');
@@ -43,7 +43,7 @@ class TransactionByOrderIDRequestResponse extends BillPayResponseBase
             array_push($transactionSummary->authorizationRecords, $authorizationRecords);
         }
         $billTransactions = $this->populateBillTransactionsFromElement($billTransactionsElement);
-        if($billTransactions !== null) {
+        if ($billTransactions !== null) {
             $transactionSummary->billTransactions = [];
             array_push($transactionSummary->billTransactions, $billTransactions);
         }
@@ -64,7 +64,7 @@ class TransactionByOrderIDRequestResponse extends BillPayResponseBase
         return $transactionSummary;
     }
 
-    private function populatePayorData(Element $transactionElement) : Customer
+    private function populatePayorData(Element $transactionElement): Customer
     {
         $newCustomer = new Customer();
 
@@ -86,13 +86,13 @@ class TransactionByOrderIDRequestResponse extends BillPayResponseBase
         return $newCustomer;
     }
 
-    private function populateBillTransactionsFromElement(Element $billTransactionsElement) : array|null
+    private function populateBillTransactionsFromElement(Element $billTransactionsElement): array|null
     {
         if ($billTransactionsElement->getElement()->childNodes->length > 0) {
             $billTransactionsList = [];
 
             /** @var Element $bill */
-            foreach($billTransactionsElement->getAll('a:BillTransactionRecord') as $bill) {
+            foreach ($billTransactionsElement->getAll('a:BillTransactionRecord') as $bill) {
                 $newBill = new Bill();
                 $newBill->setBillType($bill->getString('a:BillType'));
                 $newBill->setIdentifier1($bill->getString('a:ID1'));
@@ -125,13 +125,13 @@ class TransactionByOrderIDRequestResponse extends BillPayResponseBase
         return null;
     }
 
-    private function populateAuthorizationRecordsFromElement(Element $authorizationsElement) : array|null
+    private function populateAuthorizationRecordsFromElement(Element $authorizationsElement): array|null
     {
         if ($authorizationsElement->getElement()->childNodes->length > 0) {
             $authorizationRecordsList = [];
 
             /** @var Element $record */
-            foreach($authorizationsElement->getAll('a:AuthorizationRecord') as $record) {
+            foreach ($authorizationsElement->getAll('a:AuthorizationRecord') as $record) {
                 $authRecord = new AuthorizationRecord();
                 $authRecord->addToBatchReferenceNumber = $record->getString('a:AddToBatchReferenceNumber');
                 $authRecord->amount = $record->getFloat('a:Amount');
@@ -171,10 +171,10 @@ class TransactionByOrderIDRequestResponse extends BillPayResponseBase
 
                 array_push($authorizationRecordsList, $authRecord);
             }
-            
+
             return $authorizationRecordsList;
         }
-        
+
         return null;
     }
 }

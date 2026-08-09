@@ -29,7 +29,7 @@ class HpaDiagnosticReportResponse implements IDeviceResponseHandler
                 }
             }
         }
-        
+
         return $this->deviceResponse;
     }
 
@@ -114,7 +114,7 @@ class HpaDiagnosticReportResponse implements IDeviceResponseHandler
             $this->deviceResponse->{$propertyName} = $response[$responseKey];
         }
     }
-    
+
     private function formatKey($key)
     {
         //convert "APPLICATION MODE" key as "applicationMode"
@@ -122,14 +122,14 @@ class HpaDiagnosticReportResponse implements IDeviceResponseHandler
         $key = str_replace(' ', '', $key);
         return $key;
     }
-    
+
     private function formatTableCategory($gatewayRecord)
     {
         $tableCategory = (!empty($gatewayRecord['TableCategory'])) ?
                 lcfirst(ucwords(strtolower($gatewayRecord['TableCategory']))) : 'batchReport';
-        
+
         $tableCategory = str_replace(' ', '', $tableCategory);
-        
+
         return $tableCategory;
     }
 }

@@ -7,7 +7,6 @@ use GlobalPayments\Api\Terminals\PAX\Entities\Enums\PaxMessageId;
 
 class GiftResponse extends PaxTerminalResponse
 {
-
     public function __construct($rawResponse)
     {
         parent::__construct($rawResponse, [PaxMessageId::T07_RSP_DO_GIFT,

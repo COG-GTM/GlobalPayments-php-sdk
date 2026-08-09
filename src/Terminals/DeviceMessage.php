@@ -39,7 +39,7 @@ class DeviceMessage implements IDeviceMessage
 
     public function toString()
     {
-        return implode('',$this->buffer);
+        return implode('', $this->buffer);
     }
 
     public function getRequestField($key)

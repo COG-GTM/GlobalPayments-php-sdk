@@ -1,8 +1,6 @@
 <?php
 
-
 namespace GlobalPayments\Api\Entities\Reporting;
-
 
 use GlobalPayments\Api\Entities\Enum;
 
@@ -30,6 +28,4 @@ class DataServiceCriteria extends Enum
     const TIMEZONE = 'timezone'; // Data Services
     const START_BATCH_DATE = 'startBatchDate';
     const END_BATCH_DATE = 'endBatchDate';
-
-
 }

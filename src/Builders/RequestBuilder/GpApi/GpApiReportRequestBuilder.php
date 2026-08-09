@@ -37,8 +37,7 @@ class GpApiReportRequestBuilder implements IRequestBuilder
         /**
          * @var TransactionReportBuilder $builder
          */
-        switch ($builder->reportType)
-        {
+        switch ($builder->reportType) {
             case ReportType::TRANSACTION_DETAIL:
                 $endpoint = GpApiRequest::TRANSACTION_ENDPOINT . '/' . $builder->transactionId;
                 $verb = 'GET';
@@ -86,13 +85,14 @@ class GpApiReportRequestBuilder implements IRequestBuilder
                     'risk_assessment_mode' => $builder->searchBuilder->riskAssessmentMode,
                     'risk_assessment_result' => EnumMapping::mapFraudFilterResult(
                         GatewayProvider::GP_API,
-                        $builder->searchBuilder->riskAssessmentResult),
+                        $builder->searchBuilder->riskAssessmentResult
+                    ),
                     'risk_assessment_reason_code' => $builder->searchBuilder->riskAssessmentReasonCode,
                     'provider' => $builder->searchBuilder->paymentProvider,
                 ];
 
                 $this->addBasicParams($queryParams, $builder);
-                $queryParams = array_merge($queryParams,  $this->getTransactionParams($builder));
+                $queryParams = array_merge($queryParams, $this->getTransactionParams($builder));
                 break;
             case ReportType::FIND_SETTLEMENT_TRANSACTIONS_PAGED:
                 $endpoint = GpApiRequest::SETTLEMENT_TRANSACTIONS_ENDPOINT;
@@ -113,7 +113,7 @@ class GpApiReportRequestBuilder implements IRequestBuilder
                     $builder->searchBuilder->endBatchDate->format('Y-m-d') : null;
                 $queryParams['system.mid'] = $builder->searchBuilder->merchantId;
                 $queryParams['system.hierarchy'] = $builder->searchBuilder->systemHierarchy;
-                $queryParams = array_merge($queryParams,  $this->getTransactionParams($builder));
+                $queryParams = array_merge($queryParams, $this->getTransactionParams($builder));
                 break;
             case ReportType::DISPUTE_DETAIL:
                 $endpoint = GpApiRequest::DISPUTES_ENDPOINT . '/' . $builder->searchBuilder->disputeId;
@@ -230,7 +230,7 @@ class GpApiReportRequestBuilder implements IRequestBuilder
                 $queryParams['status'] = $builder->searchBuilder->payByLinkStatus;
                 $queryParams['usage_mode'] = $builder->searchBuilder->paymentMethodUsageMode;
                 $queryParams['name'] = $builder->searchBuilder->displayName;
-                $queryParams['amount'] = StringUtils::toNumeric($builder->searchBuilder->amount);;
+                $queryParams['amount'] = StringUtils::toNumeric($builder->searchBuilder->amount);
                 $queryParams['description'] = $builder->searchBuilder->description;
                 $queryParams['reference'] = $builder->searchBuilder->referenceNumber;
                 $queryParams['country'] = $builder->searchBuilder->country;
@@ -267,7 +267,7 @@ class GpApiReportRequestBuilder implements IRequestBuilder
                 $queryParams['id'] = $builder->searchBuilder->resourceId ?? null;
                 break;
             case ReportType::FIND_ACCOUNT_DETAIL:
-                $endpoint = GpApiRequest::ACCOUNTS_ENDPOINT. '/'. $builder->searchBuilder->accountId;
+                $endpoint = GpApiRequest::ACCOUNTS_ENDPOINT . '/' . $builder->searchBuilder->accountId;
                 if (!empty($builder->searchBuilder->address)) {
                     $endpoint .= '/addresses';
                     $queryParams = [

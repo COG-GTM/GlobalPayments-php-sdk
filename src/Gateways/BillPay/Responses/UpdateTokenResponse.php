@@ -6,7 +6,7 @@ use GlobalPayments\Api\Entities\Transaction;
 
 class UpdateTokenResponse extends BillPayResponseBase
 {
-    function map(): Transaction
+    public function map(): Transaction
     {
         $result = new Transaction();
 

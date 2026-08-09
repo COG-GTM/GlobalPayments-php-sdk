@@ -1,4 +1,5 @@
 <?php
+
 namespace GlobalPayments\Api\Terminals\PAX\SubGroups;
 
 use GlobalPayments\Api\Terminals\Abstractions\IResponseSubGroup;
@@ -9,7 +10,6 @@ use GlobalPayments\Api\Terminals\Enums\TerminalCardType;
 
 class AccountResponse implements IResponseSubGroup
 {
-
     public $accountNumber;
 
     public $entryMode;

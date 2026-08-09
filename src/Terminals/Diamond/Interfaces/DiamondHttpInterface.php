@@ -50,7 +50,7 @@ class DiamondHttpInterface implements IDeviceCommInterface
         $queryString = $this->buildQueryString($queryParams);
         $data = $buffer['body'] ?? null;
         $data = ArrayUtils::array_remove_empty($data);
-        $data = json_encode($data, JSON_UNESCAPED_SLASHES|JSON_FORCE_OBJECT);
+        $data = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT);
         $verb = $buffer['verb'] ?? 'POST';
         $mandatoryHeaders = [
             'Content-Type' => sprintf('%s', $this->contentType),
@@ -66,6 +66,7 @@ class DiamondHttpInterface implements IDeviceCommInterface
             curl_setopt($request, CURLOPT_POSTFIELDS, $data);
             curl_setopt($request, CURLOPT_HTTPHEADER, $headers);
             if (!defined('CURL_SSLVERSION_TLSv1_2')) {
+                // phpcs:ignore Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase
                 define('CURL_SSLVERSION_TLSv1_2', 6);
             }
             curl_setopt($request, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
@@ -93,7 +94,7 @@ class DiamondHttpInterface implements IDeviceCommInterface
             }
         } catch (\Exception $e) {
             TerminalUtils::manageLog($this->settings->logManagementProvider, $e->getMessage(), true);
-            throw new GatewayException('Device '. $this->settings->deviceType . ' error: ' . $e->getMessage(), null, $e->getMessage());
+            throw new GatewayException('Device ' . $this->settings->deviceType . ' error: ' . $e->getMessage(), null, $e->getMessage());
         }
     }
 

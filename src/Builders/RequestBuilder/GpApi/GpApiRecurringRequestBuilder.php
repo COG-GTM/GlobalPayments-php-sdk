@@ -41,9 +41,9 @@ class GpApiRecurringRequestBuilder implements IRequestBuilder
         $requestData = [];
         /** @var string $merchantUrl */
         $merchantUrl = '';
-       
-        if($config->merchantId != null){
-            $merchantUrl = "/merchants/".$config->merchantId;
+
+        if ($config->merchantId != null) {
+            $merchantUrl = "/merchants/" . $config->merchantId;
         }
         switch ($builder->transactionType) {
             case TransactionType::CREATE:

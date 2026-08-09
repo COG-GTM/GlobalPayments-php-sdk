@@ -43,7 +43,7 @@ class HpaEodResponse implements IDeviceResponseHandler, IBatchCloseResponse
                 }
             }
         }
-        
+
         return $this->deviceResponse;
     }
 
@@ -140,7 +140,7 @@ class HpaEodResponse implements IDeviceResponseHandler, IBatchCloseResponse
             $this->deviceResponse->{$propertyName} = $response[$responseKey];
         }
     }
-    
+
     private function formatKey($key)
     {
         //convert "APPLICATION MODE" key as "applicationMode"
@@ -148,7 +148,7 @@ class HpaEodResponse implements IDeviceResponseHandler, IBatchCloseResponse
         $key = str_replace(' ', '', $key);
         return $key;
     }
-    
+
     private function formatValue($key, $value)
     {
         if (!empty($value) && (stripos($key, 'amt') !== false || stripos($key, 'amount') !== false)) {
@@ -162,10 +162,10 @@ class HpaEodResponse implements IDeviceResponseHandler, IBatchCloseResponse
         $tableCategory = (!empty($gatewayRecord['TableCategory'])) ?
                 lcfirst(ucwords(strtolower($gatewayRecord['TableCategory']))) : 'batchReport';
         $tableCategory = str_replace(' ', '', $tableCategory);
-        
+
         $tableCategory = preg_match("/transaction[0-9]+Detail/", $tableCategory) ?
                 'transactionDetails' : $tableCategory;
-        
+
         //convert approvedSaf#1Record into approvedSafRecords
         $tableCategory = preg_match("/\#[0-9]+Record/", $tableCategory) ?
                 preg_replace("/\#[0-9]+Record/", '', $tableCategory) . 'Records' : $tableCategory;

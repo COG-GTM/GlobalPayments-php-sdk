@@ -14,7 +14,7 @@ use GlobalPayments\Api\Tests\Integration\Gateways\ProPay\TestData\TestAccountDat
 class ProPayAccountTests extends TestCase
 {
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->getConfig());
     }

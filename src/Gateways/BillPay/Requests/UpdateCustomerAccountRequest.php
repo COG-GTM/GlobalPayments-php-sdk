@@ -8,7 +8,8 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class UpdateCustomerAccountRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) {
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 
@@ -65,15 +66,15 @@ class UpdateCustomerAccountRequest extends BillPayRequestBase
         }
 
         $this->et->subElement(
-            $requestElement, 
-            "bdms:IsCustomerDefaultAccount", 
+            $requestElement,
+            "bdms:IsCustomerDefaultAccount",
             $this->serializeBooleanValues($recurringPaymentMethod->preferredPayment)
         );
         $this->et->subElement($requestElement, "bdms:MerchantCustomerID", $recurringPaymentMethod->customerKey);
         $this->et->subElement($requestElement, "bdms:NewCustomerAccountName", $recurringPaymentMethod->id);
         $this->et->subElement($requestElement, "bdms:OldCustomerAccountName", $recurringPaymentMethod->id);
         $this->et->subElement(
-            $requestElement, 
+            $requestElement,
             "bdms:PaymentMethod",
             $this->getPaymentMethodType($recurringPaymentMethod->paymentMethod->getPaymentMethodType())
         );

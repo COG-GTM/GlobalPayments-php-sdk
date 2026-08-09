@@ -52,7 +52,7 @@ class RequestLodgingFields implements IRequestSubGroup
                 $extraChargeTypes[$type] = 1;
             }
         }
-        $this->extraChargeTotal = number_format(array_sum($extraChargeTypes),2);
+        $this->extraChargeTotal = number_format(array_sum($extraChargeTypes), 2);
         $this->extraChargeTypes = json_decode(json_encode(array_values($extraChargeTypes), JSON_FORCE_OBJECT));
     }
 

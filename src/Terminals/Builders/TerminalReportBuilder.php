@@ -17,7 +17,7 @@ class TerminalReportBuilder extends TerminalBuilder
     public $reportType;
 
     /**
-     * 
+     *
      * @var TerminalSearchBuilder
      */
     public $searchBuilder;
@@ -47,7 +47,7 @@ class TerminalReportBuilder extends TerminalBuilder
      *
      * @return Transaction
      */
-    public function execute($configName = "default") : ITerminalReport
+    public function execute($configName = "default"): ITerminalReport
     {
         $client = ServicesContainer::instance()->getDeviceController($configName);
         return $client->processReport($this);

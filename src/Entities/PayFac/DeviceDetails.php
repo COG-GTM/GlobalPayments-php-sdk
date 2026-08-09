@@ -22,7 +22,7 @@ class DeviceDetails extends \ArrayObject
      *
      * @return void
      */
-    public function append($value) : void
+    public function append($value): void
     {
         if (!$value instanceof DeviceDetails) {
             throw new ArgumentException("Invalid argument type");

@@ -13,7 +13,7 @@ class AddressCollection extends \ArrayObject
         $this->offsetSet($type, $address);
     }
 
-    public function get(string $type) : Address
+    public function get(string $type): Address
     {
         return $this->offsetGet($type);
     }

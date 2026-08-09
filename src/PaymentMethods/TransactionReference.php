@@ -59,7 +59,7 @@ class TransactionReference implements IPaymentMethod
     public $transfersFundsAccount;
 
     /** @return PaymentMethodType */
-    function getPaymentMethodType()
+    public function getPaymentMethodType()
     {
         return $this->paymentMethodType;
     }

@@ -40,7 +40,6 @@ use GlobalPayments\Api\Entities\Exceptions\{ArgumentException,BuilderException};
 
 class AuthorizationBuilder extends TransactionBuilder
 {
-
     /**
      * Request alias
      *
@@ -549,7 +548,7 @@ class AuthorizationBuilder extends TransactionBuilder
     public string $clerkId;
 
     /**
-     * 
+     *
      * @param TransactionType $type Request transaction type
      * @param ?IPaymentMethod $paymentMethod Request payment method
      */
@@ -1368,8 +1367,7 @@ class AuthorizationBuilder extends TransactionBuilder
         string $transactionInitiator,
         string $cardBrandTransactionId = '',
         string $categoryIndicator = ''
-    ) : AuthorizationBuilder
-    {
+    ): AuthorizationBuilder {
         $this->transactionInitiator = $transactionInitiator;
         $this->cardBrandTransactionId = $cardBrandTransactionId;
         $this->categoryIndicator = $categoryIndicator;
@@ -1397,7 +1395,7 @@ class AuthorizationBuilder extends TransactionBuilder
      *
      * @return $this
      */
-    public function withMultiCapture(bool $multiCapture = false, int $paymentCount = 1) : AuthorizationBuilder
+    public function withMultiCapture(bool $multiCapture = false, int $paymentCount = 1): AuthorizationBuilder
     {
         $this->multiCapture = $multiCapture;
         if ($multiCapture === true) {
@@ -1587,7 +1585,7 @@ class AuthorizationBuilder extends TransactionBuilder
         return $this;
     }
 
-    public function withBlockedCardType(BlockedCardType $cardTypesBlocking) : AuthorizationBuilder
+    public function withBlockedCardType(BlockedCardType $cardTypesBlocking): AuthorizationBuilder
     {
         $vars = get_object_vars($cardTypesBlocking);
         if (empty(array_filter($vars))) {
@@ -1602,7 +1600,7 @@ class AuthorizationBuilder extends TransactionBuilder
     /**
      * @param MerchantCategory $merchantCategory
      */
-    public function withMerchantCategory($merchantCategory) : AuthorizationBuilder
+    public function withMerchantCategory($merchantCategory): AuthorizationBuilder
     {
         $this->merchantCategory = $merchantCategory;
         return $this;
@@ -1630,7 +1628,7 @@ class AuthorizationBuilder extends TransactionBuilder
             $this->bills = array();
         }
 
-        foreach($bills as $bill) {
+        foreach ($bills as $bill) {
             array_push($this->bills, $bill);
         }
 

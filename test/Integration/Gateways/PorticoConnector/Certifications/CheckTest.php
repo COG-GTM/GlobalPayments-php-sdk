@@ -27,7 +27,7 @@ class CheckTest extends TestCase
         return $config;
     }
 
-    protected function setup() : void
+    protected function setUp() : void
     {
         ServicesContainer::configureService($this->config());
 
@@ -224,12 +224,10 @@ class CheckTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\GatewayException
-     * @expectedExceptionMessage Processor Configuration error
-     */
     public function test017EbronzePersonalChecking()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
+        $this->expectExceptionMessage('Processor Configuration error');
         $check = TestChecks::certification(
             SecCode::EBRONZE,
             CheckType::PERSONAL,
@@ -245,12 +243,10 @@ class CheckTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\GatewayException
-     * @expectedExceptionMessage Processor Configuration error
-     */
     public function test018EbronzeBusinessChecking()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
+        $this->expectExceptionMessage('Processor Configuration error');
         $check = TestChecks::certification(
             SecCode::EBRONZE,
             CheckType::BUSINESS,
@@ -266,12 +262,10 @@ class CheckTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\GatewayException
-     * @expectedExceptionMessage Processor Configuration error
-     */
     public function test019EbronzePersonalSavings()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
+        $this->expectExceptionMessage('Processor Configuration error');
         $check = TestChecks::certification(
             SecCode::EBRONZE,
             CheckType::PERSONAL,
@@ -287,12 +281,10 @@ class CheckTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\GatewayException
-     * @expectedExceptionMessage Processor Configuration error
-     */
     public function test020EbronzeBusinessSavings()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
+        $this->expectExceptionMessage('Processor Configuration error');
         $check = TestChecks::certification(
             SecCode::EBRONZE,
             CheckType::BUSINESS,

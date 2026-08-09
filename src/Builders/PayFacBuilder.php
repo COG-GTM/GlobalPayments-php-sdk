@@ -173,8 +173,10 @@ class PayFacBuilder extends BaseBuilder
     {
         parent::execute($configName);
         $client = ServicesContainer::instance()->getPayFac($configName);
-        if (method_exists($client, "hasBuiltInMerchantManagementService")
-            && $client->hasBuiltInMerchantManagementService()) {
+        if (
+            method_exists($client, "hasBuiltInMerchantManagementService")
+            && $client->hasBuiltInMerchantManagementService()
+        ) {
              return $client->processBoardingUser($this);
         }
 
@@ -373,7 +375,7 @@ class PayFacBuilder extends BaseBuilder
         $this->userPersonalData = $userPersonalData;
         return $this;
     }
-    
+
     public function withCreditCardData($creditCardInformation, $paymentMethodFunction = null)
     {
         $this->creditCardInformation = $creditCardInformation;
@@ -384,7 +386,7 @@ class PayFacBuilder extends BaseBuilder
 
         return $this;
     }
-    
+
     public function withACHData($achInformation)
     {
         $this->achInformation = $achInformation;
@@ -402,13 +404,13 @@ class PayFacBuilder extends BaseBuilder
         $this->secondaryBankInformation = $secondaryBankInformation;
         return $this;
     }
-    
+
     public function withGrossBillingSettleData($grossBillingInformation)
     {
         $this->grossBillingInformation = $grossBillingInformation;
         return $this;
     }
-    
+
     /*
      * The ProPay account to be updated
      *
@@ -419,7 +421,7 @@ class PayFacBuilder extends BaseBuilder
         $this->accountNumber = $accountNumber;
         return $this;
     }
-    
+
     /*
      * Temporary password which will allow a onetime login to ProPay's website. Must be at least eight characters.
      * Must not contain part or the entire first or last name. Must contain at least one capital letter,
@@ -432,13 +434,13 @@ class PayFacBuilder extends BaseBuilder
         $this->password = $password;
         return $this;
     }
-    
+
     public function withAccountPermissions($accountPermissions)
     {
         $this->accountPermissions = $accountPermissions;
         return $this;
     }
-    
+
     /*
      * amount must be greater than zero
      */
@@ -447,7 +449,7 @@ class PayFacBuilder extends BaseBuilder
         $this->negativeLimit = $negativeLimit;
         return $this;
     }
-    
+
     public function withRenewalAccountData($renewalAccountData)
     {
         $this->renewalAccountData = $renewalAccountData;
@@ -483,31 +485,31 @@ class PayFacBuilder extends BaseBuilder
         $this->uploadDocumentData = $uploadDocumentData;
         return $this;
     }
-    
+
     public function withSingleSignOnData($singleSignOnData)
     {
         $this->singleSignOnData = $singleSignOnData;
         return $this;
     }
-    
+
     public function withAmount($amount)
     {
         $this->amount = $amount;
         return $this;
     }
-    
+
     public function withReceivingAccountNumber($receivingAccountNumber)
     {
         $this->receivingAccountNumber = $receivingAccountNumber;
         return $this;
     }
-    
+
     public function withAllowPending($allowPending)
     {
         $this->allowPending = $allowPending;
         return $this;
     }
-    
+
     public function withCCAmount($ccAmount)
     {
         $this->ccAmount = $ccAmount;
@@ -519,25 +521,25 @@ class PayFacBuilder extends BaseBuilder
         $this->requireCCRefund = $requireCCRefund;
         return $this;
     }
-    
+
     public function withTransNum($transNum)
     {
         $this->transNum = $transNum;
         return $this;
     }
-    
+
     public function withFlashFundsPaymentCardData($flashFundsPaymentCardData)
     {
         $this->flashFundsPaymentCardData = $flashFundsPaymentCardData;
         return $this;
     }
-    
+
     public function withExternalId($externalId)
     {
         $this->externalId = $externalId;
         return $this;
     }
-    
+
     public function withSourceEmail($sourceEmail)
     {
         $this->sourceEmail = $sourceEmail;

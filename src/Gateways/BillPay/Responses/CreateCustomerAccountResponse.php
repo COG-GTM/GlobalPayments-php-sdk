@@ -4,9 +4,9 @@ namespace GlobalPayments\Api\Gateways\BillPay\Responses;
 
 use GlobalPayments\Api\Entities\BillPay\TokenResponse;
 
-class CreateCustomerAccountResponse extends BillPayResponseBase 
+class CreateCustomerAccountResponse extends BillPayResponseBase
 {
-    function map()
+    public function map()
     {
         $result = new TokenResponse();
 

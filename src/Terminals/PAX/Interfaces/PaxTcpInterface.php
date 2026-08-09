@@ -12,28 +12,27 @@ use GlobalPayments\Api\Terminals\Abstractions\IDeviceCommInterface;
  */
 class PaxTcpInterface implements IDeviceCommInterface
 {
-    
     /*
      * TCP fsockopen connection object
      */
-    
+
     private $tcpConnection = null;
-    
+
     /*
      * Device configuration details ConnectionConfig object
      *
      */
     public $deviceDetails;
-    
-    
+
+
     /*
      * Device request type
      *
      */
     private $requestType;
-    
+
     private $nakCount = 0;
-    
+
     /*
      * @param ConnectionConfig object $config device configuration details
      */
@@ -41,21 +40,21 @@ class PaxTcpInterface implements IDeviceCommInterface
     {
         $this->deviceDetails = $config;
     }
-    
+
     /*
      * Create socket connection with device
      * Throws GatewayException incase of connection error
      */
     public function connect()
     {
-        
+
         if (is_resource($this->tcpConnection)) {
             return;
         }
-        
+
         $errno = '';
         $errstr = '';
-        
+
         // open socket
         try {
             if ($this->deviceDetails->connectionMode === ConnectionModes::SSL_TCP) {
@@ -71,11 +70,11 @@ class PaxTcpInterface implements IDeviceCommInterface
                     ]
                 ]);
                 // phpcs:enable
-                
+
                 stream_context_set_option($context, 'ssl', 'allow_self_signed', true);
                 stream_context_set_option($context, 'ssl', 'verify_peer', false); //true
                 stream_context_set_option($context, 'ssl', 'verify_peer_name', false); //true
-                
+
                 $this->tcpConnection = stream_socket_client(
                     $this->deviceDetails->ipAddress . ':' . $this->deviceDetails->port,
                     $errno,
@@ -101,7 +100,7 @@ class PaxTcpInterface implements IDeviceCommInterface
             );
         }
     }
-    
+
     /*
      * Close TCP socket connection with device
      */
@@ -112,7 +111,7 @@ class PaxTcpInterface implements IDeviceCommInterface
             fclose($this->tcpConnection);
         }
     }
-    
+
     /*
      * Send request message to device using socket connection
      * @param string $message XML request string
@@ -124,20 +123,20 @@ class PaxTcpInterface implements IDeviceCommInterface
         if ($this->tcpConnection !== null) {
             try {
                 TerminalUtils::manageLog($this->deviceDetails->logManagementProvider, "Input Message: $message");
-                for ($i=0; $i < 3; $i++) {
+                for ($i = 0; $i < 3; $i++) {
                     fputs($this->tcpConnection, $message);
                     $bytesReceived = $this->getTerminalResponseAsync();
-                    
+
                     if ($bytesReceived !== null) {
                         $length = strlen($bytesReceived);
-                        
+
                         //last chr is the LRC
                         $lrc = isset($bytesReceived[$length - 1]) ? $bytesReceived[$length - 1] : '';
-                        
+
                         //remove first and last chr to caluclate LRC
                         $rawString = isset($bytesReceived[$length - 1]) ? substr($bytesReceived, 0, ($length - 1)) : '';
                         $calculateLRC = TerminalUtils::calculateLRC(trim($rawString));
-                        
+
                         if (empty($lrc) || $lrc != $calculateLRC) {
                             $this->sendControlCode(ControlCodes::NAK);
                         } else {
@@ -162,7 +161,7 @@ class PaxTcpInterface implements IDeviceCommInterface
         }
         return;
     }
-    
+
     /*
      * Filter the device response. remove control characters
      *
@@ -172,15 +171,15 @@ class PaxTcpInterface implements IDeviceCommInterface
     public function parseResponse($gatewayRawResponse)
     {
     }
-    
-    
+
+
     private function getTerminalResponse()
     {
         $bytesReceived = $this->awaitResponse(true);
-        
+
         if (!empty($bytesReceived)) {
             $code = bin2hex($bytesReceived[0]);
-            
+
             if ($code == ControlCodes::NAK) {
                 return null;
             } elseif ($code == ControlCodes::EOT) {
@@ -194,36 +193,38 @@ class PaxTcpInterface implements IDeviceCommInterface
             }
         }
     }
-    
+
     /**
-     * 
-     * @param bool $readString 
-     * @return string 
-     * @throws GatewayException 
+     *
+     * @param bool $readString
+     * @return string
+     * @throws GatewayException
      */
-    private function awaitResponse(bool $readString = false) : string
+    private function awaitResponse(bool $readString = false): string
     {
         $startTime = time();
-        
+
         do {
             if ($readString) {
                 $buffer = '';
 
                 do {
                     $buffer = $buffer . fgetc($this->tcpConnection);
-                    
+
                     if (
                         strpos($buffer, chr(0x03))
                         && strlen($buffer) === strpos($buffer, chr(0x03)) + 2
-                    )
+                    ) {
                         break;
+                    }
                 } while (true);
             } else {
                 $buffer = fgetc($this->tcpConnection);
             }
 
-            if (!empty($buffer))
+            if (!empty($buffer)) {
                 return $buffer;
+            }
 
             $timeDiff = time() - $startTime;
 
@@ -231,12 +232,12 @@ class PaxTcpInterface implements IDeviceCommInterface
                 break;
             }
         } while (true);
-        
+
         throw new GatewayException(
             'Terminal did not respond in the given timeout'
         );
     }
-    
+
     private function sendControlCode($code)
     {
         try {
@@ -251,14 +252,14 @@ class PaxTcpInterface implements IDeviceCommInterface
             throw new GatewayException("Failed to send control code.");
         }
     }
-    
+
     private function getTerminalResponseAsync()
     {
         $bytesReceived = $this->awaitResponse();
-        
+
         if (!empty($bytesReceived)) {
             $code = bin2hex($bytesReceived);
-            
+
             if ($code == ControlCodes::NAK) {
                 return null;
             } elseif ($code == ControlCodes::EOT) {
@@ -272,7 +273,7 @@ class PaxTcpInterface implements IDeviceCommInterface
             }
         }
     }
-    
+
     public function __destruct()
     {
         $this->disconnect();

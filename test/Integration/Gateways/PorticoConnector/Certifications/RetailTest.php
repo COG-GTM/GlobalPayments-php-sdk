@@ -28,7 +28,7 @@ class RetailTest extends TestCase
     private static $amextoken;
     private $enableCryptoUrl = true;
 
-    protected function setup(): void
+    protected function setUp(): void
     {
         $config = new PorticoConfig();
         $config->secretApiKey = 'skapi_cert_MaePAQBr-1QAqjfckFC8FTbRTT120bVQUlfVOjgCBw'; #gitleaks:allow

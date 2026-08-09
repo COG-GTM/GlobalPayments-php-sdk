@@ -37,7 +37,7 @@ class GpApiBNPLTest extends TestCase
     private Address $shippingAddress;
     private Address $billingAddress;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
 

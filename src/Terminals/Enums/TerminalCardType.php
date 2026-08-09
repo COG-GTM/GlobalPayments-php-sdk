@@ -6,7 +6,6 @@ use GlobalPayments\Api\Entities\Enum;
 
 class TerminalCardType extends Enum
 {
-
     const VISA = "01";
     const MASTERCARD = "02";
     const AMEX = "03";

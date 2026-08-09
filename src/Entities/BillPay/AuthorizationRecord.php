@@ -5,7 +5,7 @@ namespace GlobalPayments\Api\Entities\BillPay;
 class AuthorizationRecord
 {
     public string $addToBatchReferenceNumber;
-    
+
     public ?float $amount;
 
     public string $authCode;

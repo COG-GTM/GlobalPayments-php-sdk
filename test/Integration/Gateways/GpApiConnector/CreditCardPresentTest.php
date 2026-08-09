@@ -32,7 +32,7 @@ class CreditCardPresentTest extends TestCase
     private string $currency = 'USD';
     private float $amount = 15.11;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
     }

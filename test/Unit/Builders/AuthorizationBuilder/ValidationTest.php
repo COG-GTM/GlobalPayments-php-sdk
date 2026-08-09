@@ -16,10 +16,13 @@ use PHPUnit\Framework\TestCase;
 
 class ValidationTest extends TestCase
 {
+    protected $eCheck;
+    protected $address;
+
     protected $card;
     private $enableCryptoUrl = true;
 
-    public function setup()
+    public function setUp(): void
     {
         $card = new CreditCardData();
         $card->number = '4111111111111111';
@@ -52,76 +55,62 @@ class ValidationTest extends TestCase
         ServicesContainer::configureService($this->getConfig());
     }
 
-    /**
-     * @expectedException \GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage amount cannot be null for this transaction type.
-     */
     public function testCreditAuthNoAmount()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('amount cannot be null for this transaction type.');
         $this->card->authorize()
             ->execute();
     }
 
-    /**
-     * @expectedException \GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage currency cannot be null
-     */
     public function testCreditAuthNoCurrency()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('currency cannot be null');
         $this->card->authorize(14)
             ->execute();
     }
 
-    /**
-     * @expectedException \GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage paymentMethod cannot be null
-     */
     public function testCreditAuthNoPaymentMethod()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('paymentMethod cannot be null');
         $this->card->authorize(14)
             ->withCurrency('USD')
             ->withPaymentMethod(null)
             ->execute();
     }
 
-    /**
-     * @expectedException \GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage amount cannot be null
-     */
     public function testCreditSaleNoAmount()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('amount cannot be null');
         $this->card->charge()
             ->execute();
     }
 
-    /**
-     * @expectedException \GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage currency cannot be null
-     */
     public function testCreditSaleNoCurrency()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('currency cannot be null');
         $this->card->charge(14)
             ->execute();
     }
 
-    /**
-     * @expectedException \GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage paymentMethod cannot be null
-     */
     public function testCreditSaleNoPaymentMethod()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('paymentMethod cannot be null');
         $this->card->charge(14)
             ->withCurrency('USD')
             ->withPaymentMethod(null)
             ->execute();
     }
 
-    /**
-     * @expectedException \GlobalPayments\Api\Entities\Exaceptions\ApiException
-     * @expectedExceptionMessage phone number can not be empty or invalid
-     */
     public function testCreditSalePhoneNumberValidateMethod()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\ApiException::class);
+        $this->expectExceptionMessage('phone number can not be empty or invalid');
         $this->eCheck->phoneNumber = '123456789012345678901';
         $this->eCheck->charge(11)
             ->withCurrency('USD')
@@ -129,12 +118,10 @@ class ValidationTest extends TestCase
             ->execute();
     }
 
-    /**
-     * @expectedException \GlobalPayments\Api\Entities\Exceptions\ApiException
-     * @expectedExceptionMessage zip code can not be empty or invalid
-     */
     public function testCreditSaleZipValidateMethod()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\ApiException::class);
+        $this->expectExceptionMessage('zip code can not be empty or invalid');
         $this->address->postalCode = '0123456789';
         $this->eCheck->charge(11)
             ->withCurrency('USD')

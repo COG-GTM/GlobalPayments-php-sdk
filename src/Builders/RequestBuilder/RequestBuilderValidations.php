@@ -19,7 +19,9 @@ class RequestBuilderValidations
     {
         array_map(
             [$this, 'maybeRunValidationKeyRules'],
-            array_keys($this->validations->rules), [$actionType], [$builder]
+            array_keys($this->validations->rules),
+            [$actionType],
+            [$builder]
         );
     }
 

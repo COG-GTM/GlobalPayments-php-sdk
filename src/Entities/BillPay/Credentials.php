@@ -2,7 +2,7 @@
 
 namespace GlobalPayments\Api\Entities\BillPay;
 
-class Credentials 
+class Credentials
 {
     /**
      * @var string|null
@@ -24,7 +24,8 @@ class Credentials
      */
     protected $userName;
 
-    public function getApiKey() {
+    public function getApiKey()
+    {
         return $this->apiKey;
     }
 
@@ -33,7 +34,8 @@ class Credentials
         $this->apiKey = $apiKey;
     }
 
-    public function getMerchantName() {
+    public function getMerchantName()
+    {
         return $this->merchantName;
     }
 
@@ -42,7 +44,8 @@ class Credentials
         $this->merchantName = $merchantName;
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
@@ -51,7 +54,8 @@ class Credentials
         $this->password = $password;
     }
 
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->userName;
     }
 

@@ -28,7 +28,7 @@ class Secure3DSExemptionsTest extends TestCase
     private Address $billingAddress;
     private BrowserData $browserData;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $config = $this->getConfig();
         ServicesContainer::configureService($config);

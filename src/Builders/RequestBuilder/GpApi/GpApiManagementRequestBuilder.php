@@ -26,7 +26,7 @@ use GlobalPayments\Api\Entities\Exceptions\GatewayException;
 
 class GpApiManagementRequestBuilder implements IRequestBuilder
 {
-    private static $allowedActions =[
+    private static $allowedActions = [
         PaymentMethodType::BANK_PAYMENT => []
     ];
 
@@ -65,10 +65,12 @@ class GpApiManagementRequestBuilder implements IRequestBuilder
                         throw new BuilderException(
                             sprintf(
                                 "The %s is not supported for %s",
-                                $this->getTransactionTypeName($builder->transactionType), PaymentMethodName::BANK_PAYMENT
+                                $this->getTransactionTypeName($builder->transactionType),
+                                PaymentMethodName::BANK_PAYMENT
                             )
                         );
                     }
+                    break;
                 default:
                     break;
             }
@@ -96,7 +98,10 @@ class GpApiManagementRequestBuilder implements IRequestBuilder
                     substr(str_pad($builderCard->expYear, 4, '0', STR_PAD_LEFT), 2, 2) : null;
                 $card->number = !empty($builderCard->number) ? $builderCard->number : null;
                 $this->maskedValues = ProtectSensitiveData::hideValue(
-                    'card.number', $card->number, 4, 6
+                    'card.number',
+                    $card->number,
+                    4,
+                    6
                 );
                 $this->maskedValues = ProtectSensitiveData::hideValues(
                     [
@@ -217,7 +222,7 @@ class GpApiManagementRequestBuilder implements IRequestBuilder
                 $verb = 'POST';
                 $payload = [
                     'amount' => StringUtils::toNumeric($builder->amount),
-                    'gratuity_amount' => StringUtils::toNumeric($builder->gratuity),                     
+                    'gratuity_amount' => StringUtils::toNumeric($builder->gratuity),
                     'payment_method' => [
                             'card' => ['tag' => $builder->tagData]
                         ]
@@ -227,7 +232,7 @@ class GpApiManagementRequestBuilder implements IRequestBuilder
                 $endpoint = GpApiRequest::PAYBYLINK_ENDPOINT . '/' . $builder->paymentLinkId;
                 $verb = 'PATCH';
                 $payload = [
-                    'usage_mode'=> $builder->payByLinkData->usageMode ?? null,
+                    'usage_mode' => $builder->payByLinkData->usageMode ?? null,
                     'usage_limit' => $builder->payByLinkData->usageLimit ?? null,
                     'name' => $builder->payByLinkData->name ?? null,
                     'description' => $builder->description ?? null,
@@ -276,7 +281,7 @@ class GpApiManagementRequestBuilder implements IRequestBuilder
                         'reference' => $builder->reference,
                         'amount' => StringUtils::toNumeric($builder->amount),
                         'description' => $builder->description
-                    ]
+                      ]
                 ];
                 break;
             default:
@@ -303,7 +308,7 @@ class GpApiManagementRequestBuilder implements IRequestBuilder
     {
         $reflector = new \ReflectionClass(TransactionType::class);
 
-        return array_search($transactionType,$reflector->getConstants());
+        return array_search($transactionType, $reflector->getConstants());
     }
 
     private function setLodgingInfo(&$payload, $lodging): void

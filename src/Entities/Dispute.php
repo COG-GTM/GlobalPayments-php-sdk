@@ -1,8 +1,6 @@
 <?php
 
-
 namespace GlobalPayments\Api\Entities;
-
 
 class Dispute extends Transaction
 {

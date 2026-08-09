@@ -6,7 +6,6 @@ use GlobalPayments\Api\Entities\Enum;
 
 class TerminalTransactionType extends Enum
 {
-
     const MENU = "00";
     const SALE = "01";
     const REFUND = "02";

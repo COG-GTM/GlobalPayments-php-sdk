@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 final class AutoSubstantiationTest extends TestCase
 {
     private CreditCardData $card;
-    public function setup() : void
+    public function setUp() : void
     {
         $this->card = new CreditCardData();
         $this->card->number = '4111111111111111';

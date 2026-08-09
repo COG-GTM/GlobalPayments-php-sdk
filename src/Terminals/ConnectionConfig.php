@@ -46,22 +46,22 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     /** @var string */
     public $port;
-    
+
     public $timeout;
 
     /**
      * Used only for Genius devices that connect via "Meet In The Cloud"
-     * 
+     *
      * @var Genius\ServiceConfigs\MitcConfig
      */
     public $meetInTheCloudConfig;
-    
+
     /*
      * Implementation of IRequestIdProvider to generate request id for each transaction
      */
     /** @var IRequestIdProvider */
     public $requestIdProvider;
-    
+
     /*
      * Implementation of ILogManagement to generate logs for each transaction
      */
@@ -72,12 +72,12 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     private $configName;
 
-    public function setConfigName(string $configName) : void
+    public function setConfigName(string $configName): void
     {
         $this->configName = $configName;
     }
 
-    public function getConfigName() : string
+    public function getConfigName(): string
     {
         return $this->configName;
     }
@@ -129,8 +129,10 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
             return;
         }
 
-        if ($this->connectionMode == ConnectionModes::HTTP ||
-                $this->connectionMode == ConnectionModes::TCP_IP) {
+        if (
+            $this->connectionMode == ConnectionModes::HTTP ||
+                $this->connectionMode == ConnectionModes::TCP_IP
+        ) {
             if (empty($this->ipAddress)) {
                 throw new ConfigurationException(
                     "IpAddress is required for TCP or HTTP communication modes."
@@ -144,7 +146,8 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
             }
         }
 
-        if ($this->deviceType == DeviceType::HPA_ISC250 &&
+        if (
+            $this->deviceType == DeviceType::HPA_ISC250 &&
                 empty($this->requestIdProvider)
         ) {
             throw new ConfigurationException(
@@ -161,7 +164,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getConnectionMode()
     {
-       return $this->connectionMode;
+        return $this->connectionMode;
     }
 
     public function setConnectionMode(ConnectionModes $connectionModes): void
@@ -171,7 +174,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getDeviceType(): DeviceType
     {
-        // TODO: Implement getDeviceType() method.
+        return $this->deviceType;
     }
 
     public function setDeviceType(DeviceType $deviceType): void
@@ -191,7 +194,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getIpAddress(): string
     {
-        // TODO: Implement getIpAddress() method.
+        return $this->ipAddress;
     }
 
     public function setIpAddress(string $ipAddress): void
@@ -211,7 +214,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getBaudRate(): BaudRate
     {
-        // TODO: Implement getBaudRate() method.
+        return $this->baudRate;
     }
 
     public function setBaudRate(BaudRate $baudRate): void
@@ -221,7 +224,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getParity(): Parity
     {
-        // TODO: Implement getParity() method.
+        return $this->parity;
     }
 
     public function setParity(Parity $parity): void
@@ -231,7 +234,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getStopBits(): StopBits
     {
-        // TODO: Implement getStopBits() method.
+        return $this->stopBits;
     }
 
     public function setStopBits(StopBits $stopBits): void
@@ -241,7 +244,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getDataBits(): DataBits
     {
-        // TODO: Implement getDataBits() method.
+        return $this->dataBits;
     }
 
     public function setDataBits(DataBits $dataBits): void
@@ -251,7 +254,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getTimeout(): int
     {
-        // TODO: Implement getTimeout() method.
+        return $this->timeout;
     }
 
     public function getGatewayConfig(): GatewayConfig

@@ -9,7 +9,7 @@ class FlashFundsPaymentCardData
 {
     public $creditCard;
     public $cardholderAddress;
-    
+
     public function __construct()
     {
         $this->creditCard = new CreditCardData();

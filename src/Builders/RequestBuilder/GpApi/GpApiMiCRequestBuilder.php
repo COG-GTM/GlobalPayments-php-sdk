@@ -42,7 +42,7 @@ class GpApiMiCRequestBuilder implements IRequestBuilder
     {
         // TODO: Implement buildRequest() method.
     }
-    
+
     public function buildRequestFromJson($jsonRequest, $config)
     {
         $endpoint = GpApiRequest::DEVICE_ENDPOINT;

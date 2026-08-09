@@ -87,66 +87,67 @@ class PayFacService
      * accounts, or to provide data when we've had to put an accounts ability to process on hold.
      *
      */
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     public static function UploadDocument()
     {
         return new PayFacBuilder(TransactionType::UPLOAD_DOCUMENT);
     }
-    
+
     public static function obtainSSOKey()
     {
         return new PayFacBuilder(TransactionType::OBTAIN_SSO_KEY);
     }
-    
+
     public static function updateBankAccountOwnershipInfo()
     {
         return new PayFacBuilder(TransactionType::UPDATE_BANK_ACCOUNT_OWNERSHIP);
     }
-    
+
     public static function addFunds()
     {
         return new PayFacBuilder(TransactionType::ADD_FUNDS);
     }
-    
+
     public static function sweepFunds()
     {
         return new PayFacBuilder(TransactionType::SWEEP_FUNDS);
     }
-    
+
     public static function addCardFlashFunds()
     {
         return new PayFacBuilder(TransactionType::ADD_CARD_FLASH_FUNDS);
     }
-    
+
     public static function pushMoneyToFlashFundsCard()
     {
         return new PayFacBuilder(TransactionType::PUSH_MONEY_FLASH_FUNDS);
     }
-    
+
     public static function disburseFunds()
     {
         return new PayFacBuilder(TransactionType::DISBURSE_FUNDS);
     }
-    
+
     public static function spendBack()
     {
         return new PayFacBuilder(TransactionType::SPEND_BACK);
     }
-    
+
     public static function reverseSplitPay()
     {
         return new PayFacBuilder(TransactionType::REVERSE_SPLITPAY);
     }
-    
+
     public static function splitFunds()
     {
         return new PayFacBuilder(TransactionType::SPLIT_FUNDS);
     }
-    
+
     public static function getAccountDetails()
     {
         return new PayFacBuilder(TransactionType::GET_ACCOUNT_DETAILS);
     }
-    
+
     public static function getAccountBalance()
     {
         return new PayFacBuilder(TransactionType::GET_ACCOUNT_BALANCE);

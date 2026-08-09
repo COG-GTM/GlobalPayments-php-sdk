@@ -23,7 +23,7 @@ class PaxReportTests extends TestCase
     private $transactionNumber;
     private $referenceNumber;
 
-    public function setup() : void
+    public function setUp() : void
     {
         $this->device = DeviceService::create($this->getConfig());
         

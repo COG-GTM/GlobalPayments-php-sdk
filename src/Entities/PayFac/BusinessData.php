@@ -21,35 +21,35 @@ class BusinessData
      * @var string
      */
     public $doingBusinessAs;
-    
+
     /**
      * Employer Identification Number can be added to a ProPay account. Must be 9 characters without dashes.
      *
      * @var string
      */
     public $employerIdentificationNumber;
-    
+
     /**
      * Merchant Category Code
      *
      * @var string
      */
     public $merchantCategoryCode;
-    
+
     /**
      * The Business' website URL
      *
      * @var string
      */
     public $websiteURL;
-    
+
     /**
      * The Business description
      *
      * @var string
      */
     public $businessDescription;
-    
+
     /**
      * The monthly volume of bank card transactions; Value representing the number of pennies in USD, or the number
      * of [currency] without decimals. Defaults to $1000.00 if not sent
@@ -57,7 +57,7 @@ class BusinessData
      * @var int
      */
     public $monthlyBankCardVolume;
-    
+
     /**
      * The average amount of an individual transaction; Value representing the number of pennies in
      * USD, or the number of [currency] without decimals. Defaults to $300.00 if not sent
@@ -65,7 +65,7 @@ class BusinessData
      * @var int
      */
     public $averageTicket;
-    
+
     /**
      * The highest transaction amount; Value representing the number of pennies in USD, or the number
      * of [currency] without decimals. Defaults to $300.00 if not sent.
@@ -73,7 +73,7 @@ class BusinessData
      * @var int
      */
     public $highestTicket;
-    
+
     /**
      * Business Physical Address
      *

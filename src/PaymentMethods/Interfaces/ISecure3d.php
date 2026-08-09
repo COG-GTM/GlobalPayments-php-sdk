@@ -6,5 +6,4 @@ use GlobalPayments\Api\Entities\ThreeDSecure;
 
 interface ISecure3d
 {
-    
 }

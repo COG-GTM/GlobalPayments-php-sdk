@@ -14,12 +14,12 @@ class HPPStorageModes extends Enum
      * Prompt the payer to store their card
      */
     const PROMPT = 'PROMPT';
-    
+
     /**
      * The card information is only stored if the payment method authorization was successful
      */
     const ON_SUCCESS = 'ON_SUCCESS';
-    
+
     /**
      * The card information is always stored irrespective of whether the payment method authorization was successful or not
      */

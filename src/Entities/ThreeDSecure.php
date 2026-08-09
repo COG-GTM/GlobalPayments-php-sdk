@@ -159,7 +159,7 @@ class ThreeDSecure implements ISecureCheck
      *
      * @var string
      */
-    public $threeDSecure_status; 
+    public $threeDSecure_status;
 
     /**
      * The enrollment status

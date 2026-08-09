@@ -1,8 +1,6 @@
 <?php
 
-
 namespace GlobalPayments\Api\ServiceConfigs\Gateways;
-
 
 use GlobalPayments\Api\ConfiguredServices;
 use GlobalPayments\Api\Entities\Enums\Environment;

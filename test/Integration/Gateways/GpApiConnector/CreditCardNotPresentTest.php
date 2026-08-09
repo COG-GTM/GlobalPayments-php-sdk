@@ -48,7 +48,7 @@ class CreditCardNotPresentTest extends TestCase
 
     private string $currency = 'GBP';
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
         $this->card = new CreditCardData();

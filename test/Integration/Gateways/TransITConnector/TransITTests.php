@@ -21,7 +21,7 @@ class CreditTest extends TestCase
     protected $tokenizedCard;
     protected $track;
 
-    public function setup() : void
+    public function setUp() : void
     {
         ServicesContainer::configureService($this->getConfig());
 
@@ -278,45 +278,37 @@ class CreditTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
     
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage amount cannot be null for this transaction type.
-     */
     public function testAuthorizeWithoutAmount()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('amount cannot be null for this transaction type.');
         $response = $this->card->authorize()
             ->withCurrency('USD')
             ->execute();
     }
     
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage amount cannot be null for this transaction type.
-     */
     public function testSaleWithoutAmount()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('amount cannot be null for this transaction type.');
         $response = $this->card->charge()
             ->withCurrency('USD')
             ->execute();
     }
     
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage amount cannot be null for this transaction type.
-     */
     public function testRefundWithoutAmount()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('amount cannot be null for this transaction type.');
         $response = $this->card->refund()
             ->withCurrency('USD')
             ->execute();
     }
     
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\ConfigurationException
-     * @expectedExceptionMessage deviceID is required for this configuration.
-     */
     public function testCredentialsError()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\ConfigurationException::class);
+        $this->expectExceptionMessage('deviceID is required for this configuration.');
         $config = new TransitConfig();
         $config->acceptorConfig = new AcceptorConfig();
         

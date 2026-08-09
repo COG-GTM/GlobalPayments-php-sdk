@@ -30,7 +30,6 @@ class RecurringPaymentMethod extends RecurringEntity implements
     IRefundable,
     ISecure3d
 {
-
     /**
      * The address associated with the payment method account.
      *
@@ -128,7 +127,7 @@ class RecurringPaymentMethod extends RecurringEntity implements
 
     /** @var string */
     public $token;
-    
+
     /**
      * Set the Card on File storage
      *
@@ -217,7 +216,7 @@ class RecurringPaymentMethod extends RecurringEntity implements
      *
      * @return Schedule
      */
-    public function addSchedule($scheduleId) : Schedule
+    public function addSchedule($scheduleId): Schedule
     {
         $paymentKey = $this->key ?? $this->id;
         $schedule = new Schedule($this->customerKey, $paymentKey);
@@ -267,7 +266,7 @@ class RecurringPaymentMethod extends RecurringEntity implements
 
         throw new ArgumentException(sprintf('Property `%s` does not exist on Transaction', $name));
     }
-    
+
     public function getDccRate($dccRateType, $ccp)
     {
         $dccRateData = new DccRateData();
@@ -279,7 +278,7 @@ class RecurringPaymentMethod extends RecurringEntity implements
     }
 
     /** @return PaymentMethodType */
-    function getPaymentMethodType()
+    public function getPaymentMethodType()
     {
         return $this->paymentMethodType;
     }

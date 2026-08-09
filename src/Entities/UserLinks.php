@@ -4,7 +4,6 @@ namespace GlobalPayments\Api\Entities;
 
 use GlobalPayments\Api\Entities\Enums\UserLevelRelationship;
 
-
 class UserLinks
 {
     /**

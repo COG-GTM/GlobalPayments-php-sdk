@@ -17,35 +17,35 @@ class DccRateData
      * @var float|string|null
      */
     public $cardHolderAmount;
-    
+
     /**
      * The currency
      *
      * @var string
      */
     public $cardHolderCurrency;
-    
+
     /**
      * The name of the CCP (Currency Conversion Processor) the request is to be sent to
      *
      * @var DccProcessor
      */
     public $dccProcessor;
-    
+
     /**
      * Rate Offered for the Exchange
      *
      * @var string
      */
     public $cardHolderRate;
-    
+
     /**
      * Rate type, 'S' for authorisation transactions (Sale). 'R' for Refunds.
      *
      * @var DccRateType
      */
     public $dccRateType;
-    
+
     /**
      * The type of currency conversion rate obtained. This is usually set to 1 but can contain other values.
      * Please consult with your Currency Conversion Processor.
@@ -53,7 +53,7 @@ class DccRateData
      * @var string
      */
     public $dccType;
-    
+
     /**
      * The orderId
      *

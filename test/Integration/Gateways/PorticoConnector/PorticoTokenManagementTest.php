@@ -14,7 +14,7 @@ class PorticoTokenManagementTest extends TestCase
 {
     protected $token;
     
-    public function setup() : void
+    public function setUp() : void
     {
         ServicesContainer::configureService($this->getConfig());
 

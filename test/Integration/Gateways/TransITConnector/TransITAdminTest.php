@@ -13,7 +13,7 @@ class TransITAdminTest extends TestCase
 {
     protected $card;
 
-    public function setup() : void
+    public function setUp() : void
     {
         $this->card = TestCards::visaManual();
         

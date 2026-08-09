@@ -26,7 +26,7 @@ class PaxVerificationTests extends TestCase
     protected $address;
     private $config;
 
-    public function setup() : void
+    public function setUp() : void
     {
         $this->device = DeviceService::create($this->getConfig());
         
@@ -377,12 +377,10 @@ class PaxVerificationTests extends TestCase
 
      */
     
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\GatewayException
-     * @expectedExceptionMessage HOST DECLINE: DUPLICATE TRANSACTION
-     */
     public function testCase07()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
+        $this->expectExceptionMessage('HOST DECLINE: DUPLICATE TRANSACTION');
         $clientTransactionId = 10000 + random_int(0, 99999);
         
         $response = $this->device->sale(2.00)

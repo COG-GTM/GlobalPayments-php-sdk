@@ -150,7 +150,7 @@ class TransactionSummary extends BaseSummary
     public $billingAddress;
 
     /**
-     * @var ?Bill[] $bills 
+     * @var ?Bill[] $bills
      */
     public $billTransactions;
 
@@ -479,8 +479,8 @@ class TransactionSummary extends BaseSummary
      */
     public $taxType;
 
-    /** 
-     * @var ThreeDSecure 
+    /**
+     * @var ThreeDSecure
      */
     public $threeDSecure;
 

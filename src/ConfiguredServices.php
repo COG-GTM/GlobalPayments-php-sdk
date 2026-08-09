@@ -4,9 +4,9 @@ namespace GlobalPayments\Api;
 
 use GlobalPayments\Api\Entities\Enums\Secure3dVersion;
 use GlobalPayments\Api\Gateways\{
-    OpenBankingProvider, 
-    IPaymentGateway, 
-    IRecurringService, 
+    OpenBankingProvider,
+    IPaymentGateway,
+    IRecurringService,
     IInstallmentService
 };
 use GlobalPayments\Api\Gateways\Interfaces\{IFileProcessingService, IBillingProvider};
@@ -16,7 +16,7 @@ use GlobalPayments\Api\Terminals\DeviceController;
 class ConfiguredServices
 {
     private $secure3dProviders;
-    
+
     /** @var IPayFacProvider  */
     private $payFacProvider;
 
@@ -103,7 +103,7 @@ class ConfiguredServices
     {
         $this->payFacProvider = $provider;
     }
-    
+
     /**
      * @return IPayFacProvider
      */
@@ -128,7 +128,7 @@ class ConfiguredServices
 
     public function setDeviceController(DeviceController $deviceController)
     {
-        $this->deviceController= $deviceController;
+        $this->deviceController = $deviceController;
         $this->deviceInterface = $deviceController->configureInterface();
     }
 }

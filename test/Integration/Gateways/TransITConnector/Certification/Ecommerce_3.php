@@ -28,7 +28,7 @@ use PHPUnit\Framework\TestCase;
 
 final class Ecommerce_3 extends TestCase
 {
-    public function setup() : void
+    public function setUp() : void
     {
         ServicesContainer::configureService($this->getConfig());
     }

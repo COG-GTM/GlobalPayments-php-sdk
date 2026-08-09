@@ -7,9 +7,10 @@ use GlobalPayments\Api\Entities\BillPay\Credentials;
 use GlobalPayments\Api\PaymentMethods\{CreditCardData, ECheck};
 use GlobalPayments\Api\Utils\{Element, ElementTree};
 
-class GetConvenienceFeeRequest extends BillPayRequestBase 
+class GetConvenienceFeeRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) {
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 
@@ -30,7 +31,7 @@ class GetConvenienceFeeRequest extends BillPayRequestBase
             $check = $builder->paymentMethod;
             $routingNumber = $check->routingNumber;
             $paymentMethod = "ACH";
-        } else if ($builder->paymentMethod instanceof CreditCardData) {
+        } elseif ($builder->paymentMethod instanceof CreditCardData) {
             $credit = $builder->paymentMethod;
             $accountNumber = $credit->number;
         }
@@ -44,7 +45,7 @@ class GetConvenienceFeeRequest extends BillPayRequestBase
         }
 
         $this->et->subElement(
-            $requestElement, 
+            $requestElement,
             "bdms:CardProcessingMethod",
             $this->getCardProcessingMethod($builder->paymentMethod->getPaymentMethodType())
         );

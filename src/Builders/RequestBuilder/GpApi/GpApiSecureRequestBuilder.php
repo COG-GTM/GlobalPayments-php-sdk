@@ -47,8 +47,7 @@ class GpApiSecureRequestBuilder implements IRequestBuilder
 
         $this->builder = $builder;
         $requestData = null;
-        switch ($builder->transactionType)
-        {
+        switch ($builder->transactionType) {
             case TransactionType::VERIFY_ENROLLED:
                 $verb = 'POST';
                 $endpoint = GpApiRequest::AUTHENTICATIONS_ENDPOINT;
@@ -59,7 +58,7 @@ class GpApiSecureRequestBuilder implements IRequestBuilder
                 $endpoint = GpApiRequest::AUTHENTICATIONS_ENDPOINT . "/{$builder->getServerTransactionId()}/initiate";
                 $requestData = $this->initiateAuthenticationData($builder, $config);
                 break;
-            case  TransactionType::VERIFY_SIGNATURE:
+            case TransactionType::VERIFY_SIGNATURE:
                 $verb = 'POST';
                 $endpoint = GpApiRequest::AUTHENTICATIONS_ENDPOINT . "/{$builder->getServerTransactionId()}/result";
                 if (!empty($builder->getPayerAuthenticationResponse())) {
@@ -90,9 +89,9 @@ class GpApiSecureRequestBuilder implements IRequestBuilder
                 $requestData['browser_data'] = $this->setBrowserDataParam($builder->getBrowserData());
                 break;
             default:
-                 throw new UnsupportedTransactionException(
-                     sprintf("Your current gateway does not %s transaction type.", $builder->transactionType)
-                 );
+                throw new UnsupportedTransactionException(
+                    sprintf("Your current gateway does not %s transaction type.", $builder->transactionType)
+                );
         }
         GpApiRequest::$maskedValues = $this->maskedValues;
 
@@ -194,7 +193,6 @@ class GpApiSecureRequestBuilder implements IRequestBuilder
         $paymentMethod = new PaymentMethod();
         if ($cardData instanceof ITokenizable && !empty($cardData->token)) {
             $paymentMethod->id = $cardData->token;
-
         }
         if ($cardData instanceof ICardData && empty($cardData->token)) {
             $expMonth = $cardData->expMonth ?? '';
@@ -214,7 +212,10 @@ class GpApiSecureRequestBuilder implements IRequestBuilder
                 ]
             );
             $this->maskedValues = ProtectSensitiveData::hideValue(
-                    'payment_method.card.number', $cardData->number ?? '', 4, 6
+                'payment_method.card.number',
+                $cardData->number ?? '',
+                4,
+                6
             );
         }
 
@@ -237,7 +238,7 @@ class GpApiSecureRequestBuilder implements IRequestBuilder
             'reference' => $this->builder->getOrderId() ?? GenerationUtils::getGuid(),
             'address_match_indicator' => StringUtils::boolToString($this->builder->isAddressMatchIndicator()),
             'gift_card_count' => $this->builder->getGiftCardCount(),
-            'gift_card_currency'=> $this->builder->getGiftCardCurrency(),
+            'gift_card_currency' => $this->builder->getGiftCardCurrency(),
             'gift_card_amount' => $this->builder->getGiftCardAmount(),
             'delivery_email' => $this->builder->getDeliveryEmail(),
             'delivery_timeframe' => $this->builder->getDeliveryTimeframe(),
@@ -288,7 +289,7 @@ class GpApiSecureRequestBuilder implements IRequestBuilder
 
     private function setPayerParam()
     {
-        $dateFormat = ($this->builder->transactionType === TransactionType::RISK_ASSESS ? 'Y-m-d\TH:i:s': 'Y-m-d');
+        $dateFormat = ($this->builder->transactionType === TransactionType::RISK_ASSESS ? 'Y-m-d\TH:i:s' : 'Y-m-d');
 
         return[
             'reference' => $this->builder->getCustomerAccountId(),

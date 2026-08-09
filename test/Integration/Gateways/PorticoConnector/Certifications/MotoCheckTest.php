@@ -27,7 +27,7 @@ class MotoCheckTest extends TestCase
         return $config;
     }
 
-    protected function setup() : void
+    protected function setUp() : void
     {
         ServicesContainer::configureService($this->config());
 

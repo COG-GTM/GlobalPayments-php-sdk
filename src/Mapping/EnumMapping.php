@@ -34,6 +34,7 @@ class EnumMapping
                         return 'CHECKING';
                     case AccountType::CREDIT:
                         return 'CREDIT';
+                    // Fall through.
                     default:
                         return null;
                 }
@@ -203,6 +204,7 @@ class EnumMapping
                     default:
                         break;
                 }
+            // Fall through.
             default:
                 break;
         }

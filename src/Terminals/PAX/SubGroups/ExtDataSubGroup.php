@@ -9,14 +9,14 @@ use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 class ExtDataSubGroup implements IRequestSubGroup
 {
     /**
-     * 
+     *
      * @var array
      */
     public array $details;
 
     /**
-     * 
-     * @return string 
+     *
+     * @return string
      */
     public function getElementString(): string
     {
@@ -38,9 +38,9 @@ class ExtDataSubGroup implements IRequestSubGroup
     }
 
     /**
-     * 
-     * @param AutoSubstantiation $info 
-     * @return string 
+     *
+     * @param AutoSubstantiation $info
+     * @return string
      */
     private function autoSubHelper(AutoSubstantiation $info): string
     {

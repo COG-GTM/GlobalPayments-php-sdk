@@ -6,7 +6,7 @@ use GlobalPayments\Api\Entities\Transaction;
 
 class TransactionResponse extends BillPayResponseBase
 {
-    function map(): Transaction
+    public function map(): Transaction
     {
         $result = new Transaction();
         $result->responseCode = $this->response->getString("a:ResponseCode");

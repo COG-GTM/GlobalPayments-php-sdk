@@ -7,7 +7,6 @@ use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 
 class CommercialResponse implements IResponseSubGroup
 {
-
     public $poNumber;
     public $customerCode;
     public $taxExempt;

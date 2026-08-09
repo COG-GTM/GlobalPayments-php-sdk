@@ -16,7 +16,7 @@ final class PorticoEcommerceTests extends TestCase
 {
     private CreditCardData $card;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->getConfig());
 

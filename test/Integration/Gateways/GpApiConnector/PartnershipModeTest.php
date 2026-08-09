@@ -63,7 +63,7 @@ class PartnershipModeTest extends TestCase
 
     private \DateTime $startDate;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->baseConfig = $this->setUpConfig();
         ServicesContainer::configureService($this->baseConfig);

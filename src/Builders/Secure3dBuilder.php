@@ -606,9 +606,9 @@ class Secure3dBuilder extends SecureBuilder
                         }
                         break;
                     case TransactionType::INITIATE_AUTHENTICATION:
-                    case TransactionType::VERIFY_SIGNATURE: {
+                    case TransactionType::VERIFY_SIGNATURE:
                         $rvalue->merge($response->threeDSecure);
-                    } break;
+                        break;
                 }
             }
         }

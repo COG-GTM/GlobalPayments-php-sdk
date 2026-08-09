@@ -8,7 +8,7 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class GetTokenInformationRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) 
+    public function __construct(ElementTree $et)
     {
         parent::__construct($et);
     }
@@ -20,8 +20,8 @@ class GetTokenInformationRequest extends BillPayRequestBase
         /** @var Element */
         $methodElement = $this->et->subElement($body, "bil:GetTokenInformation");
         /** @var Element */
-        $requestElement = $this->et->subElement($methodElement, "bil:request");   
-        
+        $requestElement = $this->et->subElement($methodElement, "bil:request");
+
         $this->buildCredentials($requestElement, $credentials);
 
         $this->et->subElement($requestElement, "bdms:Token", $builder->paymentMethod->token);

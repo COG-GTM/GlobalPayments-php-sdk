@@ -84,7 +84,7 @@ class ManagementBuilder extends TransactionBuilder
 
     /**
      * Request ipAddress
-     * 
+     *
      * @internal
      * @var string|float
      */
@@ -306,14 +306,15 @@ class ManagementBuilder extends TransactionBuilder
         parent::execute($configName);
 
         $client = ServicesContainer::instance()->getClient($configName);
-        if ($client->supportsOpenBanking() &&
+        if (
+            $client->supportsOpenBanking() &&
             $this->paymentMethod instanceof TransactionReference &&
             $this->paymentMethod->paymentMethodType == PaymentMethodType::BANK_PAYMENT
         ) {
             $obClient = ServicesContainer::instance()->getOpenBanking($configName);
             if (get_class($obClient) != get_class($client)) {
                 return $obClient->manageOpenBanking($this);
-           }
+            }
         }
 
         return $client->manageTransaction($this);
@@ -410,7 +411,7 @@ class ManagementBuilder extends TransactionBuilder
 
         return $this;
     }
-    
+
     /**
      * Sets the convenience amount.
      *
@@ -453,12 +454,12 @@ class ManagementBuilder extends TransactionBuilder
 
     /**
      * Set the request ipAddress
-     * 
+     *
      * @param string $ipAddress
-     * 
+     *
      * @return AuthorizationBuilder
      */
-    public function withCustomerIpAddress(string $ipAddress) 
+    public function withCustomerIpAddress(string $ipAddress)
     {
         $this->customerIpAddress = $ipAddress;
         return $this;
@@ -512,7 +513,7 @@ class ManagementBuilder extends TransactionBuilder
     /**
      * @return ManagementBuilder
      */
-    public function withIssuerData(CardIssuerEntryTag $tag, String $value)
+    public function withIssuerData(CardIssuerEntryTag $tag, string $value)
     {
         if ($this->issuerData == null) {
             $this->issuerData = [];
@@ -700,8 +701,8 @@ class ManagementBuilder extends TransactionBuilder
     }
 
     /**
-     * @param Bill 
-     * 
+     * @param Bill $bill
+     *
      * @return this
      */
     public function withBill(Bill $bill): ManagementBuilder
@@ -715,8 +716,8 @@ class ManagementBuilder extends TransactionBuilder
     }
 
     /**
-     * @param array<Bill>
-     * 
+     * @param array<Bill> $bills
+     *
      * @return this
      */
     public function withBills(array $bills): ManagementBuilder
@@ -725,7 +726,7 @@ class ManagementBuilder extends TransactionBuilder
             $this->bills = array();
         }
 
-        foreach($bills as $bill) {
+        foreach ($bills as $bill) {
             array_push($this->bills, $bill);
         }
 

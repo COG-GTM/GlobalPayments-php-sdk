@@ -27,7 +27,7 @@ use GlobalPayments\Api\Services\BatchService;
 use PHPUnit\Framework\TestCase;
 
 final class DirectMarketingMOTO_3 extends TestCase {
-    public function setup() : void {
+    public function setUp() : void {
         ServicesContainer::configureService($this->getConfig());
     }
 

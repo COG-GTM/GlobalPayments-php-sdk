@@ -32,13 +32,13 @@ abstract class DeviceController
         }
     }
 
-    abstract public function processTransaction(TerminalAuthBuilder $builder) : TerminalResponse;
+    abstract public function processTransaction(TerminalAuthBuilder $builder): TerminalResponse;
 
-    abstract public function manageTransaction(TerminalManageBuilder $builder) : TerminalResponse;
+    abstract public function manageTransaction(TerminalManageBuilder $builder): TerminalResponse;
 
-    abstract public function processReport(TerminalReportBuilder $builder) : ITerminalReport;
+    abstract public function processReport(TerminalReportBuilder $builder): ITerminalReport;
 
-    abstract public function configureInterface() : IDeviceInterface;
+    abstract public function configureInterface(): IDeviceInterface;
 
-    abstract public function configureConnector() : IDeviceCommInterface;
+    abstract public function configureConnector(): IDeviceCommInterface;
 }

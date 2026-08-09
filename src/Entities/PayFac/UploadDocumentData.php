@@ -19,14 +19,14 @@ class UploadDocumentData
      * @var string
      */
     public $transactionReference;
-    
+
     /**
      * File location
      *
      * @var string
      */
     public $documentLocation;
-    
+
     /**
      * The type of document you've been asked to provide by ProPay's Risk team. Valid values are:
      * Verification, FraudHolds, Underwriting, RetrievalRequest

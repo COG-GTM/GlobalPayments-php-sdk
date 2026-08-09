@@ -1,4 +1,5 @@
 <?php
+
 //Hosted Payment Page builder
 namespace GlobalPayments\Api\Builders;
 
@@ -29,7 +30,6 @@ use GlobalPayments\Api\Entities\Enums\{
 use GlobalPayments\Api\Entities\Exceptions\ArgumentException;
 use GlobalPayments\Api\Services\HPPService;
 use GlobalPayments\Api\Utils\StringUtils;
-
 
 class HPPBuilder extends AuthorizationBuilder
 {
@@ -105,7 +105,7 @@ class HPPBuilder extends AuthorizationBuilder
 
     /**
      * Set payment page name
-     * 
+     *
      * @param string $name
      * @return HPPBuilder
      */
@@ -141,10 +141,10 @@ class HPPBuilder extends AuthorizationBuilder
 
     /**
      *  Set expiration date for the payment link
-     * 
+     *
      * @param string $expirationDate
      * @return HPPBuilder this
-     */ 
+     */
     public function withExpirationDate(string $expirationDate): self
     {
         $this->HPPData->expirationDate = $expirationDate;
@@ -158,7 +158,7 @@ class HPPBuilder extends AuthorizationBuilder
      * @throws ArgumentException When the base64 content is empty or invalid
      * @return HPPBuilder this
      */
-    
+
     public function withImage(string $base64Content): self
     {
         if (empty($base64Content)) {
@@ -173,12 +173,12 @@ class HPPBuilder extends AuthorizationBuilder
         return $this;
     }
 
-    /** 
+    /**
      * Sets the payer information for the hosted payment request
-     * 
+     *
      * @param PayerDetails $payer
      * @return HPPBuilder this
-     * 
+     *
      */
     public function withPayer(PayerDetails $payer): self
     {
@@ -196,14 +196,14 @@ class HPPBuilder extends AuthorizationBuilder
             throw new ArgumentException('Payer ID should not be provided when status is "NEW"');
         }
         $this->payer = $payer;
-        if(!property_exists($payer, "name")){
+        if (!property_exists($payer, "name")) {
             $this->payer->name = $payer->firstName . ' ' . $payer->lastName;
         }
         return $this;
     }
     /**
      * Add phone number to the payer object
-     * 
+     *
      * @param PhoneNumber $phone
      * @return HPPBuilder this
      */
@@ -213,9 +213,9 @@ class HPPBuilder extends AuthorizationBuilder
         return $this;
     }
 
-    /** 
+    /**
      * Sets the billing address information for the hosted payment request
-     * 
+     *
      * @param Address $address The billing address object
      * @return HPPBuilder this
      */
@@ -224,10 +224,10 @@ class HPPBuilder extends AuthorizationBuilder
         $this->payer->billingAddress = $address;
         return $this;
     }
-    
-    /** 
+
+    /**
      * Sets the shipping address information for the hosted payment request
-     * 
+     *
      * @param Address $address The shipping address object
      * @return HPPBuilder this
      */
@@ -239,7 +239,7 @@ class HPPBuilder extends AuthorizationBuilder
 
     /**
      * Sets the shipping phone number for the hosted payment request
-     * 
+     *
      * @param PhoneNumber $phone The shipping phone number object
      * @return HPPBuilder this
      */
@@ -251,7 +251,7 @@ class HPPBuilder extends AuthorizationBuilder
 
     /**
      * Indicates whether the billing and shipping addresses are the same
-     * 
+     *
      * @param bool $indicator true if the addresses match, false if they do not
      * @return HPPBuilder this
      */
@@ -259,31 +259,33 @@ class HPPBuilder extends AuthorizationBuilder
     {
         $this->payer->addressMatchIndicator = StringUtils::boolToYesNo($indicator);
         return $this;
-    }    /**
-     * Configure order amount 
-     
+    }
+
+    /**
+     * Configure order amount
+
      * @param string $amount
      * @throws ArgumentException When the amount is not a number or its a negative number
      * @return HPPBuilder this
      */
-    public function withAmount( $amount ): self
+    public function withAmount($amount): self
     {
         if (!is_numeric($amount) || floatval($amount) <= 0) {
             throw new ArgumentException('Issue with the amount, it must be a positive number');
         }
-     
+
         $this->order->amount = $amount;
         return $this;
     }
 
     /**
      * Set the currency for the hosted payment
-     * 
+     *
      * @param string $currency The ISO 4217 3-character currency code (e.g., 'USD', 'EUR', 'GBP')
      * @throws ArgumentException When the currency code is not 3 characters
      * @return HPPBuilder this
      */
-    public function withCurrency( $currency ): self
+    public function withCurrency($currency): self
     {
         if (strlen($currency) !== 3) {
             throw new ArgumentException('Currency must be a 3-character code');
@@ -291,10 +293,10 @@ class HPPBuilder extends AuthorizationBuilder
         $this->order->currency = strtoupper($currency);
         return $this;
     }
-   
+
     /**
      * Add an order reference to the order
-     * 
+     *
      * @param string $reference
      * @return HPPBuilder this
      */
@@ -306,7 +308,7 @@ class HPPBuilder extends AuthorizationBuilder
 
     /**
      * Configure transaction settings
-     * 
+     *
      * @param string $channel
      * @param string $country
      * @param CaptureMode|string $captureMode
@@ -322,8 +324,7 @@ class HPPBuilder extends AuthorizationBuilder
         array $allowedPaymentMethods = ['CARD'],
         PaymentMethodUsageMode|string $usageMode = PaymentMethodUsageMode::SINGLE,
         string $usageLimit = '1'
-    ): self
-    {
+    ): self {
         $this->transactionConfig->channel = $channel;
         $this->transactionConfig->country = $country;
         // captureMode does not extend Enum, validate it manulay
@@ -331,9 +332,9 @@ class HPPBuilder extends AuthorizationBuilder
             // Check if it's a valid CaptureMode constant
             $reflection = new \ReflectionClass(CaptureMode::class);
             $constants = $reflection->getConstants();
-                if (!in_array($captureMode, $constants)) {
-                    throw new ArgumentException("Invalid CaptureMode value: {$captureMode}");
-                }
+            if (!in_array($captureMode, $constants)) {
+                throw new ArgumentException("Invalid CaptureMode value: {$captureMode}");
+            }
         }
         $this->transactionConfig->captureMode = $captureMode;
         $this->transactionConfig->allowedPaymentMethods = $allowedPaymentMethods;
@@ -344,7 +345,7 @@ class HPPBuilder extends AuthorizationBuilder
 
     /**
      * Configure currency conversion mode
-     * 
+     *
      * @param bool $currencyConversionMode true to enable, false to disable
      * @return HPPBuilder this
      */
@@ -356,7 +357,7 @@ class HPPBuilder extends AuthorizationBuilder
 
     /**
      * Configure authentication settings
-     * 
+     *
      * @param ChallengeRequestIndicator|string $preference
      * @param ExemptStatus|string $exemptStatus
      * @param bool $billingAddressRequired
@@ -367,8 +368,7 @@ class HPPBuilder extends AuthorizationBuilder
         ChallengeRequestIndicator|string $preference = ChallengeRequestIndicator::CHALLENGE_PREFERRED,
         ExemptStatus|string $exemptStatus = ExemptStatus::LOW_VALUE,
         $billingAddressRequired = true
-    ): self
-    {
+    ): self {
         $this->authConfig->preference = ChallengeRequestIndicator::validate($preference);
         $this->authConfig->exemptStatus = ExemptStatus::validate($exemptStatus);
         $this->authConfig->billingAddressRequired = $billingAddressRequired;
@@ -378,7 +378,7 @@ class HPPBuilder extends AuthorizationBuilder
     /**
      * Change the payment method storage mode, this indecates weather to prompt the user to save their payment method
      * for future use
-     * 
+     *
      * @param HPPStorageModes|string $storageMode
      * @return HPPBuilder this
      */
@@ -387,7 +387,7 @@ class HPPBuilder extends AuthorizationBuilder
         $this->paymentMethodConfig->storageMode = HPPStorageModes::validate($storageMode);
         return $this;
     }
-    
+
     /**
      * Configure AMP settings, these are specific to PayPal, if passed on a non-PayPal transaction, they will be ignored
      *
@@ -395,7 +395,7 @@ class HPPBuilder extends AuthorizationBuilder
      * @param bool $addressOverride Whether the shipping address can be changed by the customer on PayPal review page
      * @throws ArgumentException When parameters are not boolean values
      * @return HPPBuilder this
-     * 
+     *
      */
     public function withApm($shippingAddressEnabled = true, $addressOverride = true): self
     {
@@ -409,10 +409,10 @@ class HPPBuilder extends AuthorizationBuilder
         $this->apmConfig->addressOverride = StringUtils::boolToYesNo($addressOverride);
         return $this;
     }
-   
+
     /**
      * This will add a shipping charge to the hosted payment page
-     * 
+     *
      * @param bool $shippable Whether shipping is chargeable
      * @param string|null $shippingAmount The shipping amount (required when $shippable is true)
      * @throws ArgumentException When invalid params are provided or
@@ -437,7 +437,7 @@ class HPPBuilder extends AuthorizationBuilder
 
     /**
      * Build the hosted payment page
-     * 
+     *
      * @param string $configName
      * @throws ArgumentException When validation fails or when required fields are missing
      * @return HPPData
@@ -461,7 +461,7 @@ class HPPBuilder extends AuthorizationBuilder
 
     /**
      * Execute the hosted payment page request
-     * @param string $configName 
+     * @param string $configName
      * @throws ArgumentException When validation fails or when required fields are missing
      * @return PayByLinkResponse Containing the HPP URL
      */
@@ -474,7 +474,7 @@ class HPPBuilder extends AuthorizationBuilder
     /**
      * Set the type of hosted payment page
      *
-     * @param HPPTypes|string $type 
+     * @param HPPTypes|string $type
      * @throws ArgumentException When the type is not a valid or not a HPPTypes enum value
      * @return HPPBuilder this
      */
@@ -483,11 +483,11 @@ class HPPBuilder extends AuthorizationBuilder
         $this->HPPData->type = HPPTypes::validate($type);
         return $this;
     }
-    
+
     /**
-     * Set the function in the hosted payment page request. 
+     * Set the function in the hosted payment page request.
      *
-     * @param HPPFunctions|string $function 
+     * @param HPPFunctions|string $function
      * @throws ArgumentException When the function parameter is not a valid or not a HPPFunctions enum value
      * @return HPPBuilder this
      */
@@ -496,7 +496,7 @@ class HPPBuilder extends AuthorizationBuilder
         $this->HPPData->function = HPPFunctions::validate($function);
         return $this;
     }
-    
+
     /**
      * Set display configuration for the hosted payment page iframe, this functionality will be in a future release
      * Note the comments from the params are taken straight from the HPP documentation
@@ -515,9 +515,9 @@ class HPPBuilder extends AuthorizationBuilder
         $this->HPPData->HPPDisplayConfiguration = $displayConfig->toArray();
         return $this;
     }
-    
+
     /**
-     * Endpoints for the Hosted Payment Page 
+     * Endpoints for the Hosted Payment Page
      *
      * @param string $returnUrl URL to display after payment is completed, should create a form to submit the payment details to the final URL
      * @param string $statusUrl URL for receiving status updates, when certain events occur
@@ -527,9 +527,11 @@ class HPPBuilder extends AuthorizationBuilder
      */
     public function withNotifications(string $returnUrl, string $statusUrl, string $cancelUrl = ""): self
     {
-        if (!filter_var($returnUrl, FILTER_VALIDATE_URL) || 
-            !filter_var($statusUrl, FILTER_VALIDATE_URL) || 
-            (!empty($cancelUrl) && !filter_var($cancelUrl, FILTER_VALIDATE_URL))) {
+        if (
+            !filter_var($returnUrl, FILTER_VALIDATE_URL) ||
+            !filter_var($statusUrl, FILTER_VALIDATE_URL) ||
+            (!empty($cancelUrl) && !filter_var($cancelUrl, FILTER_VALIDATE_URL))
+        ) {
             throw new ArgumentException('Invalid URL format for notifications');
         }
 
@@ -538,7 +540,7 @@ class HPPBuilder extends AuthorizationBuilder
         $this->notifications->cancelUrl = $cancelUrl;
         return $this;
     }
-    
+
     /**
      * Set app email only used for the EXCHANGE_APP_CREDENTIALS type
      *
@@ -554,7 +556,7 @@ class HPPBuilder extends AuthorizationBuilder
         $this->HPPData->appEmail = $appEmail;
         return $this;
     }
-    
+
     /**
      * Indicates the apps you want the credentials for, only used in EXCHANGE_APP_CREDENTIALS type
      *
@@ -566,7 +568,7 @@ class HPPBuilder extends AuthorizationBuilder
         $this->HPPData->appIds = $appIds;
         return $this;
     }
-    
+
     /**
      * Set URL of the page requesting the hosted payment page
      *
@@ -582,7 +584,7 @@ class HPPBuilder extends AuthorizationBuilder
         $this->HPPData->referrerUrl = $referrerUrl;
         return $this;
     }
-    
+
     /**
      * Set the IP address of the page that will host the third-party payment page, not used in HPP
      *
@@ -596,16 +598,16 @@ class HPPBuilder extends AuthorizationBuilder
         if (!filter_var($ipAddress, FILTER_VALIDATE_IP)) {
             throw new ArgumentException('Invalid IP address format');
         }
-        
+
         $this->HPPData->ipAddress = $ipAddress;
-        
+
         if ($ipSubnetMask !== null) {
             if (!filter_var($ipSubnetMask, FILTER_VALIDATE_IP)) {
                 throw new ArgumentException('Invalid IP subnet mask format');
             }
             $this->HPPData->ipSubnetMask = $ipSubnetMask;
         }
-        
+
         return $this;
     }
 

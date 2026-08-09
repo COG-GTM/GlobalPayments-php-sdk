@@ -77,7 +77,7 @@ class HPPDataTest extends TestCase
     {
         $this->assertInstanceOf(HPPData::class, $this->hppData);
         $this->assertEquals(HPPTypes::HOSTED_PAYMENT_PAGE, $this->hppData->type);
-        $this->assertEquals(false, $this->hppData->shippable);
+        $this->assertEquals('NO', $this->hppData->shippable);
         $this->assertNull($this->hppData->shippingAmount);
     }
 
@@ -165,50 +165,50 @@ class HPPDataTest extends TestCase
 
     public function testValidateShippableYesWithValidAmount()
     {
-        $this->hppData->shippable = true;
+        $this->hppData->shippable = 'YES';
         $this->hppData->shippingAmount = '500';
         $this->hppData->payer = $this->createValidPayer();
         $this->hppData->order = $this->createValidOrder();
         $this->hppData->notifications = $this->createValidNotifications();
         
         $errors = $this->hppData->validate();
-        $this->assertNotContains('Shipping amount must be a valid positive number when shippable is YES', $errors);
+        $this->assertNotContains('Shipping amount must be a valid positive number when shippable is "YES"', $errors);
     }
 
     public function testValidateShippableYesWithInvalidAmount()
     {
-        $this->hppData->shippable = true;
+        $this->hppData->shippable = 'YES';
         $this->hppData->shippingAmount = '-500';
         $this->hppData->payer = $this->createValidPayer();
         $this->hppData->order = $this->createValidOrder();
         $this->hppData->notifications = $this->createValidNotifications();
         
         $errors = $this->hppData->validate();
-        $this->assertContains('Shipping amount must be a valid positive number when shippable is YES', $errors);
+        $this->assertContains('Shipping amount must be a valid positive number when shippable is "YES"', $errors);
     }
 
     public function testValidateShippableYesWithNonNumericAmount()
     {
-        $this->hppData->shippable = true;
+        $this->hppData->shippable = 'YES';
         $this->hppData->shippingAmount = 'invalid';
         $this->hppData->payer = $this->createValidPayer();
         $this->hppData->order = $this->createValidOrder();
         $this->hppData->notifications = $this->createValidNotifications();
         
         $errors = $this->hppData->validate();
-        $this->assertContains('Shipping amount must be a valid positive number when shippable is YES', $errors);
+        $this->assertContains('Shipping amount must be a valid positive number when shippable is "YES"', $errors);
     }
 
     public function testValidateShippableNoWithAmount()
     {
-        $this->hppData->shippable = false;
+        $this->hppData->shippable = 'NO';
         $this->hppData->shippingAmount = '500'; // Should be ignored when shippable is NO
         $this->hppData->payer = $this->createValidPayer();
         $this->hppData->order = $this->createValidOrder();
         $this->hppData->notifications = $this->createValidNotifications();
         
         $errors = $this->hppData->validate();
-        $this->assertNotContains('Shipping amount must be a valid positive number when shippable is YES', $errors);
+        $this->assertNotContains('Shipping amount must be a valid positive number when shippable is "YES"', $errors);
     }
 
     public function testIsValidReturnsFalseWhenInvalid()
@@ -225,7 +225,7 @@ class HPPDataTest extends TestCase
         $this->hppData->name = 'Valid Payment Page';
         // Ensure all optional fields that might cause validation issues are properly set or left empty
         $this->hppData->function = null; 
-        $this->hppData->shippable = false; // Ensure shippable is properly set
+        $this->hppData->shippable = 'NO'; // Ensure shippable is properly set
         $this->hppData->shippingAmount = null; // No shipping amount when not shippable
         
         $errors = $this->hppData->validate();
@@ -265,14 +265,14 @@ class HPPDataTest extends TestCase
         $validAmounts = ['0', '000', '599', '100', '123456'];
         
         foreach ($validAmounts as $amount) {
-            $this->hppData->shippable = true;
+            $this->hppData->shippable = 'YES';
             $this->hppData->shippingAmount = $amount;
             $this->hppData->payer = $this->createValidPayer();
             $this->hppData->order = $this->createValidOrder();
             $this->hppData->notifications = $this->createValidNotifications();
             
             $errors = $this->hppData->validate();
-            $this->assertNotContains('Shipping amount must be a valid positive number when shippable is YES', $errors, "Failed for amount: $amount");
+            $this->assertNotContains('Shipping amount must be a valid positive number when shippable is "YES"', $errors, "Failed for amount: $amount");
         }
     }
 
@@ -281,7 +281,7 @@ class HPPDataTest extends TestCase
         $invalidAmounts = ['-1', '-0.01', 'abc', ''];
         
         foreach ($invalidAmounts as $amount) {
-            $this->hppData->shippable = true;
+            $this->hppData->shippable = 'YES';
             $this->hppData->shippingAmount = $amount;
             $this->hppData->payer = $this->createValidPayer();
             $this->hppData->order = $this->createValidOrder();
@@ -289,7 +289,7 @@ class HPPDataTest extends TestCase
             
             $errors = $this->hppData->validate();
             if ($amount !== '') { 
-                $this->assertContains('Shipping amount must be a valid positive number when shippable is YES', $errors, "Should have failed for amount: '$amount'");
+                $this->assertContains('Shipping amount must be a valid positive number when shippable is "YES"', $errors, "Should have failed for amount: '$amount'");
             }
         }
     }

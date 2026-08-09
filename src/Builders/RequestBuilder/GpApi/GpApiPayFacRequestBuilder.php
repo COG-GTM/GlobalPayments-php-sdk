@@ -123,7 +123,7 @@ class GpApiPayFacRequestBuilder implements IRequestBuilder
                 break;
             case TransactionType::UPLOAD_DOCUMENT:
                 $verb = 'POST';
-                $endpoint = GpApiRequest::MERCHANT_MANAGEMENT_ENDPOINT . '/' . $builder->userReference->userId .'/documents';
+                $endpoint = GpApiRequest::MERCHANT_MANAGEMENT_ENDPOINT . '/' . $builder->userReference->userId . '/documents';
                 $requestData = [
                     'function' => $builder->uploadDocumentData->documentCategory ?? null,
                     'b64_content' => $builder->uploadDocumentData->b64_content ?? null,
@@ -174,7 +174,7 @@ class GpApiPayFacRequestBuilder implements IRequestBuilder
         return [
             'account_holder_type' => $bankAccountData->accountOwnershipType,
             'account_number' => $bankAccountData->accountNumber,
-            'account_type' => EnumMapping::mapAccountType(GatewayProvider::GP_API ,$bankAccountData->accountType),
+            'account_type' => EnumMapping::mapAccountType(GatewayProvider::GP_API, $bankAccountData->accountType),
             'bank' => [
                 'name' => $bankAccountData->bankName,
                 'code' => $bankAccountData->routingNumber, //@TODO confirmantion from GP-API team
@@ -249,8 +249,7 @@ class GpApiPayFacRequestBuilder implements IRequestBuilder
 
     private function mapAddress(Address $address, $countryCodeType = null)
     {
-        switch ($countryCodeType)
-        {
+        switch ($countryCodeType) {
             case 'alpha2':
                 $countryCode = CountryUtils::getCountryCodeByCountry($address->countryCode);
                 break;
@@ -395,8 +394,7 @@ class GpApiPayFacRequestBuilder implements IRequestBuilder
     public function validate($transactionType, PayFacBuilder $builder)
     {
         $errorMsg = "";
-        switch ($transactionType)
-        {
+        switch ($transactionType) {
             case TransactionType::ADD_FUNDS:
                 if (empty($this->config->merchantId) && empty($builder->userReference->userId)) {
                     $errorMsg = "property userId or config merchantId cannot be null for this transactionType";

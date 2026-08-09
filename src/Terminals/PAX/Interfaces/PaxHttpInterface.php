@@ -66,11 +66,11 @@ class PaxHttpInterface implements IDeviceCommInterface
                 $this->deviceDetails->port,
                 base64_encode($message)
             );
-            
+
             $request = curl_init($url);
             curl_setopt_array($request, $options);
             $out = curl_exec($request);
-            
+
             if (!empty($out)) {
                 TerminalUtils::manageLog($this->deviceDetails->logManagementProvider, $out, true);
                 return $out;
@@ -108,7 +108,7 @@ class PaxHttpInterface implements IDeviceCommInterface
             $config[CURLOPT_SSLVERSION] = CURL_SSLVERSION_TLSv1_2;
             // phpcs:enable
         }
-        
+
         return $config;
     }
 }

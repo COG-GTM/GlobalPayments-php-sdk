@@ -9,7 +9,6 @@ use GlobalPayments\Api\Entities\Enums\CommercialIndicator;
  */
 class CommercialData
 {
-
     public function __construct($taxType, $commercialIndicator = CommercialIndicator::LEVEL_II)
     {
         $this->taxType = $taxType;

@@ -21,7 +21,7 @@ class HpaAdminTests extends TestCase
 
     private $device;
 
-    public function setup() : void
+    public function setUp() : void
     {
         $this->device = DeviceService::create($this->getConfig());
     }
@@ -103,12 +103,10 @@ class HpaAdminTests extends TestCase
         $this->assertEquals('Reboot', $response->response);
     }
 
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\GatewayException
-     * @expectedExceptionMessage Unexpected Gateway Response: 1502 - CANNOT PROCESS IN LANE OPEN STATE
-     */
     public function testLaneOpenIntialize()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
+        $this->expectExceptionMessage('Unexpected Gateway Response: 1502 - CANNOT PROCESS IN LANE OPEN STATE');
         //open the lane
         $response = $this->device->openLane();
 
@@ -290,22 +288,18 @@ class HpaAdminTests extends TestCase
         $this->assertEquals('0', $response->resultCode);
     }
     
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage Input error: Image location / type missing
-     */
     public function testFileInputError()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('Input error: Image location / type missing');
         $sendFileInfo = new SendFileData();
         $this->device->sendFile($sendFileInfo);
     }
     
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage Incorrect file height and width
-     */
     public function testIncorrectFileSize()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('Incorrect file height and width');
         $sendFileInfo = new SendFileData();
         $sendFileInfo->imageLocation = dirname(__FILE__) . '/sampleimages/image_500_500.jpg';
         $sendFileInfo->imageType = SendFileType::BANNER;

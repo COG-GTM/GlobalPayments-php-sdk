@@ -6,7 +6,6 @@ use GlobalPayments\Api\Builders\TransactionBuilder;
 
 abstract class TerminalBuilder extends TransactionBuilder
 {
-
     /**
      * Request transaction type
      *
@@ -26,7 +25,7 @@ abstract class TerminalBuilder extends TransactionBuilder
 
     /*
      * ID of the clerk if in retail mode, and ID of the server if in restaurant mode
-     * 
+     *
      * @var int
      */
     public $clerkId;

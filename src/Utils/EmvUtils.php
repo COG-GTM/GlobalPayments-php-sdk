@@ -201,14 +201,14 @@ class EmvUtils
                     $tagName .= substr($tagData, $i, 2);
                     $i += 2;
                 }
-                $lengthStr = substr($tagData,$i, 2);
+                $lengthStr = substr($tagData, $i, 2);
                 $i += 2;
-                $length = base_convert($lengthStr,16,10);
+                $length = base_convert($lengthStr, 16, 10);
                 if ($length > 127) {
                     $bytesLength = $length - 128;
                     $lengthStr = substr($tagData, $bytesLength * 2);
                     $i += $bytesLength * 2;
-                    $length = base_convert($lengthStr, 16,10);
+                    $length = base_convert($lengthStr, 16, 10);
                 }
                 $length *= 2;
                 $value = substr($tagData, $i, $length);
@@ -239,7 +239,8 @@ class EmvUtils
                 } else {
                     $rvalue->addRemovedTag($tagName, $lengthStr, $value, self::$blackList[$tagName]);
                 }
-            } catch (\Exception $exc) {}
+            } catch (\Exception $exc) {
+            }
         }
 
         if ($verbose) {
@@ -249,7 +250,7 @@ class EmvUtils
                 $tag = $rvalue->getTag($tagName);
                 $appendBinary = array_key_exists($tagName, self::$dataTypes);
                 echo sprintf("TAG: %s - %s", $tagName, $tag->getDescription());
-                echo sprintf("%s: %s%s\r\n",$tag->getLength(), $tag->getValue(), $appendBinary ? sprintf(" [%s]", $tag->getBinaryValue()) : "");
+                echo sprintf("%s: %s%s\r\n", $tag->getLength(), $tag->getValue(), $appendBinary ? sprintf(" [%s]", $tag->getBinaryValue()) : "");
             }
             echo "Removed Tags:" . PHP_EOL;
             $removedTags = $rvalue->getRemovedTags();
@@ -257,7 +258,7 @@ class EmvUtils
                 /** @var TlvData $tag */
                 $tag = $removedTags[$tagName];
                 echo sprintf("TAG: %s - %s", $tagName, $tag->getDescription());
-                echo sprintf('%s: %s\r\n',$tag->getLength(), $tag->getValue());
+                echo sprintf('%s: %s\r\n', $tag->getLength(), $tag->getValue());
             }
         }
 

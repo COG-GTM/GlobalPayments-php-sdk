@@ -73,7 +73,8 @@ class ValidationClause
             $builder = ($subProperty !== null && !empty($builder->{$subProperty}))
                         ? $builder->{$subProperty}
                         : $builder;
-            if (!property_exists($builder, $this->target->property)
+            if (
+                !property_exists($builder, $this->target->property)
                 && !isset($builder->{$this->target->property})
             ) {
                 throw new BuilderException(
@@ -101,7 +102,7 @@ class ValidationClause
 
         return $this->parent->of($this->target->type, $this->target->modifier);
     }
-    
+
     /**
      * Validates the target property is null
      *
@@ -116,7 +117,8 @@ class ValidationClause
             $builder = ($subProperty == null && empty($builder->{$subProperty}))
                         ? $builder->{$subProperty}
                         : $builder;
-            if (!property_exists($builder, $this->target->property)
+            if (
+                !property_exists($builder, $this->target->property)
                 && !isset($builder->{$this->target->property})
             ) {
                 throw new BuilderException(
@@ -261,7 +263,7 @@ class ValidationClause
 
         return $this->parent->of($this->target->type, $this->target->modifier);
     }
-    
+
     /**
      * Validates the target property is not null in a sub class
      *

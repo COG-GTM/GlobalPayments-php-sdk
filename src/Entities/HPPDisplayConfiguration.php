@@ -1,8 +1,9 @@
 <?php
+
 namespace GlobalPayments\Api\Entities;
 
 /**
- * Entity for managing iframe callbacks of hosted payment pages. these properties go in root of the 
+ * Entity for managing iframe callbacks of hosted payment pages. these properties go in root of the
  * Hosted Payment Page request.
  * Note: some of the comments are taken straight from the documentation
  */
@@ -16,7 +17,7 @@ class HPPDisplayConfiguration
      * @var string
      */
     public $iframe_dimensions_domain;
-    
+
     /**
      * Domain for posting back transaction responses.
      * This will tell the HPP to post back the transaction response to the parent frame or window.
@@ -25,7 +26,7 @@ class HPPDisplayConfiguration
      * @var string|null
      */
     public $iframe_response_domain;
-    
+
     /**
      * Create a new HPPDisplayConfiguration instance.
      *
@@ -37,7 +38,7 @@ class HPPDisplayConfiguration
         $this->iframe_dimensions_domain = $iframe_dimensions_domain;
         $this->iframe_response_domain = $iframe_response_domain;
     }
-    
+
     /**
      * Convert the object to an array representation for the HPP requests.
      *
@@ -48,11 +49,11 @@ class HPPDisplayConfiguration
         $result = [
             'iframe_dimensions_domain' => $this->iframe_dimensions_domain
         ];
-        
+
         if ($this->iframe_response_domain !== null) {
             $result['iframe_response_domain'] = $this->iframe_response_domain;
         }
-        
+
         return $result;
     }
 }

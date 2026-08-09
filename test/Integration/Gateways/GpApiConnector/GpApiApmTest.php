@@ -31,7 +31,7 @@ class GpApiApmTest extends TestCase
     private string $currency;
     private Address $shippingAddress;
 
-    public function setup(): void
+    public function setUp(): void
     {
         ServicesContainer::configureService($this->setUpConfig());
 

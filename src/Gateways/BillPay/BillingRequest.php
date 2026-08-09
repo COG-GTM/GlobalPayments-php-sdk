@@ -40,18 +40,15 @@ class BillingRequest extends GatewayRequestBase
 
     public function execute(BillingBuilder $builder): BillingResponse
     {
-        switch ($builder->transactionType) 
-        {
+        switch ($builder->transactionType) {
             case TransactionType::ACTIVATE:
                 return $this->commitPreloadBills();
             case TransactionType::CREATE:
-                if ($builder->getBillingLoadType() == BillingLoadType::BILLS)
-                {
+                if ($builder->getBillingLoadType() == BillingLoadType::BILLS) {
                     return $this->preloadBills($builder);
                 }
 
-                if ($builder->getBillingLoadType() == BillingLoadType::SECURE_PAYMENT)
-                {
+                if ($builder->getBillingLoadType() == BillingLoadType::SECURE_PAYMENT) {
                     return $this->loadSecurePay($builder);
                 }
 
@@ -91,8 +88,8 @@ class BillingRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred attempting to create the token", 
-            $result->getResponseCode(), 
+            "An error occurred attempting to create the token",
+            $result->getResponseCode(),
             $result->getResponseMessage()
         );
     }
@@ -121,10 +118,10 @@ class BillingRequest extends GatewayRequestBase
         if ($result->isSuccessful()) {
             return $result;
         }
-    
+
         throw new GatewayException(
-            "An error occurred attempting to load the hosted bills", 
-            $result->getResponseCode(), 
+            "An error occurred attempting to load the hosted bills",
+            $result->getResponseCode(),
             $result->getResponseMessage()
         );
     }
@@ -152,10 +149,10 @@ class BillingRequest extends GatewayRequestBase
         if ($result->isSuccessful()) {
             return $result;
         }
-        
+
         throw new GatewayException(
-            "An error occurred attempting to commit the preloaded bills", 
-            $result->getResponseCode(), 
+            "An error occurred attempting to commit the preloaded bills",
+            $result->getResponseCode(),
             $result->getResponseMessage()
         );
     }
@@ -174,7 +171,7 @@ class BillingRequest extends GatewayRequestBase
         $response = $this->doTransaction($request);
 
         $billingRequestResponse = new BillingRequestResponse();
-        
+
         return $billingRequestResponse
             ->withResponseTagName("ClearLoadedBillsResponse")
             ->withResponse($response)
@@ -207,8 +204,8 @@ class BillingRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred attempting to load the hosted bill", 
-            $result->getResponseCode(), 
+            "An error occurred attempting to load the hosted bill",
+            $result->getResponseCode(),
             $result->getResponseMessage()
         );
     }

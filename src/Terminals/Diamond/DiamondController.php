@@ -91,7 +91,7 @@ class DiamondController extends DeviceController
         return $this->doTransaction($request);
     }
 
-    public function configureInterface() : IDeviceInterface
+    public function configureInterface(): IDeviceInterface
     {
         if (empty($this->device)) {
             $this->device = new DiamondInterface($this);
@@ -143,7 +143,7 @@ class DiamondController extends DeviceController
         return true;
     }
 
-    private function buildProcessTransaction(TerminalAuthBuilder $builder) : DeviceMessage
+    private function buildProcessTransaction(TerminalAuthBuilder $builder): DeviceMessage
     {
         $body = [];
         $endpoint = '';
@@ -175,7 +175,7 @@ class DiamondController extends DeviceController
                 break;
             case TransactionType::REFUND:
                 $verb = 'POST';
-                if($builder->paymentMethodType === PaymentMethodType::EBT) {
+                if ($builder->paymentMethodType === PaymentMethodType::EBT) {
                     $endpoint = DiamondCloudRequest::EBT_RETURN;
                     $body = [
                         'amount' => StringUtils::toNumeric($builder->amount)
@@ -188,7 +188,7 @@ class DiamondController extends DeviceController
                     ];
                 }
                 break;
-            case  TransactionType::AUTH:
+            case TransactionType::AUTH:
                 $endpoint = DiamondCloudRequest::AUTH;
                 $verb = 'POST';
                 $body = [
@@ -199,10 +199,10 @@ class DiamondController extends DeviceController
             case TransactionType::BALANCE:
                 if ($this->config->region !== Region::EU) {
                     $verb = 'POST';
-                    if($builder->paymentMethodType === PaymentMethodType::EBT) {
+                    if ($builder->paymentMethodType === PaymentMethodType::EBT) {
                         $endpoint = DiamondCloudRequest::EBT_BALANCE;
                     }
-                    if($builder->paymentMethodType === PaymentMethodType::GIFT) {
+                    if ($builder->paymentMethodType === PaymentMethodType::GIFT) {
                         $endpoint = DiamondCloudRequest::GIFT_BALANCE;
                     }
                 } else {
@@ -247,7 +247,7 @@ class DiamondController extends DeviceController
         return new DeviceMessage($request);
     }
 
-    private function buildManageTransaction(TerminalManageBuilder $builder) : DeviceMessage
+    private function buildManageTransaction(TerminalManageBuilder $builder): DeviceMessage
     {
         $body = [];
         switch ($builder->transactionType) {
@@ -259,7 +259,7 @@ class DiamondController extends DeviceController
                 ];
                 break;
             case TransactionType::EDIT:
-                if (substr($this->config->deviceType,0,4) === "PAX_") {
+                if (substr($this->config->deviceType, 0, 4) === "PAX_") {
                     throw new GatewayException("Tip adjust is not available on PAX devices");
                 }
                 $endpoint = DiamondCloudRequest::TIP_ADJUST;
@@ -309,7 +309,8 @@ class DiamondController extends DeviceController
                 ];
                 break;
             default:
-                throw new GatewayException(sprintf("Transaction type %s with modifier %s not supported!",
+                throw new GatewayException(sprintf(
+                    "Transaction type %s with modifier %s not supported!",
                     TransactionType::getKey($builder->transactionType),
                     TransactionModifier::getKey($builder->transactionModifier)
                 ));

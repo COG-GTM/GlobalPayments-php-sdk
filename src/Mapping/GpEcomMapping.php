@@ -29,11 +29,11 @@ class GpEcomMapping
 {
     /**
      * Deserializes the gateway's XML response
-     * 
-     * @param mixed $root 
-     * @param null|array $acceptedCodes 
-     * @return Transaction 
-     * @throws GatewayException 
+     *
+     * @param mixed $root
+     * @param null|array $acceptedCodes
+     * @return Transaction
+     * @throws GatewayException
      */
     public static function mapResponse($root, ?array $acceptedCodes = null)
     {
@@ -174,8 +174,7 @@ class GpEcomMapping
     public static function mapScheduleReport($response, $reportType)
     {
         self::checkResponse($response);
-        switch ($reportType)
-        {
+        switch ($reportType) {
             case TransactionType::FETCH:
                 return self::hydrateSchedule($response);
             case TransactionType::SEARCH:
@@ -191,11 +190,10 @@ class GpEcomMapping
         return [];
     }
 
-    public static function mapRecurringEntityResponse($response,RecurringEntity $recurringEntity)
+    public static function mapRecurringEntityResponse($response, RecurringEntity $recurringEntity)
     {
         self::checkResponse($response);
-        switch (get_class($recurringEntity))
-        {
+        switch (get_class($recurringEntity)) {
             case Schedule::class:
                 $schedule = $recurringEntity;
                 $schedule->scheduletext = $response->scheduletext;
@@ -298,8 +296,10 @@ class GpEcomMapping
                 return 'settle';
             case TransactionType::VERIFY:
                 if ($builder->paymentMethod->paymentMethodType == PaymentMethodType::RECURRING) {
-                    if (!empty($builder->transactionModifier) &&
-                        $builder->transactionModifier === TransactionModifier::SECURE3D) {
+                    if (
+                        !empty($builder->transactionModifier) &&
+                        $builder->transactionModifier === TransactionModifier::SECURE3D
+                    ) {
                         return 'realvault-3ds-verifyenrolled';
                     }
                     return 'receipt-in-otb';
@@ -397,6 +397,7 @@ class GpEcomMapping
                         $summary->schemeReferenceData = (string)$root->srd;
                     }
                     break;
+                // Fall through.
                 default:
                     break;
             }
@@ -407,11 +408,11 @@ class GpEcomMapping
     }
 
     /**
-     * 
-     * @param mixed $root 
-     * @param null|array $acceptedCodes 
-     * @return void 
-     * @throws GatewayException 
+     *
+     * @param mixed $root
+     * @param null|array $acceptedCodes
+     * @return void
+     * @throws GatewayException
      */
     protected static function checkResponse($root, ?array $acceptedCodes = null)
     {

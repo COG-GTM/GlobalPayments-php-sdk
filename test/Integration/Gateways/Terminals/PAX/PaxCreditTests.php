@@ -20,7 +20,7 @@ class PaxCreditTests extends TestCase
     protected $card;
     protected $address;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->device = DeviceService::create($this->getConfig());
 
@@ -227,33 +227,27 @@ class PaxCreditTests extends TestCase
         $this->assertEquals('00', $refundResponse->responseCode);
     }
 
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage amount cannot be null for this transaction type
-     */
     public function testAuthNoAmount()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('amount cannot be null for this transaction type');
         $response = $this->device->authorize()
             ->withPaymentMethod($this->card)
             ->execute();
     }
 
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage transactionId cannot be null for this transaction type
-     */
     public function testCaptureNoTransactionId()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('transactionId cannot be null for this transaction type');
         $response = $this->device->capture(10)
             ->execute();
     }
 
-    /**
-     * @expectedException GlobalPayments\Api\Entities\Exceptions\BuilderException
-     * @expectedExceptionMessage amount cannot be null for this transaction type
-     */
     public function testRefundNoAmount()
     {
+        $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
+        $this->expectExceptionMessage('amount cannot be null for this transaction type');
         $response = $this->device->refund()
             ->execute();
     }

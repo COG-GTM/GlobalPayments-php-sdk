@@ -63,7 +63,7 @@ class CreditCardData extends Credit implements ICardData
      * @var bool
      */
     public $readerPresent;
-    
+
     /**
      * Set the Card on File storage
      *

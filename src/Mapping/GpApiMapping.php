@@ -44,7 +44,6 @@ use GlobalPayments\Api\Entities\{
     UserLinks,
     MessageExtension
 };
-
 use GlobalPayments\Api\Entities\Enums\{
     AddressType,
     AuthenticationSource,
@@ -200,7 +199,7 @@ class GpApiMapping
         if (!empty($response->installment)) {
             $transaction->installment = $response->installment;
         }
-    
+
         return $transaction;
     }
 
@@ -292,7 +291,8 @@ class GpApiMapping
         }
 
         $transaction->cardIssuerResponse = $cardIssuerResponse;
-        if (!empty($paymentMethodResponse->apm) &&
+        if (
+            !empty($paymentMethodResponse->apm) &&
             $paymentMethodResponse->apm->provider == strtolower(PaymentProvider::OPEN_BANKING)
         ) {
             $transaction->paymentMethodType = PaymentMethodType::BANK_PAYMENT;
@@ -315,7 +315,8 @@ class GpApiMapping
             $transaction->paymentMethodType = PaymentMethodType::APM;
         }
 
-        if ( !empty($paymentMethodResponse->apm->provider) &&
+        if (
+            !empty($paymentMethodResponse->apm->provider) &&
             $paymentMethodResponse->apm->provider == strtolower(AlternativePaymentType::BLIK)
         ) {
             $alternativePaymentResponse = new AlternativePaymentResponse();
@@ -324,14 +325,15 @@ class GpApiMapping
             $transaction->alternativePaymentResponse = $alternativePaymentResponse;
         }
 
-        if ( !empty($paymentMethodResponse->apm->provider) &&
+        if (
+            !empty($paymentMethodResponse->apm->provider) &&
             strcasecmp($paymentMethodResponse->apm->provider, "BANK_PAYMENT") === 0
         ) {
             $alternativePaymentResponse = new AlternativePaymentResponse();
             $alternativePaymentResponse->providerName = !empty($paymentMethodResponse->apm->provider);
             $transaction->alternativePaymentResponse = $alternativePaymentResponse;
 
-            if(!empty($paymentMethodResponse->apm->bank)) {
+            if (!empty($paymentMethodResponse->apm->bank)) {
                 $bank = $paymentMethodResponse->apm->bank;
 
                 $obResponse = new Bank();
@@ -611,7 +613,6 @@ class GpApiMapping
                     $bankPaymentResponse->redirectUrl = $response->payment_method->redirect_url ?? null;
                     $summary->bankPaymentResponse = $bankPaymentResponse;
                     $summary->accountNumberLast4 = $response->payment_method->bank_transfer->masked_account_number_last4 ?? null;
-
                 } else {
                     /** map APMs (Paypal) response info */
                     $apm = $response->payment_method->apm;
@@ -1544,7 +1545,7 @@ class GpApiMapping
         }
     }
 
-    private static function map3DSInfo(object $response) : ?ThreeDSecure
+    private static function map3DSInfo(object $response): ?ThreeDSecure
     {
         $threeDS = new ThreeDSecure();
         $threeDS->serverTransactionId = $response->id ?? null;
@@ -1585,7 +1586,7 @@ class GpApiMapping
         $installment->accountId = $response->account_id;
         $installment->reference = $response->reference;
         $installment->program = $response->program;
-        
+
         $installment->result = $response->payment_method->result;
         $installment->entryMode = $response->payment_method->entry_mode;
         $installment->message = $response->payment_method->message;
@@ -1597,7 +1598,7 @@ class GpApiMapping
         $card->authCode = $cardData->authcode;
         $card->brandReference = $cardData->brand_reference;
         $installment->card = $card;
-     
+
         if (!empty($response->action)) {
             $action = new Action();
             $action->id = $response->action->id;
