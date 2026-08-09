@@ -50,6 +50,37 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
     public $timeout;
 
     /**
+     * Path to a CA bundle or certificate file used to verify the terminal's TLS certificate
+     *
+     * @var string|null
+     */
+    public $sslCaFile;
+
+    /**
+     * Expected certificate fingerprint(s) used to pin the terminal's TLS certificate.
+     * Accepts a hash string or an array in the format ['sha256' => '...']
+     *
+     * @var string|array|null
+     */
+    public $sslPeerFingerprint;
+
+    /**
+     * Name expected in the terminal's certificate. Required when the device is reached by IP
+     * address and its certificate is issued for a host name instead
+     *
+     * @var string|null
+     */
+    public $sslPeerName;
+
+    /**
+     * Allow the terminal to present a self-signed certificate. Only honoured when the
+     * certificate is anchored by sslCaFile or pinned by sslPeerFingerprint
+     *
+     * @var bool
+     */
+    public $allowSelfSignedCertificate = false;
+
+    /**
      * Used only for Genius devices that connect via "Meet In The Cloud"
      * 
      * @var Genius\ServiceConfigs\MitcConfig
