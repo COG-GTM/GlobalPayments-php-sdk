@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.2', '8.3']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: curl, dom, openssl, json, zlib, intl, mbstring, fileinfo
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+      - name: PHP coding standards
+        # COG-884 owns the pre-existing PSR-12 violations in src/.
+        continue-on-error: true
+        run: vendor/bin/phpcs --standard=phpcs.xml
+      - name: HPP unit tests
+        run: vendor/bin/phpunit --testsuite hpp-unit

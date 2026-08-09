@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" bootstrap="./test/setup.php" colors="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-<!--  <coverage>-->
-<!--    <include>-->
-<!--      <directory>./src/</directory>-->
-<!--    </include>-->
-<!--    <exclude>-->
-<!--      <directory>./test/</directory>-->
-<!--    </exclude>-->
-<!--  </coverage>-->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" bootstrap="./test/setup.php" colors="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd" cacheDirectory=".phpunit.cache" backupStaticProperties="false">
+  <!--  <coverage>-->
+  <!--    <include>-->
+  <!--      <directory>./src/</directory>-->
+  <!--    </include>-->
+  <!--    <exclude>-->
+  <!--      <directory>./test/</directory>-->
+  <!--    </exclude>-->
+  <!--  </coverage>-->
   <php>
     <ini name="zend.enable_gc" value="0"/>
     <ini name="memory_limit" value="-1"/>
@@ -42,7 +42,7 @@
       <directory>./test/Integration/Gateways/GpApiConnector/</directory>
     </testsuite>
     <testsuite name="transactionapi">
-        <directory>./test/Integration/Gateways/TransactionApiConnector/</directory>
+      <directory>./test/Integration/Gateways/TransactionApiConnector/</directory>
     </testsuite>
     <testsuite name="hpp">
       <directory>./test/Unit/Entities/HPP/</directory>
