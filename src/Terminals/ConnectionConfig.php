@@ -171,7 +171,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getDeviceType(): DeviceType
     {
-        // TODO: Implement getDeviceType() method.
+        return $this->deviceType;
     }
 
     public function setDeviceType(DeviceType $deviceType): void
@@ -191,7 +191,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getIpAddress(): string
     {
-        // TODO: Implement getIpAddress() method.
+        return $this->ipAddress;
     }
 
     public function setIpAddress(string $ipAddress): void
@@ -211,7 +211,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getBaudRate(): BaudRate
     {
-        // TODO: Implement getBaudRate() method.
+        return $this->baudRate;
     }
 
     public function setBaudRate(BaudRate $baudRate): void
@@ -221,7 +221,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getParity(): Parity
     {
-        // TODO: Implement getParity() method.
+        return $this->parity;
     }
 
     public function setParity(Parity $parity): void
@@ -231,7 +231,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getStopBits(): StopBits
     {
-        // TODO: Implement getStopBits() method.
+        return $this->stopBits;
     }
 
     public function setStopBits(StopBits $stopBits): void
@@ -241,7 +241,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getDataBits(): DataBits
     {
-        // TODO: Implement getDataBits() method.
+        return $this->dataBits;
     }
 
     public function setDataBits(DataBits $dataBits): void
@@ -251,7 +251,7 @@ class ConnectionConfig extends Configuration implements ITerminalConfiguration
 
     public function getTimeout(): int
     {
-        // TODO: Implement getTimeout() method.
+        return $this->timeout;
     }
 
     public function getGatewayConfig(): GatewayConfig

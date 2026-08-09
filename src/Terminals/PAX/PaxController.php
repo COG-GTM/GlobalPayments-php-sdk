@@ -148,6 +148,10 @@ class PaxController extends DeviceController
                     new CashierSubGroup(),
                     $extData
                 );
+            default:
+                throw new UnsupportedTransactionException(
+                    'The selected gateway does not support this transaction type.'
+                );
         }
     }
 
@@ -269,6 +273,10 @@ class PaxController extends DeviceController
                     $account->ebtType = substr($builder->currency, 0, 1);
                 }
                 return $this->doEBT($transactionType, $amount, $account, $trace, $cashier, $extData);
+            default:
+                throw new UnsupportedTransactionException(
+                    'The selected gateway does not support this transaction type.'
+                );
         }
     }
 
@@ -450,6 +458,10 @@ class PaxController extends DeviceController
             case ConnectionModes::HTTP:
             case ConnectionModes::HTTPS:
                 return new PaxHttpInterface($this->settings);
+            default:
+                throw new UnsupportedTransactionException(
+                    'The selected gateway does not support this connection mode.'
+                );
         }
     }
 }

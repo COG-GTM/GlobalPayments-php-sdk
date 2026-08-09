@@ -2685,6 +2685,8 @@ class PorticoConnector extends XmlGateway implements IPaymentGateway
                 "Unable to append SDK version to request header. Inner Exception:"
                 . PHP_EOL . $e->getMessage()
             );
+
+            return '';
         }        
     }
 

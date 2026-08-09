@@ -2,6 +2,7 @@
 
 namespace GlobalPayments\Api\Entities\GpApi;
 
+use GlobalPayments\Api\Entities\Exceptions\NotImplementedException;
 use GlobalPayments\Api\Gateways\IAccessTokenProvider;
 
 class GpApiSessionInfo implements IAccessTokenProvider
@@ -36,6 +37,6 @@ class GpApiSessionInfo implements IAccessTokenProvider
 
     public function singOut(): GpApiRequest
     {
-        // TODO: Implement singOut() method.
+        throw new NotImplementedException('GP API sign-out is not supported.');
     }
 }
