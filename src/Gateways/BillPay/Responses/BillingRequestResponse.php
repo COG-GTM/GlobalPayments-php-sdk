@@ -6,7 +6,7 @@ use GlobalPayments\Api\Entities\BillPay\BillingResponse;
 
 class BillingRequestResponse extends BillPayResponseBase
 {
-    function map()
+    public function map()
     {
         $result = new BillingResponse();
 

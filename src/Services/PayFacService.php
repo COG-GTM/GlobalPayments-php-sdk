@@ -87,6 +87,8 @@ class PayFacService
      * accounts, or to provide data when we've had to put an accounts ability to process on hold.
      *
      */
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     public static function UploadDocument()
     {
         return new PayFacBuilder(TransactionType::UPLOAD_DOCUMENT);

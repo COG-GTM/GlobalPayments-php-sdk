@@ -11,6 +11,7 @@ class ArrayUtils
      *
      * @return array
      */
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     public static function array_remove_empty(?array $haystack): array
     {
         if (is_null($haystack)) {

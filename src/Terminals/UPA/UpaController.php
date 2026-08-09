@@ -395,6 +395,7 @@ class UpaController extends DeviceController
                 if ($this->settings->getGatewayConfig() instanceof GpApiConfig) {
                     return new UpaMicInterface($this->settings);
                 }
+            // Fall through.
             default:
                 throw  new NotImplementedException();
         }

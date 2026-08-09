@@ -70,6 +70,10 @@ class GpApiManagementRequestBuilder implements IRequestBuilder
                             )
                         );
                     }
+                    // Fall through.
+                    // Fall through.
+                    // Fall through.
+                    // Fall through.
                 default:
                     break;
             }

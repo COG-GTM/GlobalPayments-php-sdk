@@ -202,6 +202,7 @@ class TransactionApiConnector extends RestGateway implements IPaymentGateway
      *
      * Transaction API base64 encoding
      */
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function base64url_encode($data)
     {
         return strtr(base64_encode($data), '+/', '-_');

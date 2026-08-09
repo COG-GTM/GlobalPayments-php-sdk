@@ -8,7 +8,7 @@ use GlobalPayments\Api\Entities\BillPay\TokenData;
 
 class TokenInformationRequestResponse extends BillPayResponseBase
 {
-    function map(): Transaction
+    public function map(): Transaction
     {
         $result = new Transaction();
         $address = new Address();

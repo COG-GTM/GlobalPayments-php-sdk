@@ -397,6 +397,8 @@ class GpEcomMapping
                         $summary->schemeReferenceData = (string)$root->srd;
                     }
                     break;
+                // Fall through.
+                // Fall through.
                 default:
                     break;
             }

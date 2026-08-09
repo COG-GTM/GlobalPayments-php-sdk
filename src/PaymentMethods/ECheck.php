@@ -93,7 +93,7 @@ class ECheck implements
     }
 
     /** @return PaymentMethodType */
-    function getPaymentMethodType()
+    public function getPaymentMethodType()
     {
         return $this->paymentMethodType;
     }

@@ -66,6 +66,8 @@ class DiamondHttpInterface implements IDeviceCommInterface
             curl_setopt($request, CURLOPT_POSTFIELDS, $data);
             curl_setopt($request, CURLOPT_HTTPHEADER, $headers);
             if (!defined('CURL_SSLVERSION_TLSv1_2')) {
+                // phpcs:ignore PSR2.Classes.ConstantVisibility.NotFound
+                // phpcs:ignore Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase
                 define('CURL_SSLVERSION_TLSv1_2', 6);
             }
             curl_setopt($request, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);

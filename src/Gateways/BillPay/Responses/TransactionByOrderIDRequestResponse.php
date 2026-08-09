@@ -13,7 +13,7 @@ use GlobalPayments\Api\Utils\Element;
 
 class TransactionByOrderIDRequestResponse extends BillPayResponseBase
 {
-    function map()
+    public function map()
     {
         $acceptedCodes = ['00', '0'];
         $responseCode = $this->response->getString('a:ResponseCode');

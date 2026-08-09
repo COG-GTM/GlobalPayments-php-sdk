@@ -117,6 +117,7 @@ class MitcGateway extends RestGateway
         return "{$headerJSON}.{$payloadJSON}.{$signature}";
     }
 
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     private function base64url_encode($data): string
     {
         $newString = base64_encode($data);

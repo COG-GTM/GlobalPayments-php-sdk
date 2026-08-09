@@ -6,7 +6,7 @@ use GlobalPayments\Api\Entities\BillPay\LoadSecurePayResponse;
 
 class SecurePayResponse extends BillPayResponseBase
 {
-    function map(): LoadSecurePayResponse
+    public function map(): LoadSecurePayResponse
     {
         $result = new LoadSecurePayResponse();
         $result->setPaymentIdentifier($this->response->getString("a:GUID"));

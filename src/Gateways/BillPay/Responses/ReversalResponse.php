@@ -7,7 +7,7 @@ use GlobalPayments\Api\Utils\Element;
 
 class ReversalResponse extends BillPayResponseBase
 {
-    function map(): Transaction
+    public function map(): Transaction
     {
         /** @var Element */
         $authorizationElement = $this->response->get(

@@ -66,7 +66,7 @@ class BNPL implements
     }
 
     /** @return PaymentMethodType */
-    function getPaymentMethodType()
+    public function getPaymentMethodType()
     {
         return PaymentMethodType::BNPL;
     }

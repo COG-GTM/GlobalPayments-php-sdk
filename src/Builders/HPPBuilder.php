@@ -259,7 +259,9 @@ class HPPBuilder extends AuthorizationBuilder
     {
         $this->payer->addressMatchIndicator = StringUtils::boolToYesNo($indicator);
         return $this;
-    }    /**
+    }
+
+    /**
      * Configure order amount
 
      * @param string $amount

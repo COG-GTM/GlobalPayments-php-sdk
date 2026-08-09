@@ -6,7 +6,7 @@ use GlobalPayments\Api\Entities\BillPay\BillingResponse;
 
 class CommitPreloadedBillsResponse extends BillPayResponseBase
 {
-    function map()
+    public function map()
     {
         $result = new BillingResponse();
 
