@@ -15,7 +15,7 @@ class TokenData
     {
         $this->merchants = array();
     }
-    
+
     public function getLastUsedDateUTC(): DateTime
     {
         return $this->lastUsedDateUTC;
@@ -56,6 +56,4 @@ class TokenData
     {
         $this->merchants = $merchants;
     }
-
 }
-

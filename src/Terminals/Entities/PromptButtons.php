@@ -11,12 +11,12 @@ class PromptButtons
         $this->list = $button;
     }
 
-    public function add(Button $button) : void
+    public function add(Button $button): void
     {
         $this->list[] = $button;
     }
 
-    public function all() : array
+    public function all(): array
     {
         return $this->list;
     }

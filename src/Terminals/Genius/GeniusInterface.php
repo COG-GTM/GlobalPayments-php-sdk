@@ -24,11 +24,11 @@ class GeniusInterface extends DeviceInterface
     }
 
     /**
-     * 
-     * @param mixed $amount 
-     * @return MitcManageBuilder 
+     *
+     * @param mixed $amount
+     * @return MitcManageBuilder
      */
-    public function refundById($amount = null) : MitcManageBuilder
+    public function refundById($amount = null): MitcManageBuilder
     {
         return (new MitcManageBuilder(
             TransactionType::SALE,
@@ -37,20 +37,19 @@ class GeniusInterface extends DeviceInterface
     }
 
     /**
-     * 
-     * @param TransactionType $transactionType 
-     * @param string $transactionId 
-     * @param TransactionIdType $transactionIdType 
-     * @return MitcResponse 
-     * @throws ApiException 
-     * @throws Exception 
+     *
+     * @param TransactionType $transactionType
+     * @param string $transactionId
+     * @param TransactionIdType $transactionIdType
+     * @return MitcResponse
+     * @throws ApiException
+     * @throws Exception
      */
     public function getTransactionDetail(
         $transactionType,
         string $transactionId,
         $transactionIdType = TransactionIdType::CLIENT_TRANSACTION_ID
-    ) : TerminalReportBuilder
-    {
+    ): TerminalReportBuilder {
         $builder = new TerminalReportBuilder(ReportType::TRANSACTION_DETAIL);
         $builder->where('transactionType', $transactionType);
         $builder->where('transactionId', $transactionId);
@@ -59,10 +58,10 @@ class GeniusInterface extends DeviceInterface
     }
 
     /**
-     * 
-     * @return MitcManageBuilder 
+     *
+     * @return MitcManageBuilder
      */
-    public function void() : MitcManageBuilder
+    public function void(): MitcManageBuilder
     {
         return (new MitcManageBuilder(
             TransactionType::SALE,
@@ -72,10 +71,10 @@ class GeniusInterface extends DeviceInterface
     }
 
     /**
-     * 
-     * @return MitcManageBuilder 
+     *
+     * @return MitcManageBuilder
      */
-    public function voidRefund() : MitcManageBuilder
+    public function voidRefund(): MitcManageBuilder
     {
         return (new MitcManageBuilder(
             TransactionType::REFUND,
@@ -88,7 +87,7 @@ class GeniusInterface extends DeviceInterface
         return new NotImplementedException();
     }
 
-    public function getSignatureFile(SignatureData $data = null) : ISignatureResponse
+    public function getSignatureFile(SignatureData $data = null): ISignatureResponse
     {
         return new NotImplementedException();
     }
@@ -98,7 +97,7 @@ class GeniusInterface extends DeviceInterface
         return new NotImplementedException();
     }
 
-    public function batchClose() : IBatchCloseResponse
+    public function batchClose(): IBatchCloseResponse
     {
         return new NotImplementedException();
     }

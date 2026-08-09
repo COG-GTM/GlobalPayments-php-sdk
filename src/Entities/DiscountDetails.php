@@ -4,7 +4,6 @@ namespace GlobalPayments\Api\Entities;
 
 class DiscountDetails
 {
-
     /**
      * The dollar amount of discount applied to a product
      *

@@ -9,16 +9,17 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class ReversePaymentRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) {
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 
     /**
-     * 
+     *
      * @param Element $envelope
      * @param ManagementBuilder $builder
-     * @param Credentials $credentials 
-     * 
+     * @param Credentials $credentials
+     *
      * @return string|null
      * @throws ApiException
      */
@@ -66,7 +67,7 @@ class ReversePaymentRequest extends BillPayRequestBase
         /** @var TransactionReference*/
         $transactionRef = $builder->paymentMethod;
         $this->et->subElement(
-            $requestElement, 
+            $requestElement,
             "bdms:Transaction_ID",
             $transactionRef->transactionId
         );

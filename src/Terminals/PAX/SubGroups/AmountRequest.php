@@ -7,14 +7,13 @@ use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 
 class AmountRequest implements IRequestSubGroup
 {
-
     public $transactionAmount;
     public $tipAmount;
     public $cashBackAmount;
     public $merchantFee;
     public $taxAmount;
     public $fuelAmount;
-    
+
     public function getElementString()
     {
         $requestParams = ['transactionAmount', 'tipAmount', 'cashBackAmount',

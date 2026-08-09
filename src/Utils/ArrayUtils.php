@@ -31,7 +31,7 @@ class ArrayUtils
         return $haystack;
     }
 
-    public static function jsonToArray(object $response) : array
+    public static function jsonToArray(object $response): array
     {
         return json_decode(json_encode($response), true);
     }

@@ -61,7 +61,7 @@ class PaxController extends DeviceController
         $this->requestIdProvider = $config->requestIdProvider;
     }
 
-    public function configureInterface() : IDeviceInterface
+    public function configureInterface(): IDeviceInterface
     {
         if (empty($this->device)) {
             $this->device = new PaxInterface($this);
@@ -84,7 +84,7 @@ class PaxController extends DeviceController
         return $this->connector->send(trim($message), $requestType);
     }
 
-    public function manageTransaction(TerminalManageBuilder $builder) : TerminalResponse
+    public function manageTransaction(TerminalManageBuilder $builder): TerminalResponse
     {
         $requestId = (!empty($builder->requestId)) ?
                         $builder->requestId :
@@ -95,11 +95,11 @@ class PaxController extends DeviceController
         $extData = new ExtDataSubGroup();
         $trace = new TraceRequest();
         $trace->referenceNumber = $requestId;
-        
+
         //Tip Adjust
-        if($builder->transactionType === TransactionType::EDIT && !empty($builder->gratuity)){
+        if ($builder->transactionType === TransactionType::EDIT && !empty($builder->gratuity)) {
             /*
-             * Transaction Type 06 : ADJUST: Used for additional charges or gratuity. 
+             * Transaction Type 06 : ADJUST: Used for additional charges or gratuity.
              * Typically used for tip adjustment.
              * Set the amount to Transaction Amount, not the Tip Amount
              */
@@ -120,8 +120,8 @@ class PaxController extends DeviceController
                 $card = $builder->paymentMethod;
                 $account->accountNumber = $card->number;
             }
-        }        
-        
+        }
+
         $transactionType = $this->mapTransactionType($builder->transactionType);
         switch ($builder->paymentMethodType) {
             case PaymentMethodType::CREDIT:
@@ -155,7 +155,7 @@ class PaxController extends DeviceController
         }
     }
 
-    public function processTransaction(TerminalAuthBuilder $builder) : TerminalResponse
+    public function processTransaction(TerminalAuthBuilder $builder): TerminalResponse
     {
         $requestId = (!empty($builder->requestId)) ?
                         $builder->requestId :
@@ -169,29 +169,32 @@ class PaxController extends DeviceController
         $ecom = new EcomSubGroup();
         $cashier = new CashierSubGroup();
         $avs = new AvsRequest();
-        
+
         $amount->transactionAmount = TerminalUtils::formatAmount($builder->amount);
         $amount->tipAmount = TerminalUtils::formatAmount($builder->gratuity);
         $amount->cashBackAmount = TerminalUtils::formatAmount($builder->cashBackAmount);
         $amount->taxAmount = TerminalUtils::formatAmount($builder->taxAmount);
-        
+
         $trace->referenceNumber = $requestId;
         $trace->invoiceNumber = $builder->invoiceNumber;
 
         if (!empty($builder->clientTransactionId)) {
             $trace->clientTransactionId = $builder->clientTransactionId;
         }
-        if (!empty($builder->cardBrandTransId))
+        if (!empty($builder->cardBrandTransId)) {
             $trace->cardBrandTransactionId = $builder->cardBrandTransId;
-        
+        }
+
         if ($builder->paymentMethod != null) {
             if ($builder->paymentMethod instanceof CreditCardData) {
                 $card = $builder->paymentMethod;
                 if (empty($card->token)) {
                     $account->accountNumber = $card->number;
                     $account->expd = $card->getShortExpiry();
-                    if ($builder->transactionType != TransactionType::VERIFY &&
-                            $builder->transactionType != TransactionType::REFUND) {
+                    if (
+                        $builder->transactionType != TransactionType::VERIFY &&
+                            $builder->transactionType != TransactionType::REFUND
+                    ) {
                         $account->cvvCode = $card->cvn;
                     }
                 } else {
@@ -210,11 +213,11 @@ class PaxController extends DeviceController
                 $account->accountNumber = $card->number;
             }
         }
-        
+
         if ($builder->allowDuplicates !== null) {
             $account->dupOverrideFlag = 1;
         }
-        
+
         if ($builder->address !== null) {
             $avs->address = $builder->address->streetAddress1;
             $avs->zipCode = $builder->address->postalCode;
@@ -224,11 +227,11 @@ class PaxController extends DeviceController
         $commercial->poNumber = $builder->poNumber;
         $commercial->taxExempt = $builder->taxExempt;
         $commercial->taxExemptId = $builder->taxExemptId;
-        
+
         if ($builder->requestMultiUseToken !== null) {
             $extData->details[PaxExtData::TOKEN_REQUEST] = $builder->requestMultiUseToken;
         }
-        
+
         if ($builder->signatureCapture !== null) {
             $extData->details[PaxExtData::SIGNATURE_CAPTURE] = $builder->signatureCapture;
         }
@@ -237,9 +240,10 @@ class PaxController extends DeviceController
             $extData->details[PaxExtData::TIP_REQUEST] = 1;
         }
 
-        if (!empty($builder->autoSubstantiation)) 
+        if (!empty($builder->autoSubstantiation)) {
             $extData->details[PaxExtData::PASS_THROUGH_DATA] = $builder->autoSubstantiation;
-        
+        }
+
         $transactionType = $this->mapTransactionType($builder->transactionType, $builder->requestMultiUseToken);
         switch ($builder->paymentMethodType) {
             case PaymentMethodType::CREDIT:
@@ -267,7 +271,7 @@ class PaxController extends DeviceController
                 $messageId = ($builder->currency == CurrencyType::CURRENCY) ?
                                 PaxMessageId::T06_DO_GIFT : PaxMessageId::T08_DO_LOYALTY;
                 return $this->doGift($messageId, $transactionType, $amount, $account, $trace, $cashier, $extData);
-                
+
             case PaymentMethodType::EBT:
                 if (!empty($builder->currency)) {
                     $account->ebtType = substr($builder->currency, 0, 1);
@@ -311,7 +315,7 @@ class PaxController extends DeviceController
                 );
         }
     }
-    
+
     private function doCredit(
         $transactionType,
         $amounts,
@@ -322,8 +326,8 @@ class PaxController extends DeviceController
         $commercial,
         $ecom,
         $extData
-    ) : CreditResponse {
-    
+    ): CreditResponse {
+
         $commands = [
             PaxMessageId::T00_DO_CREDIT,
             '1.35',
@@ -340,15 +344,15 @@ class PaxController extends DeviceController
         $response = $this->doTransaction($commands, PaxMessageId::T00_DO_CREDIT);
         return new CreditResponse($response);
     }
-    
+
     private function doTransaction($commands, $requestType = null)
     {
         $message = implode(chr(ControlCodes::FS), $commands);
         $finalMessage = TerminalUtils::buildMessage($message);
         return $this->send($finalMessage, $requestType);
     }
-    
-    private function doDebit($transactionType, $amounts, $accounts, $trace, $cashier, $extData) : DebitResponse
+
+    private function doDebit($transactionType, $amounts, $accounts, $trace, $cashier, $extData): DebitResponse
     {
         $commands = [
             PaxMessageId::T02_DO_DEBIT,
@@ -363,7 +367,7 @@ class PaxController extends DeviceController
         $response = $this->doTransaction($commands, PaxMessageId::T02_DO_DEBIT);
         return new DebitResponse($response);
     }
-    
+
     private function doGift($messageId, $transactionType, $amounts, $accounts, $trace, $cashier, $extData)
     {
         $commands = [
@@ -379,17 +383,17 @@ class PaxController extends DeviceController
         $response = $this->doTransaction($commands, $messageId);
         return new GiftResponse($response);
     }
-    
-    public function processReport(TerminalReportBuilder $builder) : ITerminalReport
+
+    public function processReport(TerminalReportBuilder $builder): ITerminalReport
     {
         $response = $this->buildReportTransaction($builder);
         return new PaxLocalReportResponse($response);
     }
-    
+
     public function buildReportTransaction($builder)
     {
         $messageId = $this->mapReportType($builder->reportType);
-        
+
         switch ($builder->reportType) {
             case TerminalReportType::LOCAL_DETAIL_REPORT:
                 $criteria = $builder->searchBuilder;
@@ -397,11 +401,11 @@ class PaxController extends DeviceController
                 if (!empty($criteria->MerchantId)) {
                     $extData->details[PaxExtData::MERCHANT_ID] = $criteria->MerchantId;
                 }
-                
+
                 if (!empty($criteria->MerchantName)) {
                     $extData->details[PaxExtData::MERCHANT_NAME] = $criteria->MerchantName;
                 }
-                
+
                 $commands = [
                     $messageId,
                     '1.35',
@@ -421,7 +425,7 @@ class PaxController extends DeviceController
                 );
         }
     }
-    
+
     private function mapReportType($type)
     {
         switch ($type) {

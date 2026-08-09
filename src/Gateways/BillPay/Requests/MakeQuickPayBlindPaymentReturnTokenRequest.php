@@ -6,7 +6,8 @@ use GlobalPayments\Api\Utils\ElementTree;
 
 class MakeQuickPayBlindPaymentReturnTokenRequest extends MakeQuickPayBlindPaymentRequest
 {
-    public function __construct(ElementTree $et) {
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 

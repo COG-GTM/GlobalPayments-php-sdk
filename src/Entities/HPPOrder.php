@@ -1,4 +1,5 @@
 <?php
+
 //Entity class for hosted payment page's order properties
 
 namespace GlobalPayments\Api\Entities;

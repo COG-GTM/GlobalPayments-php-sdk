@@ -43,7 +43,7 @@ class AlternativePaymentResponse
      * @var string
      */
     public $paymentPurpose;
-    
+
     /**
      *
      * @var string

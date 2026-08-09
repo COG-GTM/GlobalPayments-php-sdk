@@ -6,7 +6,6 @@ use GlobalPayments\Api\Entities\Enum;
 
 class PaxMessageId extends Enum
 {
-
     const A00_INITIALIZE = "A00";
     const A02_GET_VARIABLE = "A02";
     const A04_SET_VARIABLE = "A04";

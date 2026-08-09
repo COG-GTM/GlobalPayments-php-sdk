@@ -1,6 +1,5 @@
 <?php
 
-
 namespace GlobalPayments\Api\Services;
 
 use GlobalPayments\Api\Entities\Enums\Environment;

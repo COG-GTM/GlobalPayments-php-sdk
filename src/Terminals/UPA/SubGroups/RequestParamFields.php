@@ -15,14 +15,14 @@ class RequestParamFields implements IRequestSubGroup
      * ID of the clerk if in retail mode, and ID of the server if in restaurant mode.
      */
     public $clerkId = null;
-    
+
     /*
      * When enabled create token request is sent to Portico to generate a token for a cardholder
-     * 
+     *
      * Possible values: 0 or 1
      */
     public $tokenRequest = null;
-    
+
     /*
      * Token returned previously by the host.
      */
@@ -59,7 +59,7 @@ class RequestParamFields implements IRequestSubGroup
             return !is_null($val);
         });
     }
-    
+
     public function setParams(TerminalBuilder $builder)
     {
         switch ($builder->transactionType) {
@@ -90,11 +90,11 @@ class RequestParamFields implements IRequestSubGroup
         if (!empty($builder->cardBrandTransId)) {
             $this->cardBrandTransId = $builder->cardBrandTransId;
         }
-        
+
         if (!empty($builder->requestMultiUseToken)) {
             $this->tokenRequest = $builder->requestMultiUseToken === true ? 1 : 0;
         }
-        
+
         if (
             $builder->paymentMethod instanceof CreditCardData &&
             !empty($builder->paymentMethod->token)

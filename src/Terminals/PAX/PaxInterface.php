@@ -41,11 +41,11 @@ final class PaxInterface extends DeviceInterface
     }
 
     #region Admin Messages
-    
+
     public function initialize(): InitializeResponse
     {
         $message = TerminalUtils::buildAdminMessage(PaxMessageId::A00_INITIALIZE);
-        
+
         // Add automatic logging (same pattern as UPA) - meets requirement for same config
         if (isset($this->paxController->settings->logManagementProvider)) {
             TerminalUtils::manageLog(
@@ -53,17 +53,17 @@ final class PaxInterface extends DeviceInterface
                 "PAX Initialize Request: " . PaxMessageId::A00_INITIALIZE
             );
         }
-        
+
         $rawResponse = $this->paxController->send($message);
-        
-        // Log response as well 
+
+        // Log response as well
         if (isset($this->paxController->settings->logManagementProvider)) {
             TerminalUtils::manageLog(
                 $this->paxController->settings->logManagementProvider,
                 "PAX Initialize Response: " . $rawResponse
             );
         }
-        
+
         return new InitializeResponse($rawResponse, PaxMessageId::A00_INITIALIZE);
     }
 
@@ -71,7 +71,7 @@ final class PaxInterface extends DeviceInterface
     {
         $message = TerminalUtils::buildAdminMessage(PaxMessageId::B00_BATCH_CLOSE, [date("YMDhms")]);
         $rawResponse = $this->paxController->send($message);
-        
+
         return new BatchResponse($rawResponse);
     }
 
@@ -115,7 +115,7 @@ final class PaxInterface extends DeviceInterface
     {
         throw new UnsupportedTransactionException('');
     }
-    
+
     public function promptForSignature(?string $transactionId = null): SignatureResponse
     {
         $message = TerminalUtils::buildAdminMessage(
@@ -128,7 +128,7 @@ final class PaxInterface extends DeviceInterface
                     ]
         );
         $rawResponse = $this->paxController->send($message);
-        
+
         return new SignatureResponse($rawResponse, PaxMessageId::A21_RSP_DO_SIGNATURE);
     }
 
@@ -137,13 +137,13 @@ final class PaxInterface extends DeviceInterface
         if (!function_exists('imagecreate')) {
             throw new ApiException("The gd2 extension needs to be enabled for this request. Please contact your admin");
         }
-        
+
         $message = TerminalUtils::buildAdminMessage(
             PaxMessageId::A08_GET_SIGNATURE,
             [0]
         );
         $rawResponse = $this->paxController->send($message);
-        
+
         return new SignatureResponse(
             $rawResponse,
             PaxMessageId::A09_RSP_GET_SIGNATURE,
@@ -155,7 +155,7 @@ final class PaxInterface extends DeviceInterface
     {
         $message = TerminalUtils::buildAdminMessage(PaxMessageId::A26_REBOOT);
         $rawResponse = $this->paxController->send($message);
-        
+
         return new PaxTerminalResponse($rawResponse, PaxMessageId::A26_REBOOT);
     }
 
@@ -163,7 +163,7 @@ final class PaxInterface extends DeviceInterface
     {
         $message = TerminalUtils::buildAdminMessage(PaxMessageId::A16_RESET);
         $rawResponse = $this->paxController->send($message);
-        
+
         return new PaxTerminalResponse($rawResponse, PaxMessageId::A16_RESET);
     }
 
@@ -176,7 +176,7 @@ final class PaxInterface extends DeviceInterface
     {
         throw new UnsupportedTransactionException('');
     }
-    
+
     #region Reporting Messages
 
     public function localDetailReport(): TerminalReportBuilder
@@ -185,13 +185,13 @@ final class PaxInterface extends DeviceInterface
     }
 
     #endregion
-    
+
     #region Saf
     public function sendSaf($safIndicator = null): DeviceResponse
     {
         return $this->safUpload($safIndicator);
     }
-    
+
     public function setSafMode($paramValue): PaxTerminalResponse
     {
         $message = TerminalUtils::buildAdminMessage(PaxMessageId::A54_SET_SAF_PARAMETERS, [
@@ -201,30 +201,30 @@ final class PaxInterface extends DeviceInterface
         $rawResponse = $this->paxController->send($message);
         return new PaxTerminalResponse($rawResponse, PaxMessageId::A54_SET_SAF_PARAMETERS);
     }
-    
+
     public function safUpload($safIndicator): SafUploadResponse
     {
         $message = TerminalUtils::buildAdminMessage(PaxMessageId::B08_SAF_UPLOAD, [$safIndicator]);
         $rawResponse = $this->paxController->send($message);
         return new SafUploadResponse($rawResponse);
     }
-    
+
     public function safDelete($safIndicator): SafDeleteResponse
     {
         $message = TerminalUtils::buildAdminMessage(PaxMessageId::B10_DELETE_SAF_FILE, [$safIndicator]);
-        
+
         $rawResponse = $this->paxController->send($message);
         return new SafDeleteResponse($rawResponse);
     }
-    
+
     public function safSummaryReport($safIndicator = null): SafSummaryReport
     {
         $message = TerminalUtils::buildAdminMessage(PaxMessageId::R10_SAF_SUMMARY_REPORT, [$safIndicator]);
-        
+
         $rawResponse = $this->paxController->send($message);
         return new SafSummaryReport($rawResponse);
     }
-    
+
     public function tipAdjust($tipAmount = null): TerminalManageBuilder
     {
         return (new TerminalManageBuilder(TransactionType::EDIT, PaymentMethodType::CREDIT))
@@ -235,13 +235,13 @@ final class PaxInterface extends DeviceInterface
     {
         // Add null safety check - requirement: same config as UPA
         if (isset($this->paxController->settings->logManagementProvider)) {
-            $this->paxController->settings->logManagementProvider->enableConsoleOutput = 
+            $this->paxController->settings->logManagementProvider->enableConsoleOutput =
                 $logOutput === (string)DebugLogsOutput::CONSOLE;
         }
-        
+
         // Store debug levels locally instead of on ConnectionConfig to avoid dynamic property creation
         $this->debugLevels = $debugLevels;
-        
+
         return new PaxTerminalResponse("0\x1CA90\x1C1.35\x1C000000\x1COK\x03", "A90");
     }
 
@@ -255,16 +255,16 @@ final class PaxInterface extends DeviceInterface
     public function getDebugInfo(string $logDirectory, ?string $fileIndicator = null): DeviceResponse
     {
         $response = new PaxTerminalResponse("0\x1CA92\x1C1.35\x1C000000\x1COK\x03", "A92");
-        
+
         // Get log file with null safety (same pattern as UPA)
         $logFile = '';
         if (isset($this->paxController->settings->logManagementProvider)) {
             $logFile = $this->paxController->settings->logManagementProvider->logLocation ?? '';
         }
-        
+
         $response->debugFileContents = file_exists($logFile) ? file_get_contents($logFile) : '';
         $response->debugFileLength = file_exists($logFile) ? filesize($logFile) : 0;
-        
+
         return $response;
     }
     #endregion

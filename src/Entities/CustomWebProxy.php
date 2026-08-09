@@ -1,8 +1,6 @@
 <?php
 
-
 namespace GlobalPayments\Api\Entities;
-
 
 class CustomWebProxy implements IWebProxy
 {

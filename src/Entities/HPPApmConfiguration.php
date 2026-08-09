@@ -1,7 +1,8 @@
 <?php
+
 /**
  * APM Configuration for Hosted Payment Pages, goes in order.payment_method_configuration.amp
- * 
+ *
  */
 
 namespace GlobalPayments\Api\Entities;
@@ -21,13 +22,13 @@ class HPPApmConfiguration
      * @var bool|null
      */
     public ?bool $shippingAddressEnabled = false;
-    
+
     /**
      * Determines whether the shipping address can be changed by the customer on the PayPal review page
      * @var bool|null
      */
     public ?bool $addressOverride = false;
-    
+
     /**
      * The nullable boolean properties are type-enforced, so no runtime validation remains.
      *

@@ -7,7 +7,6 @@ namespace GlobalPayments\Api\Entities;
  */
 class CommercialLineItem
 {
-
     /**
      * The tax identification number of the merchant that reported the alternate tax amount.
      *
@@ -30,7 +29,7 @@ class CommercialLineItem
      * @var string
      */
     public $description;
-    
+
     public $discountDetails;
 
     /**
@@ -75,7 +74,7 @@ class CommercialLineItem
      * @var string
      */
     public $taxName;
-    
+
     /**
      * optional w/TransIt level3
      *

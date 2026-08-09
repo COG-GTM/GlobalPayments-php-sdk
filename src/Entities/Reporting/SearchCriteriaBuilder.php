@@ -1,4 +1,5 @@
 <?php
+
 namespace GlobalPayments\Api\Entities\Reporting;
 
 use GlobalPayments\Api\Builders\ReportBuilder;
@@ -44,7 +45,7 @@ class SearchCriteriaBuilder
      * @var string
      */
     public $accountNumberLastFour;
-    
+
     /**
      * @var string
      */
@@ -59,7 +60,7 @@ class SearchCriteriaBuilder
      * @var string
      */
     public $aquirerReferenceNumber;
-    
+
     /**
      * @var string
      */
@@ -69,17 +70,17 @@ class SearchCriteriaBuilder
      * @var string
      */
     public $bankAccountNumber;
-    
+
     /**
      * @var string
      */
     public $bankRoutingNumber;
-    
+
     /**
      * @var string
      */
     public $batchId;
-    
+
     /**
      * @var string
      */
@@ -89,7 +90,7 @@ class SearchCriteriaBuilder
      * @var string
      */
     public $brandReference;
-    
+
     /**
      * @var string
      */
@@ -99,32 +100,32 @@ class SearchCriteriaBuilder
      * @var string
      */
     public $cardBrand;
-    
+
     /**
      * @var string
      */
     public $cardHolderFirstName;
-    
+
     /**
      * @var string
      */
     public $cardHolderLastName;
-    
+
     /**
      * @var string
      */
     public $cardHolderPoNumber;
-    
+
     /**
      * @var string
      */
     public $cardNumberFirstSix;
-    
+
     /**
      * @var string
      */
     public $cardNumberLastFour;
-    
+
     /**
      * @var array<CardType>
      */
@@ -134,32 +135,32 @@ class SearchCriteriaBuilder
      * @var Channel
      */
     public $channel;
-    
+
     /**
      * @var string
      */
     public $checkFirstName;
-    
+
     /**
      * @var string
      */
     public $checkLastName;
-    
+
     /**
      * @var string
      */
     public $checkName;
-    
+
     /**
      * @var string
      */
     public $checkNumber;
-    
+
     /**
      * @var string
      */
     public $clerkId;
-    
+
     /**
      * @var string
      */
@@ -174,7 +175,7 @@ class SearchCriteriaBuilder
      * @var string
      */
     public $currency;
-    
+
     /**
      * @var string
      */
@@ -194,7 +195,7 @@ class SearchCriteriaBuilder
      * @var DepositStatus
      */
     public $depositStatus;
-    
+
     /**
      * @var string
      */
@@ -222,7 +223,7 @@ class SearchCriteriaBuilder
      * @var \DateTime
      */
     public $endBatchDate;
-    
+
     /**
      * @var \DateTime
      */
@@ -272,12 +273,12 @@ class SearchCriteriaBuilder
      * @var string
      */
     public $invoiceNumber;
-    
+
     /**
      * @var string
      */
     public $issuerResult;
-    
+
     /**
      * @var string
      */
@@ -302,7 +303,7 @@ class SearchCriteriaBuilder
      * @var string
      */
     public $name;
-    
+
     /**
      * @var bool
      */
@@ -348,17 +349,17 @@ class SearchCriteriaBuilder
      * @var PaymentMethodType
      */
     public $paymentMethodType;
-    
+
     /**
      * @var string
      */
     public $referenceNumber;
-    
+
     /**
      * @var array<TransactionType>
      */
     public $transactionType;
-    
+
     /**
      * @var integer
      */
@@ -378,12 +379,12 @@ class SearchCriteriaBuilder
      * @var string
      */
     public $storedPaymentMethodStatus;
-    
+
     /**
      * @var string
      */
     public $scheduleId;
-    
+
     /**
      * @var string
      */
@@ -393,7 +394,7 @@ class SearchCriteriaBuilder
      * @var \DateTime
      */
     public $startBatchDate;
-    
+
     /**
      * @var \DateTime
      */
@@ -428,12 +429,12 @@ class SearchCriteriaBuilder
      * @var TransactionStatus
      */
     public $transactionStatus;
-    
+
     /**
      * @var string
      */
     public $uniqueDeviceId;
-    
+
     /**
      * @var string
      */
@@ -534,7 +535,7 @@ class SearchCriteriaBuilder
     public $returnPii;
 
     /** END Open Banking search criteria */
-    
+
 
     /** START FRAUD MANAGEMENT search criteria */
 
@@ -554,7 +555,7 @@ class SearchCriteriaBuilder
     {
         $this->reportBuilder = $reportBuilder;
     }
-    
+
     public function andWith($criteria, $value)
     {
         if (property_exists($this, $criteria)) {
@@ -562,7 +563,7 @@ class SearchCriteriaBuilder
         }
         return $this;
     }
-    
+
     public function execute($configName = "default")
     {
         if (($this->reportBuilder) === null) {

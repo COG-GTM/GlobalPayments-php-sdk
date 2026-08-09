@@ -125,7 +125,7 @@ abstract class Credit implements
      */
     public function charge($amount = null)
     {
-      
+
         return (new AuthorizationBuilder(TransactionType::SALE, $this))
             ->withAmount($amount != null ? $amount : ($this->threeDSecure != null ? $this->threeDSecure->getAmount() : null))
             ->withCurrency($this->threeDSecure != null ? $this->threeDSecure->getCurrency() : null)
@@ -202,7 +202,7 @@ abstract class Credit implements
      *
      * @return AuthorizationBuilder
      */
-    public function tokenize($verifyCard = true, $usageMode = PaymentMethodUsageMode::MULTIPLE) : AuthorizationBuilder
+    public function tokenize($verifyCard = true, $usageMode = PaymentMethodUsageMode::MULTIPLE): AuthorizationBuilder
     {
         if ($verifyCard !== false) {
             $verifyCard = true;
@@ -216,12 +216,12 @@ abstract class Credit implements
 
     /**
      * Tokenizes the payment method
-     * 
+     *
      * @param bool $verifyCard
      * @param Address $billingAddress
      * @param Customer $customerData
      * @param string $configName
-     * 
+     *
      * @return string
      */
     public function tokenizeWithVerifyCardUsageAddressCustomerConfig(
@@ -280,7 +280,7 @@ abstract class Credit implements
         return (new ManagementBuilder(TransactionType::TOKEN_UPDATE))
             ->withPaymentMethod($this);
     }
-    
+
     /**
      * Deletes the token associated with the current card object
      *
@@ -300,10 +300,10 @@ abstract class Credit implements
     }
 
     /**
-     * 
-     * @param null|string $configName 
-     * @return Transaction 
-     * @throws ApiException 
+     *
+     * @param null|string $configName
+     * @return Transaction
+     * @throws ApiException
      */
     public function getTokenInformation(?string $configName = null): Transaction
     {

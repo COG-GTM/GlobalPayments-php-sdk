@@ -7,12 +7,11 @@ use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 
 class CommercialRequest implements IRequestSubGroup
 {
-
     public $poNumber;
     public $customerCode;
     public $taxExempt;
     public $taxExemptId;
-    
+
     public function getElementString()
     {
         $requestParams = ['poNumber', 'customerCode', 'taxExempt', 'taxExemptId'];

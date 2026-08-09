@@ -1,6 +1,7 @@
 <?php
 
 namespace GlobalPayments\Api\Entities;
+
 class InstallmentData
 {
     /**

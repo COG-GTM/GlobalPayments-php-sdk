@@ -8,7 +8,6 @@ use GlobalPayments\Api\ServicesContainer;
 use GlobalPayments\Api\Entities\Enums\{BillingLoadType,
     TransactionModifier
 };
-
 use GlobalPayments\Api\PaymentMethods\{EBTCardData, CreditCardData};
 use GlobalPayments\Api\PaymentMethods\Interfaces\IPaymentMethod;
 use GlobalPayments\Api\Entities\BillPay\BillingResponse;
@@ -17,21 +16,21 @@ class BillingBuilder extends TransactionBuilder
 {
     /**
      * Request Bills
-     * 
+     *
      * @var array<Bill>
      */
     private $bills = array();
 
     /**
      * Request BillingLoadType
-     * 
+     *
      * @var BillingLoadType
      */
     private $billingLoadType;
 
     /**
      * Request HostedPaymentData
-     * 
+     *
      * @var ?HostedPaymentData
      */
     private $hostedPaymentData;
@@ -110,61 +109,61 @@ class BillingBuilder extends TransactionBuilder
         return $this;
     }
 
-    public function getBills() 
+    public function getBills()
     {
         return $this->bills;
     }
 
-    public function getBillingLoadType() 
+    public function getBillingLoadType()
     {
         return $this->billingLoadType;
     }
 
-    public function getHostedPaymentData() 
+    public function getHostedPaymentData()
     {
         return $this->hostedPaymentData;
     }
 
-    public function getOrderId() 
+    public function getOrderId()
     {
         return $this->orderId;
     }
 
-    public function getCommitBills() 
+    public function getCommitBills()
     {
         return $this->commitBills;
     }
 
-    public function getClearBills() 
+    public function getClearBills()
     {
         return $this->clearBills;
     }
 
-    public function getCustomer() 
+    public function getCustomer()
     {
         return $this->customer;
     }
 
-    public function getAmount() 
+    public function getAmount()
     {
         return $this->amount;
     }
 
-    public function withOrderId(string $orderId) 
+    public function withOrderId(string $orderId)
     {
         $this->orderId = $orderId;
 
         return $this;
     }
 
-    public function commitPreloadedBills() 
+    public function commitPreloadedBills()
     {
         $this->commitBills = true;
 
         return $this;
     }
 
-    public function clearPreloadedBills() 
+    public function clearPreloadedBills()
     {
         $this->clearBills = true;
 
@@ -172,7 +171,7 @@ class BillingBuilder extends TransactionBuilder
     }
 
     /**
-     * @param BillingLoadType $billingLoadType 
+     * @param BillingLoadType $billingLoadType
      */
     public function withBillingLoadType($billingLoadType): BillingBuilder
     {
@@ -225,5 +224,4 @@ class BillingBuilder extends TransactionBuilder
     {
         // Intended to be unimplemented, same implementation on other SDKs
     }
-
-}  
+}

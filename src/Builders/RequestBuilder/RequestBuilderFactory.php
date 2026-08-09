@@ -24,7 +24,6 @@ use GlobalPayments\Api\Builders\RequestBuilder\TransactionApi\{
     TransactionApiManagementRequestBuilder,
     TransactionApiAuthorizationRequestBuilder
 };
-
 use GlobalPayments\Api\Entities\Enums\GatewayProvider;
 
 class RequestBuilderFactory
@@ -60,7 +59,7 @@ class RequestBuilderFactory
         }
         foreach (self::$processes[$gatewayProvider] as $gateway => $processName) {
             if (call_user_func(array($processName, 'canProcess'), $builder)) {
-                return new $processName;
+                return new $processName();
             }
         }
 

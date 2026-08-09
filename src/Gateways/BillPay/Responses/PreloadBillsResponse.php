@@ -2,4 +2,6 @@
 
 namespace GlobalPayments\Api\Gateways\BillPay\Responses;
 
-class PreloadBillsResponse extends BillingRequestResponse {}
+class PreloadBillsResponse extends BillingRequestResponse
+{
+}

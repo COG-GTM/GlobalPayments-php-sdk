@@ -17,7 +17,7 @@ class TokenInformationRequestResponse extends BillPayResponseBase
         $tokenData = new TokenData();
 
         $tokenDetailsElement = $this->response->get("a:TokenDetails");
-        $accountHolderData= $this->response->getAccountHolderData("a:AccountHolderData");
+        $accountHolderData = $this->response->getAccountHolderData("a:AccountHolderData");
 
         $address->streetAddress1 = $accountHolderData["Address"];
         $address->city = $accountHolderData["City"];

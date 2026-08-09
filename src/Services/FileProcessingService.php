@@ -14,7 +14,7 @@ class FileProcessingService
             ->execute();
     }
 
-    public static function getDetails(string $resourceId) : FileProcessor
+    public static function getDetails(string $resourceId): FileProcessor
     {
         return (new FileProcessingBuilder(FileProcessingActionType::GET_DETAILS))
             ->withResourceId($resourceId)

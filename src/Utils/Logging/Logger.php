@@ -92,8 +92,12 @@ class Logger
     public function setLogFilePath($logDirectory)
     {
         if ($this->options['filename']) {
-            if (strpos($this->options['filename'], '.log') !== false || strpos($this->options['filename'],
-                    '.txt') !== false) {
+            if (
+                strpos($this->options['filename'], '.log') !== false || strpos(
+                    $this->options['filename'],
+                    '.txt'
+                ) !== false
+            ) {
                 $this->logFilePath = $logDirectory . DIRECTORY_SEPARATOR . $this->options['filename'];
             } else {
                 $this->logFilePath = $logDirectory . DIRECTORY_SEPARATOR . $this->options['filename'] . '.' . $this->options['extension'];
@@ -213,7 +217,6 @@ class Logger
             foreach ($parts as $part => $value) {
                 $message = str_replace('{' . $part . '}', $value, $message);
             }
-
         } else {
             $message = "[{$this->getTimestamp()}] [{$level}] {$message}";
         }
@@ -223,7 +226,6 @@ class Logger
         }
 
         return $message . PHP_EOL;
-
     }
 
     /**
@@ -282,6 +284,6 @@ class Logger
 
     public function info($message, array $context = array())
     {
-        $this->log(self::INFO_LOG_LEVEL,$message, $context);
+        $this->log(self::INFO_LOG_LEVEL, $message, $context);
     }
 }

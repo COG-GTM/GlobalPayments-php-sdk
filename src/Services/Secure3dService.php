@@ -28,7 +28,7 @@ class Secure3dService
         if ($paymentMethod instanceof ISecure3d) {
             $paymentMethod->threeDSecure = $secureEcom;
         }
-        
+
         return (new Secure3dBuilder(TransactionType::INITIATE_AUTHENTICATION))
             ->withPaymentMethod($paymentMethod);
     }

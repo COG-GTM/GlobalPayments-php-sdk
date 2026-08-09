@@ -70,7 +70,7 @@ class UpaResponseHandler extends TerminalResponse
         $this->parseResponse($response);
     }
 
-    protected function isGpApiResponse($jsonResponse) : bool
+    protected function isGpApiResponse($jsonResponse): bool
     {
         if (is_object($jsonResponse)) {
             $jsonResponse = ArrayUtils::jsonToArray($jsonResponse);

@@ -7,5 +7,5 @@ use GlobalPayments\Api\Entities\FileProcessor;
 
 interface IFileProcessingService
 {
-    public function processFileUpload(FileProcessingBuilder $builder) : FileProcessor;
+    public function processFileUpload(FileProcessingBuilder $builder): FileProcessor;
 }

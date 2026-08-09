@@ -17,7 +17,6 @@ use GlobalPayments\Api\Entities\Transaction;
 
 class HostedService
 {
-
     /**
      * Shared secret to authenticate with the gateway
      */
@@ -95,7 +94,7 @@ class HostedService
             ->withPaymentMethod($transaction);
     }
 
-    private function mapTransactionStatusResponse($response) : array
+    private function mapTransactionStatusResponse($response): array
     {
         return [
             'ACCOUNT_HOLDER_NAME' => $response['accountholdername'] ?? '',
@@ -115,7 +114,7 @@ class HostedService
             'PAYMENTMETHOD' => $response['paymentmethod'] ?? '',
             'PAYMENT_PURPOSE' => $response['paymentpurpose'] ?? '',
             'RESULT' => $response['result'] ?? '',
-            $this->shaHashType . "HASH" => $response[strtolower($this->shaHashType).'hash']
+            $this->shaHashType . "HASH" => $response[strtolower($this->shaHashType) . 'hash']
         ];
     }
 

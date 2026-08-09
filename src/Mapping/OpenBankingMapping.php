@@ -52,7 +52,6 @@ class OpenBankingMapping
                 break;
             default:
                 break;
-
         }
 
         return $report;

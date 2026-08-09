@@ -4,7 +4,6 @@ namespace GlobalPayments\Api\Entities;
 
 class AdditionalTaxDetails
 {
-
     /**
      * Tax amount
      *

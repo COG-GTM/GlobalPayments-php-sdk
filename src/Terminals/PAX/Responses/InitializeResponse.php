@@ -8,11 +8,10 @@ use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 
 class InitializeResponse extends PaxTerminalResponse
 {
-
     public $serialNumber;
     public $modelName;
     public $osVersion;
-    
+
     public function __construct($rawResponse)
     {
         parent::__construct($rawResponse, PaxMessageId::A01_RSP_INITIALIZE);
@@ -20,9 +19,9 @@ class InitializeResponse extends PaxTerminalResponse
 
     public function parseResponse($messageReader)
     {
-        
+
         parent::parseResponse($messageReader);
-        
+
         $this->serialNumber = $messageReader->readToCode(ControlCodes::FS);
         $this->modelName = $messageReader->readToCode(ControlCodes::FS);
         $this->osVersion = $messageReader->readToCode(ControlCodes::FS);

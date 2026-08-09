@@ -12,7 +12,8 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class CreateCustomerAccountRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) {
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 
@@ -80,15 +81,15 @@ class CreateCustomerAccountRequest extends BillPayRequestBase
         }
 
         $this->et->subElement(
-            $customerAccountElement, 
-            "bdms:IsCustomerDefaultAccount", 
+            $customerAccountElement,
+            "bdms:IsCustomerDefaultAccount",
             $this->serializeBooleanValues($recurringPaymentMethod->preferredPayment)
         );
         $this->et->subElement($customerAccountElement, "bdms:RoutingNumber", $routingNumber);
 
         if ($recurringPaymentMethod->paymentMethod !== null) {
             $this->et->subElement(
-                $customerAccountElement, 
+                $customerAccountElement,
                 "bdms:TokenPaymentMethod",
                 $this->getPaymentMethodType($recurringPaymentMethod->paymentMethod->getPaymentMethodType())
             );

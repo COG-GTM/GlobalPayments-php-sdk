@@ -6,7 +6,6 @@ use GlobalPayments\Api\Entities\Enum;
 
 class PaxEntryMode extends Enum
 {
-
     const MANUAL = "0";
     const SWIPE = "1";
     const CONTACTLESS = "2";

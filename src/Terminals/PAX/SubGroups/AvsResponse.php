@@ -7,7 +7,6 @@ use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 
 class AvsResponse implements IResponseSubGroup
 {
-
     public $avsResponseCode;
     public $avsResponseMessage;
 

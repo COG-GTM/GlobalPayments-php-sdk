@@ -20,7 +20,6 @@ use GlobalPayments\Api\Terminals\TerminalResponse;
 
 class TerminalAuthBuilder extends TerminalBuilder
 {
-
     public $address;
 
     public $allowDuplicates;
@@ -32,7 +31,7 @@ class TerminalAuthBuilder extends TerminalBuilder
     public $cashBackAmount;
 
     /**
-     * 
+     *
      * @var string|int|float
      */
     public string|int|float $tippableAmount;
@@ -62,13 +61,13 @@ class TerminalAuthBuilder extends TerminalBuilder
     public $shiftId;
 
     public $taxType;
-    
+
     public $tokenRequest;
-    
+
     public $tokenValue;
-    
+
     /**
-     * 
+     *
      * @var AutoSubstantiation
      */
     public $autoSubstantiation;
@@ -84,13 +83,13 @@ class TerminalAuthBuilder extends TerminalBuilder
     public bool $confirmAmount;
 
     /**
-     * 
+     *
      * @var bool
      */
     public $allowPartialAuth;
 
     /**
-     * 
+     *
      * @var StoredCredentialInitiator
      */
     public $transactionInitiator;
@@ -140,7 +139,7 @@ class TerminalAuthBuilder extends TerminalBuilder
      * @return TerminalResponse
      * @throws \GlobalPayments\Api\Entities\Exceptions\ApiException
      */
-    public function execute(string $configName = "default") : TerminalResponse
+    public function execute(string $configName = "default"): TerminalResponse
     {
         parent::execute($configName);
         $client = ServicesContainer::instance()->getDeviceController($configName);
@@ -173,11 +172,11 @@ class TerminalAuthBuilder extends TerminalBuilder
     }
 
     /**
-     * 
-     * @param string|int|float $tippableAmount 
-     * @return $this 
+     *
+     * @param string|int|float $tippableAmount
+     * @return $this
      */
-    public function withTippableAmount(string|int|float $tippableAmount) : TerminalAuthBuilder
+    public function withTippableAmount(string|int|float $tippableAmount): TerminalAuthBuilder
     {
         $this->tippableAmount = $tippableAmount;
         return $this;
@@ -263,21 +262,20 @@ class TerminalAuthBuilder extends TerminalBuilder
     }
 
     /**
-     * 
-     * @param null|StoredCredentialInitiator|string $transactionInitiator 
-     * @param string|null $cardBrandTransactionId 
-     * @return TerminalAuthBuilder 
+     *
+     * @param null|StoredCredentialInitiator|string $transactionInitiator
+     * @param string|null $cardBrandTransactionId
+     * @return TerminalAuthBuilder
      */
     public function withCardBrandStorage(
         StoredCredentialInitiator|string $transactionInitiator = null,
         string $cardBrandTransactionId = null
-    )
-    {
+    ) {
         $this->cardBrandTransId = $cardBrandTransactionId;
         $this->transactionInitiator = $transactionInitiator;
         return $this;
     }
-  
+
     public function withEcrId(string $ecrId)
     {
         $this->ecrId = $ecrId;
@@ -342,17 +340,17 @@ class TerminalAuthBuilder extends TerminalBuilder
         $this->taxExemptId = $taxExemptId;
         return $this;
     }
-    
+
     public function withClientTransactionId($clientTransactionId)
     {
         $this->clientTransactionId = $clientTransactionId;
         return $this;
-    } 
-    
+    }
+
     /**
-     * 
-     * @param AutoSubstantiation $healthCareCardData 
-     * @return $this 
+     *
+     * @param AutoSubstantiation $healthCareCardData
+     * @return $this
      */
     public function withAutoSubstantiation(AutoSubstantiation $healthCareCardData)
     {
@@ -361,9 +359,9 @@ class TerminalAuthBuilder extends TerminalBuilder
     }
 
     /**
-     * 
-     * @param bool $value 
-     * @return $this 
+     *
+     * @param bool $value
+     * @return $this
      */
     public function withAllowPartialAuth(bool $value)
     {
@@ -389,78 +387,78 @@ class TerminalAuthBuilder extends TerminalBuilder
         return $this;
     }
 
-    public function withConfirmationAmount(bool $value) : TerminalAuthBuilder
+    public function withConfirmationAmount(bool $value): TerminalAuthBuilder
     {
         $this->confirmAmount = $value;
         return $this;
     }
 
-    public function withQuickChip(bool $value) : TerminalAuthBuilder
+    public function withQuickChip(bool $value): TerminalAuthBuilder
     {
         $this->isQuickChip = $value;
         return $this;
     }
 
-    public function withCheckLuhn(bool $value) : TerminalAuthBuilder
+    public function withCheckLuhn(bool $value): TerminalAuthBuilder
     {
         $this->hasCheckLuhn = $value;
         return $this;
     }
 
-    public function withSecurityCode(bool $value) : TerminalAuthBuilder
+    public function withSecurityCode(bool $value): TerminalAuthBuilder
     {
         $this->hasSecurityCode = $value;
         return $this;
     }
 
-    public function withCardTypeFilter(array $cardTypeFilter) : TerminalAuthBuilder
+    public function withCardTypeFilter(array $cardTypeFilter): TerminalAuthBuilder
     {
         $this->cardTypeFilter = $cardTypeFilter;
         return $this;
     }
 
-    public function withTransactionDate(\DateTime $date) : TerminalAuthBuilder
+    public function withTransactionDate(\DateTime $date): TerminalAuthBuilder
     {
         $this->transactionDate = $date;
         return $this;
     }
 
-    public function withTimeout(int $timeout) : TerminalAuthBuilder
+    public function withTimeout(int $timeout): TerminalAuthBuilder
     {
         $this->timeout = $timeout;
         return $this;
     }
-    public function withAcquisitionTypes(array $acquisitionTypes) : TerminalAuthBuilder
+    public function withAcquisitionTypes(array $acquisitionTypes): TerminalAuthBuilder
     {
         $this->acquisitionTypes = $acquisitionTypes;
         return $this;
     }
 
-    public function withDisplayTotalAmount(bool $value) : TerminalAuthBuilder
+    public function withDisplayTotalAmount(bool $value): TerminalAuthBuilder
     {
         $this->displayTotalAmount = $value;
         return $this;
     }
 
-    public function withPromptForManualEntryPassword(string $value) : TerminalAuthBuilder
+    public function withPromptForManualEntryPassword(string $value): TerminalAuthBuilder
     {
         $this->promptForManualEntryPassword = $value;
         return $this;
     }
 
-    public function withMerchantDecision(string $merchantDecision) : TerminalAuthBuilder
+    public function withMerchantDecision(string $merchantDecision): TerminalAuthBuilder
     {
         $this->merchantDecision = $merchantDecision;
         return $this;
     }
 
-    public function withLanguage(string $language) : TerminalAuthBuilder
+    public function withLanguage(string $language): TerminalAuthBuilder
     {
         $this->language = $language;
         return $this;
     }
 
-    public function withHostData(HostData $hostData) : TerminalAuthBuilder
+    public function withHostData(HostData $hostData): TerminalAuthBuilder
     {
         $this->hostData = $hostData;
         return $this;

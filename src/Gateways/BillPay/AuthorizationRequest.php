@@ -28,19 +28,18 @@ class AuthorizationRequest extends GatewayRequestBase
     }
 
     /**
-     * 
-     * @param AuthorizationBuilder $builder 
-     * @param bool $isBillDataHosted 
-     * @return Transaction 
-     * @throws DOMException 
-     * @throws UnsupportedTransactionException 
-     * @throws BuilderException 
-     * @throws GatewayException 
+     *
+     * @param AuthorizationBuilder $builder
+     * @param bool $isBillDataHosted
+     * @return Transaction
+     * @throws DOMException
+     * @throws UnsupportedTransactionException
+     * @throws BuilderException
+     * @throws GatewayException
      */
     public function execute(AuthorizationBuilder $builder, bool $isBillDataHosted)
     {
-        switch ($builder->transactionType)
-        {
+        switch ($builder->transactionType) {
             case TransactionType::SALE:
                 if ($isBillDataHosted) {
                     if ($builder->requestMultiUseToken) {
@@ -99,8 +98,8 @@ class AuthorizationRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred attempting to make the payment", 
-            $result->responseCode, 
+            "An error occurred attempting to make the payment",
+            $result->responseCode,
             $result->responseMessage
         );
     }
@@ -131,8 +130,8 @@ class AuthorizationRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred attempting to make the payment", 
-            $result->responseCode, 
+            "An error occurred attempting to make the payment",
+            $result->responseCode,
             $result->responseMessage
         );
     }
@@ -163,8 +162,8 @@ class AuthorizationRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred attempting to make the payment", 
-            $result->responseCode, 
+            "An error occurred attempting to make the payment",
+            $result->responseCode,
             $result->responseMessage
         );
     }
@@ -195,8 +194,8 @@ class AuthorizationRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred attempting to make the payment", 
-            $result->responseCode, 
+            "An error occurred attempting to make the payment",
+            $result->responseCode,
             $result->responseMessage
         );
     }
@@ -227,8 +226,8 @@ class AuthorizationRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred attempting to create the token", 
-            $result->responseCode, 
+            "An error occurred attempting to create the token",
+            $result->responseCode,
             $result->responseMessage
         );
     }
@@ -259,8 +258,8 @@ class AuthorizationRequest extends GatewayRequestBase
         }
 
         throw new GatewayException(
-            "An error occurred attempting to create the token", 
-            $result->responseCode, 
+            "An error occurred attempting to create the token",
+            $result->responseCode,
             $result->responseMessage
         );
     }
@@ -323,10 +322,10 @@ class AuthorizationRequest extends GatewayRequestBase
         if ($result->responseCode === "0") {
             return $result;
         }
-    
+
         throw new GatewayException(
-            "An error occurred attempting to make the payment", 
-            $result->responseCode, 
+            "An error occurred attempting to make the payment",
+            $result->responseCode,
             $result->responseMessage
         );
     }
@@ -351,14 +350,14 @@ class AuthorizationRequest extends GatewayRequestBase
             ->withResponseTagName("MakeQuickPayBlindPaymentReturnTokenResponse")
             ->withResponse($response)
             ->map();
-        
+
         if ($result->responseCode === "0") {
             return $result;
         }
 
         throw new GatewayException(
-            "An error occurred attempting to make the payment", 
-            $result->responseCode, 
+            "An error occurred attempting to make the payment",
+            $result->responseCode,
             $result->responseMessage
         );
     }

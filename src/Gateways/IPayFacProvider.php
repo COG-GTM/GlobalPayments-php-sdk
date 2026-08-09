@@ -19,5 +19,5 @@ interface IPayFacProvider
      * @param PayFacBuilder $builder
      * @return User
      */
-    public function processBoardingUser(PayFacBuilder $builder) : User;
+    public function processBoardingUser(PayFacBuilder $builder): User;
 }

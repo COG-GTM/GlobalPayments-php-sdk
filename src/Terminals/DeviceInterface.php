@@ -3,46 +3,46 @@
 namespace GlobalPayments\Api\Terminals;
 
 use GlobalPayments\Api\Terminals\Entities\{
-    GenericData, 
-    MessageLines, 
-    PrintData, 
-    PromptData, 
-    PromptMessages, 
+    GenericData,
+    MessageLines,
+    PrintData,
+    PromptData,
+    PromptMessages,
     ScanData,
     UDData,
     UpaConfigContent
 };
 use GlobalPayments\Api\Terminals\UPA\Entities\TokenInfo;
 use GlobalPayments\Api\Entities\Enums\{
-    PaymentMethodType, 
+    PaymentMethodType,
     TransactionType
 };
 use GlobalPayments\Api\Entities\Exceptions\{
-    NotImplementedException, 
+    NotImplementedException,
     UnsupportedTransactionException
 };
 use GlobalPayments\Api\Terminals\Abstractions\{
-    IBatchCloseResponse, 
-    IDeviceScreen, 
-    ISAFResponse, 
-    ISignatureResponse, 
-    ITerminalReport, 
+    IBatchCloseResponse,
+    IDeviceScreen,
+    ISAFResponse,
+    ISignatureResponse,
+    ITerminalReport,
     IDeviceInterface
 };
 use GlobalPayments\Api\Terminals\Builders\{
-    TerminalAuthBuilder, 
-    TerminalManageBuilder, 
+    TerminalAuthBuilder,
+    TerminalManageBuilder,
     TerminalReportBuilder
 };
 use GlobalPayments\Api\Terminals\Enums\{
-    BatchReportType, 
-    CurrencyType, 
-    DeviceConfigType, 
-    DisplayOption, 
+    BatchReportType,
+    CurrencyType,
+    DeviceConfigType,
+    DisplayOption,
     PromptType
 };
 use GlobalPayments\Api\Terminals\UPA\Entities\{
-    POSData, 
+    POSData,
     SignatureData
 };
 use GlobalPayments\Api\Tests\Integration\Gateways\Terminals\RequestIdProvider;
@@ -75,57 +75,57 @@ abstract class DeviceInterface implements IDeviceInterface
         );
     }
 
-    public function closeLane() : DeviceResponse
+    public function closeLane(): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function disableHostResponseBeep() : DeviceResponse
+    public function disableHostResponseBeep(): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function getSignatureFile(SignatureData $data = null) : ISignatureResponse
+    public function getSignatureFile(SignatureData $data = null): ISignatureResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function registerPOS(POSData $data) : DeviceResponse
+    public function registerPOS(POSData $data): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function broadcastConfiguration(bool $enable) : DeviceResponse
+    public function broadcastConfiguration(bool $enable): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function getDeviceConfig(string|DeviceConfigType $type) : DeviceResponse
+    public function getDeviceConfig(string|DeviceConfigType $type): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function setDebugLevel(array $debugLevels,string $logOutput = null) : DeviceResponse
+    public function setDebugLevel(array $debugLevels, string $logOutput = null): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function getDebugLevel() : DeviceResponse
+    public function getDebugLevel(): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function getDebugInfo(string $logDirectory, string $fileIndicator = null) : DeviceResponse
+    public function getDebugInfo(string $logDirectory, string $fileIndicator = null): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function scan(ScanData $data) : DeviceResponse
+    public function scan(ScanData $data): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function print(PrintData $data) : DeviceResponse
+    public function print(PrintData $data): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -140,12 +140,11 @@ abstract class DeviceInterface implements IDeviceInterface
         string $rightText = null,
         string $runningLeftText = null,
         string $runningRightText = null
-    ) : DeviceResponse
-    {
+    ): DeviceResponse {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function openLane() : DeviceResponse
+    public function openLane(): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -155,7 +154,7 @@ abstract class DeviceInterface implements IDeviceInterface
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function reboot() : DeviceResponse
+    public function reboot(): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -185,12 +184,12 @@ abstract class DeviceInterface implements IDeviceInterface
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function communicationCheck() : DeviceResponse
+    public function communicationCheck(): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function injectCarouselLogo(UDData $uddata) : DeviceResponse
+    public function injectCarouselLogo(UDData $uddata): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -205,32 +204,32 @@ abstract class DeviceInterface implements IDeviceInterface
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function deleteSAF(String $referenceNumber, String $transactionNumber) : DeviceResponse
+    public function deleteSAF(string $referenceNumber, string $transactionNumber): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function saveConfigFile(UpaConfigContent $upaConfigContent) : DeviceResponse
+    public function saveConfigFile(UpaConfigContent $upaConfigContent): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function setLogoCarouselInterval(int $intervalTime, bool $isFullScreen) : DeviceResponse
+    public function setLogoCarouselInterval(int $intervalTime, bool $isFullScreen): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function getBatteryPercentage() : DeviceResponse
+    public function getBatteryPercentage(): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function logon() : DeviceResponse
+    public function logon(): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function startCard(PaymentMethodType $paymentMethodType) : DeviceResponse
+    public function startCard(PaymentMethodType $paymentMethodType): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -246,12 +245,12 @@ abstract class DeviceInterface implements IDeviceInterface
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function sendSaf($safIndicator = null) : DeviceResponse
+    public function sendSaf($safIndicator = null): DeviceResponse
     {
             throw new NotImplementedException();
     }
 
-    public function sendStoreAndForward() : ISAFResponse
+    public function sendStoreAndForward(): ISAFResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -261,42 +260,42 @@ abstract class DeviceInterface implements IDeviceInterface
         throw new NotImplementedException();
     }
 
-    public function returnToIdle() : DeviceResponse
+    public function returnToIdle(): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function loadUDData(UDData $screen) : IDeviceScreen
+    public function loadUDData(UDData $screen): IDeviceScreen
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function removeUDData(UDData $screen) : IDeviceScreen
+    public function removeUDData(UDData $screen): IDeviceScreen
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function executeUDData(UDData $screen) : IDeviceScreen
+    public function executeUDData(UDData $screen): IDeviceScreen
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function injectUDData(UDData $screen) : IDeviceScreen
+    public function injectUDData(UDData $screen): IDeviceScreen
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function enterPIN(PromptMessages $promptMessages, bool $canBypass, string $accountNumber) : DeviceResponse
+    public function enterPIN(PromptMessages $promptMessages, bool $canBypass, string $accountNumber): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function getGenericEntry(GenericData $data) : DeviceResponse
+    public function getGenericEntry(GenericData $data): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function displayMessage(MessageLines $messageLines) : DeviceResponse
+    public function displayMessage(MessageLines $messageLines): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -306,12 +305,12 @@ abstract class DeviceInterface implements IDeviceInterface
      * @return DeviceResponse
      * @throws UnsupportedTransactionException
      */
-    public function returnDefaultScreen(string $option) : DeviceResponse
+    public function returnDefaultScreen(string $option): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function getEncryptionType() : DeviceResponse
+    public function getEncryptionType(): DeviceResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -329,7 +328,7 @@ abstract class DeviceInterface implements IDeviceInterface
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function getLastEOD() : IBatchCloseResponse
+    public function getLastEOD(): IBatchCloseResponse
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -341,70 +340,70 @@ abstract class DeviceInterface implements IDeviceInterface
     /**
      * @return TerminalAuthBuilder
      */
-    public function addValue($amount = null) : TerminalAuthBuilder
+    public function addValue($amount = null): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder(TransactionType::ADD_VALUE, PaymentMethodType::GIFT))
                 ->withAmount($amount)
                 ->withCurrency(CurrencyType::CURRENCY);
     }
 
-    public function authorize($amount = null) : TerminalAuthBuilder
+    public function authorize($amount = null): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder(TransactionType::AUTH, PaymentMethodType::CREDIT))
             ->withAmount($amount);
     }
 
-    public function balance() : TerminalAuthBuilder
+    public function balance(): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder(TransactionType::BALANCE, PaymentMethodType::GIFT))
             ->withCurrency(CurrencyType::CURRENCY);
     }
 
-    public function capture($amount = null) : TerminalManageBuilder
+    public function capture($amount = null): TerminalManageBuilder
     {
         return (new TerminalManageBuilder(TransactionType::CAPTURE, PaymentMethodType::CREDIT))
             ->withAmount($amount);
     }
 
-    public function refund($amount = null) : TerminalAuthBuilder
+    public function refund($amount = null): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder(TransactionType::REFUND, PaymentMethodType::CREDIT))
                 ->withAmount($amount);
     }
 
-    public function sale($amount = null) : TerminalAuthBuilder
+    public function sale($amount = null): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder(TransactionType::SALE, PaymentMethodType::CREDIT))
             ->withAmount($amount);
     }
 
-    public function verify() : TerminalAuthBuilder
+    public function verify(): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder(TransactionType::VERIFY, PaymentMethodType::CREDIT));
     }
 
-    public function void() : TerminalManageBuilder
+    public function void(): TerminalManageBuilder
     {
         return (new TerminalManageBuilder(TransactionType::VOID, PaymentMethodType::CREDIT));
     }
 
-    public function withdrawal($amount = null) : TerminalAuthBuilder
+    public function withdrawal($amount = null): TerminalAuthBuilder
     {
         return (new TerminalAuthBuilder(TransactionType::BENEFIT_WITHDRAWAL, PaymentMethodType::EBT))
                 ->withAmount($amount);
     }
 
-    public function startTransaction(float $amount, $transactionType = TransactionType::SALE) : TerminalAuthBuilder
+    public function startTransaction(float $amount, $transactionType = TransactionType::SALE): TerminalAuthBuilder
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function continueTransaction(float $amount, bool $isEmv = false) : TerminalAuthBuilder
+    public function continueTransaction(float $amount, bool $isEmv = false): TerminalAuthBuilder
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function completeTransaction() : TerminalAuthBuilder
+    public function completeTransaction(): TerminalAuthBuilder
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -416,7 +415,7 @@ abstract class DeviceInterface implements IDeviceInterface
         );
     }
 
-    public function processTransaction(float $amount, $transactionType = TransactionType::SALE) : TerminalAuthBuilder
+    public function processTransaction(float $amount, $transactionType = TransactionType::SALE): TerminalAuthBuilder
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
@@ -435,14 +434,14 @@ abstract class DeviceInterface implements IDeviceInterface
         );
     }
 
-    public function deletePreAuth() : TerminalManageBuilder
+    public function deletePreAuth(): TerminalManageBuilder
     {
         throw new UnsupportedTransactionException(
             "This method is not supported by the currently configured device."
         );
     }
 
-    public function increasePreAuth($amount) : TerminalManageBuilder
+    public function increasePreAuth($amount): TerminalManageBuilder
     {
         throw new UnsupportedTransactionException(
             "This method is not supported by the currently configured device."
@@ -456,7 +455,7 @@ abstract class DeviceInterface implements IDeviceInterface
         );
     }
 
-    public function reverse() : TerminalManageBuilder
+    public function reverse(): TerminalManageBuilder
     {
         throw new UnsupportedTransactionException(
             "This method is not supported by the currently configured device."
@@ -473,7 +472,7 @@ abstract class DeviceInterface implements IDeviceInterface
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function getSAFReport() : TerminalReportBuilder
+    public function getSAFReport(): TerminalReportBuilder
     {
         throw new UnsupportedTransactionException(
             "This method is not supported by the currently configured device."
@@ -487,19 +486,19 @@ abstract class DeviceInterface implements IDeviceInterface
         );
     }
 
-    public function getBatchDetails(?string $batchId = null,bool $printReport = false, string|BatchReportType $reportType = null): ITerminalReport
+    public function getBatchDetails(?string $batchId = null, bool $printReport = false, string|BatchReportType $reportType = null): ITerminalReport
     {
         throw new UnsupportedTransactionException(
             "This method is not supported by the currently configured device."
         );
     }
 
-    public function findBatches() : TerminalReportBuilder
+    public function findBatches(): TerminalReportBuilder
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }
 
-    public function getOpenTabDetails() : TerminalReportBuilder
+    public function getOpenTabDetails(): TerminalReportBuilder
     {
         throw new UnsupportedTransactionException(self::ERROR_MESSAGE);
     }

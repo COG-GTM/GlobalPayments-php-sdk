@@ -34,8 +34,7 @@ class TransactionApiReportRequestBuilder implements IRequestBuilder
             case ReportType::FIND_TRANSACTIONS:
                 $verb = 'GET';
 
-                switch ($builder->searchBuilder->paymentMethodType)
-                {
+                switch ($builder->searchBuilder->paymentMethodType) {
                     case PaymentMethodType::CREDIT:
                         if (isset($builder->transactionId)) {
                             $endpoint = TransactionApiRequest::CREDITREFUND . '/' . $builder->transactionId;

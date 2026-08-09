@@ -11,12 +11,12 @@ final class TransactionList
         $this->list = $transaction;
     }
 
-    public function add(TransactionSummary $transactionSummary) : void
+    public function add(TransactionSummary $transactionSummary): void
     {
         $this->list[] = $transactionSummary;
     }
 
-    public function all() : array
+    public function all(): array
     {
         return $this->list;
     }

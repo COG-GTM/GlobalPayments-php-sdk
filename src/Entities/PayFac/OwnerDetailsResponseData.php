@@ -1,4 +1,5 @@
 <?php
+
 namespace GlobalPayments\Api\Entities\PayFac;
 
 class OwnerDetailsResponseData

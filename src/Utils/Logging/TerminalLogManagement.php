@@ -1,4 +1,5 @@
 <?php
+
 namespace GlobalPayments\Api\Utils\Logging;
 
 use GlobalPayments\Api\Terminals\Abstractions\ILogManagement;
@@ -6,7 +7,6 @@ use GlobalPayments\Api\Entities\Exceptions\ConfigurationException;
 
 class TerminalLogManagement implements ILogManagement
 {
-
     public string $logLocation;
     public bool $enableConsoleOutput = false;
 
@@ -15,7 +15,7 @@ class TerminalLogManagement implements ILogManagement
         if (!empty($targetFile)) {
             $this->logLocation = $targetFile;
         } else {
-            $this->logLocation = 'logmanagement_'. date('Y-m-d') . '.log';
+            $this->logLocation = 'logmanagement_' . date('Y-m-d') . '.log';
         }
     }
 

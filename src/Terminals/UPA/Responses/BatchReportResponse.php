@@ -38,7 +38,6 @@ class BatchReportResponse extends UpaResponseHandler
             $batchRecordResponse = $this->mapBatchRecordInfo($rawBatchRecord);
             if ($this->command == UpaMessageId::GET_BATCH_REPORT) {
                 $this->mapBatchTransactions($batchRecordResponse, $rawBatchRecord->batchTransactions);
-
             } elseif ($this->command == UpaMessageId::GET_BATCH_DETAILS) {
                 $this->mapTransactionDetails($batchRecordResponse, $rawBatchRecord->batchDetailRecords);
             }

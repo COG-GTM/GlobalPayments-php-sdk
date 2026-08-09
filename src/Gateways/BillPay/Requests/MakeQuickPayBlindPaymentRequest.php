@@ -25,7 +25,8 @@ class MakeQuickPayBlindPaymentRequest extends BillPayRequestBase
 
     protected static $BDMS_ORDERID = "bdms:OrderID";
 
-    public function __construct(ElementTree $et) {
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 
@@ -67,7 +68,7 @@ class MakeQuickPayBlindPaymentRequest extends BillPayRequestBase
         $this->buildBillTransactions(
             $billTransactions,
             $builder->bills,
-            MakeQuickPayBlindPaymentRequest::$BDMS_BILLTRANSACTION, 
+            MakeQuickPayBlindPaymentRequest::$BDMS_BILLTRANSACTION,
             MakeQuickPayBlindPaymentRequest::$BDMS_AMOUNTTOAPPLYTOBILL
         );
 
@@ -78,8 +79,8 @@ class MakeQuickPayBlindPaymentRequest extends BillPayRequestBase
             if (!$this->isNullOrEmpty($check->token)) {
                 $this->buildQuickPayACHAccountToCharge(
                     $requestElement,
-                    $check, 
-                    $builder->amount, 
+                    $check,
+                    $builder->amount,
                     $builder->convenienceAmount
                 );
             } else {
@@ -94,9 +95,9 @@ class MakeQuickPayBlindPaymentRequest extends BillPayRequestBase
             if (!$this->isNullOrEmpty($credit->token)) {
                 $this->buildQuickPayCardToCharge(
                     $requestElement,
-                    $credit, 
-                    $amount, 
-                    $builder->billingAddress, 
+                    $credit,
+                    $amount,
+                    $builder->billingAddress,
                     $builder->convenienceAmount
                 );
             } else {

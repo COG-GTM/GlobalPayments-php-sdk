@@ -8,17 +8,18 @@ use GlobalPayments\Api\Utils\{Element, ElementTree};
 
 class CreateSingleSignOnAccountRequest extends BillPayRequestBase
 {
-    public function __construct(ElementTree $et) {
+    public function __construct(ElementTree $et)
+    {
         parent::__construct($et);
     }
 
     /**
-     * 
+     *
      * @param Element $envelope
-     * @param Credentials $credentials 
-     * @param Customer $customer 
-     * @return string|null 
-     * @throws ApiException 
+     * @param Credentials $credentials
+     * @param Customer $customer
+     * @return string|null
+     * @throws ApiException
      */
     public function build(Element $envelope, Credentials $credentials, Customer $customer)
     {

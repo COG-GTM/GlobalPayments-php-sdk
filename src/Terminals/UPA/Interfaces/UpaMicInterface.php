@@ -73,7 +73,7 @@ class UpaMicInterface implements IDeviceCommInterface
                 TerminalUtils::manageLog($this->config->logManagementProvider, 'Response:' . json_encode($out));
             }
             return $this->parseResponse($out);
-        }  catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new GatewayException(
                 'Device error: ' . $e->getMessage(),
                 null,
@@ -109,6 +109,4 @@ class UpaMicInterface implements IDeviceCommInterface
 
         return $array;
     }
-
-
 }
