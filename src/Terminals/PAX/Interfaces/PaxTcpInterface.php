@@ -2,6 +2,7 @@
 
 namespace GlobalPayments\Api\Terminals\PAX\Interfaces;
 
+use GlobalPayments\Api\Entities\Exceptions\ConfigurationException;
 use GlobalPayments\Api\Entities\Exceptions\GatewayException;
 use GlobalPayments\Api\Terminals\{ConnectionConfig, TerminalUtils};
 use GlobalPayments\Api\Terminals\Enums\{ControlCodes, ConnectionModes};
@@ -55,27 +56,23 @@ class PaxTcpInterface implements IDeviceCommInterface
         
         $errno = '';
         $errstr = '';
-        
+
+        if ($this->deviceDetails->connectionMode === ConnectionModes::SSL_TCP) {
+            // Define the constant manually for earlier versions of PHP.
+            // Disable phpcs here since this constant does not exist until PHP 5.5.
+            // phpcs:disable
+            if (!defined('STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT')) {
+                define('STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT', 33);
+            }
+            // phpcs:enable
+            $sslOptions = $this->getSslOptions();
+        }
+
         // open socket
         try {
             if ($this->deviceDetails->connectionMode === ConnectionModes::SSL_TCP) {
-                // Define the constant manually for earlier versions of PHP.
-                // Disable phpcs here since this constant does not exist until PHP 5.5.
-                // phpcs:disable
-                if (!defined('STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT')) {
-                    define('STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT', 33);
-                }
-                $context = stream_context_create([
-                    'ssl' => [
-                        "crypto_method" => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
-                    ]
-                ]);
-                // phpcs:enable
-                
-                stream_context_set_option($context, 'ssl', 'allow_self_signed', true);
-                stream_context_set_option($context, 'ssl', 'verify_peer', false); //true
-                stream_context_set_option($context, 'ssl', 'verify_peer_name', false); //true
-                
+                $context = stream_context_create(['ssl' => $sslOptions]);
+
                 $this->tcpConnection = stream_socket_client(
                     $this->deviceDetails->ipAddress . ':' . $this->deviceDetails->port,
                     $errno,
@@ -100,6 +97,56 @@ class PaxTcpInterface implements IDeviceCommInterface
                 $errstr
             );
         }
+
+        if (!is_resource($this->tcpConnection)) {
+            TerminalUtils::manageLog($this->deviceDetails->logManagementProvider, $errstr, true);
+            throw new GatewayException(
+                sprintf('Device connection error: %s - %s', $errno, $errstr),
+                $errno,
+                $errstr
+            );
+        }
+    }
+
+    /*
+     * Build the TLS options used for the SSL_TCP connection.
+     * The terminal certificate is always authenticated; self-signed certificates are only
+     * accepted when they are anchored by a CA file or pinned by a fingerprint.
+     *
+     * @return array
+     */
+    private function getSslOptions()
+    {
+        $caFile = $this->deviceDetails->sslCaFile ?? null;
+        $fingerprint = $this->deviceDetails->sslPeerFingerprint ?? null;
+        $allowSelfSigned = !empty($this->deviceDetails->allowSelfSignedCertificate);
+
+        if ($allowSelfSigned && empty($caFile) && empty($fingerprint)) {
+            throw new ConfigurationException(
+                'sslCaFile or sslPeerFingerprint is required when allowSelfSignedCertificate is enabled.'
+            );
+        }
+
+        $options = [
+            'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
+            'verify_peer' => true,
+            'verify_peer_name' => true,
+            'allow_self_signed' => $allowSelfSigned,
+            'SNI_enabled' => true,
+            'disable_compression' => true,
+        ];
+
+        if (!empty($caFile)) {
+            $options['cafile'] = $caFile;
+        }
+        if (!empty($fingerprint)) {
+            $options['peer_fingerprint'] = $fingerprint;
+        }
+        if (!empty($this->deviceDetails->sslPeerName)) {
+            $options['peer_name'] = $this->deviceDetails->sslPeerName;
+        }
+
+        return $options;
     }
     
     /*

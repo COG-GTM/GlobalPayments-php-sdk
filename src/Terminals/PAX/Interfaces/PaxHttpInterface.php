@@ -5,6 +5,7 @@ namespace GlobalPayments\Api\Terminals\PAX\Interfaces;
 use GlobalPayments\Api\Terminals\Abstractions\IDeviceCommInterface;
 use GlobalPayments\Api\Terminals\ConnectionConfig;
 use GlobalPayments\Api\Terminals\TerminalUtils;
+use GlobalPayments\Api\Entities\Exceptions\ConfigurationException;
 use GlobalPayments\Api\Entities\Exceptions\GatewayException;
 use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 use GlobalPayments\Api\Terminals\PAX\Entities\Enums\PaxMessageId;
@@ -95,9 +96,20 @@ class PaxHttpInterface implements IDeviceCommInterface
             CURLOPT_VERBOSE => false
         ];
         if ($this->deviceDetails->connectionMode === ConnectionModes::HTTPS) {
-            $config[CURLOPT_SSL_VERIFYPEER] = false; //true
-            $config[CURLOPT_SSL_VERIFYHOST] = false; //2
+            $caFile = $this->deviceDetails->sslCaFile ?? null;
+
+            if (!empty($this->deviceDetails->allowSelfSignedCertificate) && empty($caFile)) {
+                throw new ConfigurationException(
+                    'sslCaFile is required when allowSelfSignedCertificate is enabled.'
+                );
+            }
+
+            $config[CURLOPT_SSL_VERIFYPEER] = true;
+            $config[CURLOPT_SSL_VERIFYHOST] = 2;
             $config[CURLOPT_PROTOCOLS] = CURLPROTO_HTTPS;
+            if (!empty($caFile)) {
+                $config[CURLOPT_CAINFO] = $caFile;
+            }
 
             // Define the constant manually for earlier versions of PHP.
             // Disable phpcs here since this constant does not exist until PHP 5.5.19.
