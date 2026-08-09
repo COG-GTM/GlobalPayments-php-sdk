@@ -26,17 +26,10 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
       - name: PHPStan static analysis
-        # PHPStan baseline coverage is being adopted incrementally; make this
-        # blocking once COG-884 resolves the remaining non-baselinable findings.
-        continue-on-error: true
         run: vendor/bin/phpstan analyse
       - name: PHP coding standards
-        # COG-884 owns the pre-existing PSR-12 violations in src/.
-        continue-on-error: true
-        run: vendor/bin/phpcs --standard=phpcs.xml
+        run: vendor/bin/phpcs --standard=phpcs.xml --warning-severity=0
       - name: HPP unit tests
-        # This suite has 20 pre-existing errors and 20 failures under both
-        # PHPUnit 9.6.19 and 11; COG-884 owns the fixes. Flip this back to
-        # blocking once COG-884 lands.
-        continue-on-error: true
         run: vendor/bin/phpunit --testsuite hpp-unit
+      - name: Unit tests
+        run: vendor/bin/phpunit --testsuite unit
