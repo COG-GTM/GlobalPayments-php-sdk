@@ -40,7 +40,8 @@
   "scripts": {
     "docs": "@php sami.phar update docs-config.php",
     "pretest": "@composer test:lint",
-    "test:lint": "vendor/bin/phpcs --standard=phpcs.xml"
+    "test:lint": "vendor/bin/phpcs --standard=phpcs.xml",
+    "test:static": "vendor/bin/phpstan analyse"
   },
   "config": {
     "process-timeout": 0,
