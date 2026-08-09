@@ -35,8 +35,6 @@ class EnumMapping
                     case AccountType::CREDIT:
                         return 'CREDIT';
                     // Fall through.
-                    // Fall through.
-                    // Fall through.
                     default:
                         return null;
                 }

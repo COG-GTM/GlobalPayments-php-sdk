@@ -28,6 +28,7 @@ jobs:
       - name: PHPStan static analysis
         run: vendor/bin/phpstan analyse
       - name: PHP coding standards
+        # Ignore pre-existing line-length and legacy constant-visibility warnings outside COG-884 scope.
         run: vendor/bin/phpcs --standard=phpcs.xml --warning-severity=0
       - name: HPP unit tests
         run: vendor/bin/phpunit --testsuite hpp-unit

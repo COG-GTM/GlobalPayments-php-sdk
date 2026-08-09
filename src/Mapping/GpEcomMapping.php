@@ -398,7 +398,6 @@ class GpEcomMapping
                     }
                     break;
                 // Fall through.
-                // Fall through.
                 default:
                     break;
             }
