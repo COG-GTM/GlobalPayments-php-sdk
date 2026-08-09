@@ -19,6 +19,10 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: curl, dom, openssl, json, zlib, intl, mbstring, fileinfo
+      - name: Validate Composer configuration
+        # --strict is intentionally omitted because the deliberate exact
+        # symfony/process pin triggers Composer's semver warning.
+        run: composer validate
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
       - name: PHPStan static analysis
