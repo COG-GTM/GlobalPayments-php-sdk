@@ -701,7 +701,7 @@ class ManagementBuilder extends TransactionBuilder
     }
 
     /**
-     * @param Bill
+     * @param Bill $bill
      *
      * @return this
      */
@@ -716,7 +716,7 @@ class ManagementBuilder extends TransactionBuilder
     }
 
     /**
-     * @param array<Bill>
+     * @param array<Bill> $bills
      *
      * @return this
      */

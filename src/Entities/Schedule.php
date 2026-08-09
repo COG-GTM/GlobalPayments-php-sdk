@@ -504,7 +504,7 @@ class Schedule extends RecurringEntity
     /**
      * Set single Bill
      *
-     * @param Bill
+     * @param Bill $bill
      *
      * * @return Schedule
      */
@@ -521,7 +521,7 @@ class Schedule extends RecurringEntity
     /**
      * Set multiple Bills
      *
-     * @param array<Bill>
+     * @param array<Bill> $bills
      *
      * @return Schedule
      */
@@ -548,7 +548,7 @@ class Schedule extends RecurringEntity
     /**
      * Set schedule's token
      *
-     * @param string
+     * @param string $token
      *
      * * @return Schedule
      */
@@ -561,7 +561,7 @@ class Schedule extends RecurringEntity
     /**
      * Set the schedule's last primary convenience amount
      *
-     * @param @param float|string $amount The tax amount
+     * @param float|string $amount The tax amount
      *
      * * @return Schedule
      */
@@ -575,7 +575,7 @@ class Schedule extends RecurringEntity
     /**
      * Set the schedule's initial payment method
      *
-     * @param @param float|string $amount The tax amount
+     * @param InitialPaymentMethod $initialPaymentMethod The initial payment method
      *
      * * @return Schedule
      */
@@ -589,7 +589,7 @@ class Schedule extends RecurringEntity
     /**
      * Set the schedule's primary convenience amount
      *
-     * @param @param float|string $amount The tax amount
+     * @param float|string $amount The convenience amount
      *
      * * @return Schedule
      */
@@ -610,7 +610,7 @@ class Schedule extends RecurringEntity
     /**
      * Set `Customer`
      *
-     * @param Customer
+     * @param Customer $customer
      *
      * * @return Schedule
      */
