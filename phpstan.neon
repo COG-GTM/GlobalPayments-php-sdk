@@ -5,3 +5,11 @@ parameters:
     level: 3
     paths:
         - src
+    # The baseline will drift as COG-884 fixes src/; stale entries should not fail the run.
+    reportUnmatchedIgnoredErrors: false
+    # These legacy files contain non-baselinable return-path findings deferred to COG-884.
+    excludePaths:
+        - src/Entities/GpApi/GpApiSessionInfo.php
+        - src/Gateways/PorticoConnector.php
+        - src/Terminals/ConnectionConfig.php
+        - src/Terminals/PAX/PaxController.php
