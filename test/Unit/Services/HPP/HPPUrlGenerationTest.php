@@ -31,6 +31,15 @@ class HPPUrlGenerationTest extends TestCase
 
     public function setUp(): void
     {
+        $this->config = new GpApiConfig();
+        $this->config->appId = getenv('GP_API_APP_ID') ?: 'YOUR_APP_ID';
+        $this->config->appKey = getenv('GP_API_APP_KEY') ?: 'YOUR_APP_KEY';
+        $this->config->environment = Environment::TEST;
+        $this->config->country = 'GB';
+        $this->config->channel = Channel::CardNotPresent;
+
+        ServicesContainer::configureService($this->config);
+
         // Set up valid test entities
         $this->setupValidTestEntities();
     }
@@ -44,15 +53,6 @@ class HPPUrlGenerationTest extends TestCase
                 'HPP URL generation requires GP_API_APP_ID and GP_API_APP_KEY environment variables.'
             );
         }
-
-        $this->config = new GpApiConfig();
-        $this->config->appId = $appId;
-        $this->config->appKey = $appKey;
-        $this->config->environment = Environment::TEST;
-        $this->config->country = 'GB';
-        $this->config->channel = Channel::CardNotPresent;
-
-        ServicesContainer::configureService($this->config);
     }
 
     private function setupValidTestEntities(): void
