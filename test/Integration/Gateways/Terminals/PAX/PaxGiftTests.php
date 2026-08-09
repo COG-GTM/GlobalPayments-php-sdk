@@ -77,8 +77,6 @@ class PaxGiftTests extends TestCase
         $this->assertEquals("00", $response->deviceResponseCode);
     }
 
-    /**
-     */
     public function testSaleNoAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);

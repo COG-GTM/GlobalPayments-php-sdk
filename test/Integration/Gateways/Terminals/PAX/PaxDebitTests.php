@@ -50,8 +50,6 @@ class PaxDebitTests extends TestCase
         $this->assertEquals('OK', $response->deviceResponseText);
     }
 
-    /**
-     */
     public function testSaleNoAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);

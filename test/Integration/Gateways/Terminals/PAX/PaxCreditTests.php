@@ -227,8 +227,6 @@ class PaxCreditTests extends TestCase
         $this->assertEquals('00', $refundResponse->responseCode);
     }
 
-    /**
-     */
     public function testAuthNoAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -238,8 +236,6 @@ class PaxCreditTests extends TestCase
             ->execute();
     }
 
-    /**
-     */
     public function testCaptureNoTransactionId()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -248,8 +244,6 @@ class PaxCreditTests extends TestCase
             ->execute();
     }
 
-    /**
-     */
     public function testRefundNoAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);

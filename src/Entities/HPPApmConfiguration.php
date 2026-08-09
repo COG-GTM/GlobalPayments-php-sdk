@@ -29,8 +29,9 @@ class HPPApmConfiguration
     public ?bool $addressOverride = false;
     
     /**
-     * Validate APM configuration
-     * @return array List of validation errors, empty if valid
+     * The nullable boolean properties are type-enforced, so no runtime validation remains.
+     *
+     * @return array Empty validation errors
      */
     public function validate(): array
     {

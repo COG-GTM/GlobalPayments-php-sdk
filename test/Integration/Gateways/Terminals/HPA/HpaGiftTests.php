@@ -127,8 +127,6 @@ class HpaGiftTests extends TestCase
         $this->assertEquals('0', $response->resultCode);
     }
     
-    /**
-     */
     public function testAddValueWithoutAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);

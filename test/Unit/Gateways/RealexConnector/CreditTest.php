@@ -25,8 +25,6 @@ class CreditTest extends TestCase
         ServicesContainer::configureService($this->getConfig());
     }
 
-    /**
-     */
     public function testCreditReverse()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\UnsupportedTransactionException::class);

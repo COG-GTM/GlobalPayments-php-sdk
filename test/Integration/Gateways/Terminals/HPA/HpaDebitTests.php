@@ -79,8 +79,6 @@ class HpaDebitTests extends TestCase
         $this->assertEquals('0', $response->resultCode);
     }
 
-    /**
-     */
     public function testSaleWithoutAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -93,8 +91,6 @@ class HpaDebitTests extends TestCase
         $this->assertEquals('0', $response->resultCode);
     }
 
-    /**
-     */
     public function testRefundWithoutAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);

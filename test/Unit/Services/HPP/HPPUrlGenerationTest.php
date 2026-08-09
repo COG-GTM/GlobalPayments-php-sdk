@@ -31,6 +31,12 @@ class HPPUrlGenerationTest extends TestCase
 
     public function setUp(): void
     {
+        // Set up valid test entities
+        $this->setupValidTestEntities();
+    }
+
+    private function requireGatewayCredentials(): void
+    {
         $appId = getenv('GP_API_APP_ID');
         $appKey = getenv('GP_API_APP_KEY');
         if (empty($appId) || empty($appKey)) {
@@ -39,7 +45,6 @@ class HPPUrlGenerationTest extends TestCase
             );
         }
 
-        // Set up test configuration
         $this->config = new GpApiConfig();
         $this->config->appId = $appId;
         $this->config->appKey = $appKey;
@@ -47,11 +52,7 @@ class HPPUrlGenerationTest extends TestCase
         $this->config->country = 'GB';
         $this->config->channel = Channel::CardNotPresent;
 
-        // Configure the service container
         ServicesContainer::configureService($this->config);
-
-        // Set up valid test entities
-        $this->setupValidTestEntities();
     }
 
     private function setupValidTestEntities(): void
@@ -94,6 +95,7 @@ class HPPUrlGenerationTest extends TestCase
 
     public function testBasicHPPUrlGeneration()
     {
+        $this->requireGatewayCredentials();
         $reference = 'TEST_REF_' . uniqid();
         
         $builder = HPPBuilder::create()
@@ -139,6 +141,7 @@ class HPPUrlGenerationTest extends TestCase
 
     public function testHPPUrlGenerationWithAuthentication()
     {
+        $this->requireGatewayCredentials();
         $reference = '3DS_TEST_' . uniqid();
         
         $builder = HPPBuilder::create()
@@ -180,6 +183,7 @@ class HPPUrlGenerationTest extends TestCase
 
     public function testComprehensiveHPPUrlGenerationWithAllOptions()
     {
+        $this->requireGatewayCredentials();
         $reference = 'COMPREHENSIVE_' . uniqid();
         
         $builder = HPPBuilder::create()
@@ -277,6 +281,7 @@ class HPPUrlGenerationTest extends TestCase
 
     public function testHPPResponseStructureAndUrlValidation()
     {
+        $this->requireGatewayCredentials();
         $reference = 'STRUCTURE_TEST_' . uniqid();
         
         $builder = HPPBuilder::create()
@@ -341,6 +346,7 @@ class HPPUrlGenerationTest extends TestCase
 
     public function testHPPUrlGenerationWithShippingCharges()
     {
+        $this->requireGatewayCredentials();
         $reference = 'SHIPPING_' . uniqid();
         
         $builder = HPPBuilder::create()
@@ -378,6 +384,7 @@ class HPPUrlGenerationTest extends TestCase
 
     public function testHPPUrlGenerationWithMultiplePaymentMethods()
     {
+        $this->requireGatewayCredentials();
         $reference = 'MULTI_PAY_' . uniqid();
         
         $builder = HPPBuilder::create()
@@ -417,6 +424,7 @@ class HPPUrlGenerationTest extends TestCase
 
     public function testHPPUrlGenerationWithExpirationDate()
     {
+        $this->requireGatewayCredentials();
         $expirationDate = date('Y-m-d\TH:i:s\Z', strtotime('+30 days'));
         $reference = 'EXPIRY_' . uniqid();
         
@@ -473,6 +481,7 @@ class HPPUrlGenerationTest extends TestCase
 
     public function testHPPUrlGenerationWithMinimalValidData()
     {
+        $this->requireGatewayCredentials();
         // Test with minimal required data to ensure URL generation works
         $reference = 'MINIMAL_' . uniqid();
         
@@ -535,6 +544,7 @@ class HPPUrlGenerationTest extends TestCase
 
     public function testHPPUrlGenerationWithAPMConfiguration()
     {
+        $this->requireGatewayCredentials();
         $reference = 'APM_' . uniqid();
         
         $builder = HPPBuilder::create()
@@ -571,6 +581,7 @@ class HPPUrlGenerationTest extends TestCase
 
     public function testHPPUrlGenerationWithCurrencyConversion()
     {
+        $this->requireGatewayCredentials();
         $reference = 'CURRENCY_' . uniqid();
         
         $builder = HPPBuilder::create()

@@ -278,8 +278,6 @@ class CreditTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
     
-    /**
-     */
     public function testAuthorizeWithoutAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -289,8 +287,6 @@ class CreditTest extends TestCase
             ->execute();
     }
     
-    /**
-     */
     public function testSaleWithoutAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -300,8 +296,6 @@ class CreditTest extends TestCase
             ->execute();
     }
     
-    /**
-     */
     public function testRefundWithoutAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -311,8 +305,6 @@ class CreditTest extends TestCase
             ->execute();
     }
     
-    /**
-     */
     public function testCredentialsError()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\ConfigurationException::class);

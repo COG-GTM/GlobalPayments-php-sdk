@@ -103,8 +103,6 @@ class HpaAdminTests extends TestCase
         $this->assertEquals('Reboot', $response->response);
     }
 
-    /**
-     */
     public function testLaneOpenIntialize()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
@@ -290,8 +288,6 @@ class HpaAdminTests extends TestCase
         $this->assertEquals('0', $response->resultCode);
     }
     
-    /**
-     */
     public function testFileInputError()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -300,8 +296,6 @@ class HpaAdminTests extends TestCase
         $this->device->sendFile($sendFileInfo);
     }
     
-    /**
-     */
     public function testIncorrectFileSize()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);

@@ -224,8 +224,6 @@ class CheckTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    /**
-     */
     public function test017EbronzePersonalChecking()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
@@ -245,8 +243,6 @@ class CheckTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    /**
-     */
     public function test018EbronzeBusinessChecking()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
@@ -266,8 +262,6 @@ class CheckTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    /**
-     */
     public function test019EbronzePersonalSavings()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
@@ -287,8 +281,6 @@ class CheckTest extends TestCase
         $this->assertEquals('00', $response->responseCode);
     }
 
-    /**
-     */
     public function test020EbronzeBusinessSavings()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);

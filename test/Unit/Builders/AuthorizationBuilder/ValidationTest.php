@@ -55,8 +55,6 @@ class ValidationTest extends TestCase
         ServicesContainer::configureService($this->getConfig());
     }
 
-    /**
-     */
     public function testCreditAuthNoAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -65,8 +63,6 @@ class ValidationTest extends TestCase
             ->execute();
     }
 
-    /**
-     */
     public function testCreditAuthNoCurrency()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -75,8 +71,6 @@ class ValidationTest extends TestCase
             ->execute();
     }
 
-    /**
-     */
     public function testCreditAuthNoPaymentMethod()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -87,8 +81,6 @@ class ValidationTest extends TestCase
             ->execute();
     }
 
-    /**
-     */
     public function testCreditSaleNoAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -97,8 +89,6 @@ class ValidationTest extends TestCase
             ->execute();
     }
 
-    /**
-     */
     public function testCreditSaleNoCurrency()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -107,8 +97,6 @@ class ValidationTest extends TestCase
             ->execute();
     }
 
-    /**
-     */
     public function testCreditSaleNoPaymentMethod()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -119,8 +107,6 @@ class ValidationTest extends TestCase
             ->execute();
     }
 
-    /**
-     */
     public function testCreditSalePhoneNumberValidateMethod()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\ApiException::class);
@@ -132,8 +118,6 @@ class ValidationTest extends TestCase
             ->execute();
     }
 
-    /**
-     */
     public function testCreditSaleZipValidateMethod()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\ApiException::class);

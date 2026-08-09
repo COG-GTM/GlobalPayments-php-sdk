@@ -93,8 +93,6 @@ class PaxEBTTests extends TestCase
             $this->assertEquals("00", $response->deviceResponseCode);
     }
 
-    /**
-     */
     public function testEbtBalanceInquiryWithVoucher()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -126,8 +124,6 @@ class PaxEBTTests extends TestCase
         $this->assertEquals("00", $response->deviceResponseCode);
     }
 
-    /**
-     */
     public function testEbtRefundAllowDup()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);
@@ -147,8 +143,6 @@ class PaxEBTTests extends TestCase
             $this->assertEquals("00", $response->deviceResponseCode);
     }
 
-    /**
-     */
     public function testEbtBenefitWithdrawalAllowDup()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);

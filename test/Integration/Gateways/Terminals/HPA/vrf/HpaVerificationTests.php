@@ -221,8 +221,6 @@ class HpaVerificationTests extends TestCase
         The transaction has been voided.
     */
     
-    /**
-     */
     public function testCase07()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\UnsupportedTransactionException::class);

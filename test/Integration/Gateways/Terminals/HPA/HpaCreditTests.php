@@ -134,8 +134,6 @@ class HpaCreditTests extends TestCase
         $this->assertEquals('0', $response->resultCode);
     }
 
-    /**
-     */
     public function testAuthWithoutAmount()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\BuilderException::class);

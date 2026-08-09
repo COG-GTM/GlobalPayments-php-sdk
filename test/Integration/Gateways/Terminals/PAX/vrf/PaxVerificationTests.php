@@ -377,8 +377,6 @@ class PaxVerificationTests extends TestCase
 
      */
     
-    /**
-     */
     public function testCase07()
     {
         $this->expectException(\GlobalPayments\Api\Entities\Exceptions\GatewayException::class);
