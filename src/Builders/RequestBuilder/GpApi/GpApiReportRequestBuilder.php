@@ -231,7 +231,6 @@ class GpApiReportRequestBuilder implements IRequestBuilder
                 $queryParams['usage_mode'] = $builder->searchBuilder->paymentMethodUsageMode;
                 $queryParams['name'] = $builder->searchBuilder->displayName;
                 $queryParams['amount'] = StringUtils::toNumeric($builder->searchBuilder->amount);
-                ;
                 $queryParams['description'] = $builder->searchBuilder->description;
                 $queryParams['reference'] = $builder->searchBuilder->referenceNumber;
                 $queryParams['country'] = $builder->searchBuilder->country;

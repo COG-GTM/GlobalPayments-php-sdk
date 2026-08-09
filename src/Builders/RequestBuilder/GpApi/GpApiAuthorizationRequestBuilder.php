@@ -592,7 +592,6 @@ class GpApiAuthorizationRequestBuilder implements IRequestBuilder
                 }
                 list($phoneNumber, $phoneCountryCode) = $this->getPhoneNumber($builder, PhoneNumberType::HOME);
                 $payer['landline_phone'] = $phoneCountryCode . $phoneNumber;
-                ;
                 list($phoneNumber, $phoneCountryCode) = $this->getPhoneNumber($builder, PhoneNumberType::MOBILE);
                 $payer['mobile_phone'] = $phoneCountryCode . $phoneNumber;
                 break;
