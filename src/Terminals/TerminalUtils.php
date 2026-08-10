@@ -5,6 +5,7 @@ namespace GlobalPayments\Api\Terminals;
 use GlobalPayments\Api\Terminals\Enums\ControlCodes;
 use GlobalPayments\Api\Terminals\Abstractions\ILogManagement;
 use GlobalPayments\Api\Terminals\UPA\UpaMessageType;
+use GlobalPayments\Api\Utils\Logging\TerminalLogMasking;
 
 class TerminalUtils
 {
@@ -120,7 +121,7 @@ class TerminalUtils
                 ob_end_clean();
             }
             
-            $logProvider->setLog($message, $trace);
+            $logProvider->setLog(TerminalLogMasking::maskMessage($message), $trace);
         }
     }
 
