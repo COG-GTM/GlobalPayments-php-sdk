@@ -22,8 +22,12 @@ class TerminalLogManagement implements ILogManagement
     public function setLog($message, $backTrace = '')
     {
         try {
-            $message = "\n$message\n$backTrace";
+            $message = "\n" . TerminalLogMasking::maskMessage($message) . "\n$backTrace";
+            $fileExists = file_exists($this->logLocation);
             file_put_contents($this->logLocation, $message, FILE_APPEND);
+            if (!$fileExists) {
+                @chmod($this->logLocation, 0600);
+            }
         } catch (\Exception $e) {
             throw new ConfigurationException('Error in log management config: ', $e->getMessage());
         }
