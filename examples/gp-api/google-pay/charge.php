@@ -51,6 +51,7 @@ try {
     echo '<br />';
     echo '<b>Transaction status: </b>' . $transaction->responseMessage;
 } catch (\Exception $e) {
-    echo 'Failure: ' . $e->getMessage();
+    error_log('Google Pay charge failed: ' . $e->getMessage());
+    echo 'Failure: the transaction could not be processed.';
     exit;
 }

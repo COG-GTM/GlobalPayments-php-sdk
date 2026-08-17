@@ -112,7 +112,8 @@ try {
     printf('Payment Method Key: %s<br />', $paymentMethod->key);
     printf('Schedule Key: %s<br />', $schedule->key);
 } catch (Exception $e) {
-    die($e->getMessage());
+    error_log('ACH recurring signup failed: ' . $e->getMessage());
+    die('Failure: your payment could not be scheduled.');
 }
 
 

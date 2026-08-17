@@ -11,6 +11,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="SecureSubmit PHP end-to-end payment example using tokenization.">
         <meta name="author" content="Mark Smedal">
+        <!-- Publishable (public) API key for this demo. Never place a secret API key in a page or in client-side code. -->
+        <meta name="gp-public-api-key" content="pkapi_cert_jKc1FtuyAydZhZfbB3">
         <title>Simple Payment Form Demo</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>        
@@ -136,9 +138,10 @@
             </form>        
         </div>
         <script>
-            // Configure account
+            // Configure account. The publishable (public) API key is read from the page so it is
+            // not hardcoded in the script. Never place a secret API key in client-side code.
             GlobalPayments.configure({
-                publicApiKey: "pkapi_cert_jKc1FtuyAydZhZfbB3" //gitleaks:allow
+                publicApiKey: document.querySelector('meta[name="gp-public-api-key"]').content
             });
 
             // Create Form

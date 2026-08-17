@@ -41,7 +41,8 @@ try {
 
     sendEmail($_GET['EMAIL'], 'donotreply@e-hps.com', 'Successful Charge!', $body, true); #gitleaks:allow
 } catch (Exception $e) {
-    echo 'Failure: ' . $e->getMessage();
+    error_log('Charge failed: ' . $e->getMessage());
+    echo 'Failure: the transaction could not be processed.';
     exit;
 }
 

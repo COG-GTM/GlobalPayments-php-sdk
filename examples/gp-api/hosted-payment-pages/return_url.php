@@ -35,7 +35,10 @@ if (!$is_valid_request) {
     const form = document.createElement("form");
     form.method = "POST";
     form.id = "paymentForm";
-    form.action = "<?= str_replace("return_url", "final_page", "https://".$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'])?>"; // Change this to your final processing URL
+    form.action = <?= json_encode(
+        str_replace("return_url", "final_page", "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']),
+        JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
+    ) ?>; // Change this to your final processing URL
 
     //Include the signature in the POST request, so it can be verified on the again final page.
     const signatureKey = document.createElement("input");

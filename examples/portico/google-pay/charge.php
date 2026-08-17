@@ -25,6 +25,7 @@ try {
 
     echo "<b>Your transaction Id is: </b>" . $response->transactionId;
 } catch (Exception $e) {
-    echo 'Failure: ' . $e->getMessage();
+    error_log('Google Pay charge failed: ' . $e->getMessage());
+    echo 'Failure: the transaction could not be processed.';
     exit;
 }

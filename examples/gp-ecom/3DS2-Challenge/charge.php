@@ -91,7 +91,8 @@ if (!isset($_POST['ThreeDSData'])) {
             echo json_encode(['error' => 'true', 'enrolled' => $secureEcom->enrolled, 'message' => 'Card not enrolled']);
         }
     } catch (Exception $e) {
-        echo json_encode(['error' => 'true', 'message' => $e->getMessage()]);
+        error_log('3DS2 authentication failed: ' . $e->getMessage());
+        echo json_encode(['error' => 'true', 'message' => 'Authentication could not be completed.']);
     }
 } else {
     try {
@@ -120,7 +121,8 @@ if (!isset($_POST['ThreeDSData'])) {
         }
 
     } catch (Exception $exce) {
-        echo 'Fail:' . $exce->getMessage();
+        error_log('3DS2 challenge processing failed: ' . $exce->getMessage());
+        echo 'Fail: the transaction could not be processed.';
         // TODO: Add your exception handling here
     }
 }

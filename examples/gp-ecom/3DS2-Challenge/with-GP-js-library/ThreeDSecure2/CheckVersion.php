@@ -50,9 +50,10 @@ try {
     $response['methodUrl']   = $threeDSecureData->issuerAcsUrl;
     $response['methodData']  = $threeDSecureData->payerAuthenticationRequest;
 } catch (\Exception $e) {
+    error_log('3DS2 check version failed: ' . $e->getMessage());
     $response = [
         'error'    => true,
-        'message'  => $e->getMessage(),
+        'message'  => 'Authentication could not be completed.',
         'enrolled' => 'NO_RESPONSE',
     ];
 }
