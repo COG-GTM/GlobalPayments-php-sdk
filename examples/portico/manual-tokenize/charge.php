@@ -47,7 +47,8 @@ try {
 
     // sendEmail($_GET['email'], 'donotreply@e-hps.com', 'Successful Charge!', $body, true);
 } catch (Exception $e) {
-    echo 'Failure: ' . $e->getMessage();
+    error_log('Charge failed: ' . $e->getMessage());
+    echo 'Failure: the transaction could not be processed.';
     exit;
 }
 

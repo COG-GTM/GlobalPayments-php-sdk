@@ -28,7 +28,8 @@ try {
 
     echo "<b>Transaction Success your transaction Id is: </b>" . $response->transactionId;
 } catch (Exception $e) {
-    echo 'Failure: ' . $e->getMessage();
+    error_log('Charge failed: ' . $e->getMessage());
+    echo 'Failure: the transaction could not be processed.';
     exit;
 }
 ?>

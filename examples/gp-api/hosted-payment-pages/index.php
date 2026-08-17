@@ -142,7 +142,7 @@ try{
     // Generate The HPP URL
 	->execute();
 	echo "<h2>Hosted Payment Page Created</h2>";
-	echo '<a target="_blank" href="'.$first_example->payByLinkResponse->url.'">Click here to pay</a>';
+	echo '<a target="_blank" href="'.htmlspecialchars($first_example->payByLinkResponse->url, ENT_QUOTES, 'UTF-8').'">Click here to pay</a>';
 	// echo "<pre>" . print_r($first_example->payByLinkResponse, true) . "</pre>";
 
 	// echo "<h2>Loaded in Iframe</h2>";
@@ -150,8 +150,8 @@ try{
 	// echo '<iframe src="'.$first_example->payByLinkResponse->url.'" width="100%" height="600px"></iframe>';
 	// echo "<pre>" . print_r($first_example->payByLinkResponse, true) . "</pre>";
 }catch (\Exception $e) {
-	echo "Error creating hosted payment page: " . $e->getMessage();
-	echo "<pre>" . print_r($e->getTrace(), true) . "</pre>";
+	error_log("Error creating hosted payment page: " . $e->getMessage());
+	echo "Error creating hosted payment page. See the server error log for details.";
 	exit;
 }
 
@@ -241,15 +241,15 @@ try {
         )
         // Build the second example HPP URL
 		->execute();
-	echo '<a target="_blank" href="'.$second_example->payByLinkResponse->url.'">Click here to pay (With Active Payer)</a>';
+	echo '<a target="_blank" href="'.htmlspecialchars($second_example->payByLinkResponse->url, ENT_QUOTES, 'UTF-8').'">Click here to pay (With Active Payer)</a>';
 	// echo "<pre>" . print_r($second_example->payByLinkResponse, true) . "</pre>";
 
 	// echo "<h2>Second Example Loaded in Iframe</h2>";
 	// echo '<iframe src="'.$second_example->payByLinkResponse->url.'" width="100%" height="600px"></iframe>';
 	
 } catch (\Exception $e) {
-	echo "Error creating second hosted payment page: " . $e->getMessage();
-	echo "<pre>" . print_r($e->getTrace(), true) . "</pre>";
+	error_log("Error creating second hosted payment page: " . $e->getMessage());
+	echo "Error creating second hosted payment page. See the server error log for details.";
 }
 // Third example using ALL available HostedPayment methods 
 try {
@@ -417,15 +417,15 @@ try {
         ->execute();
         
     echo "<h2>Third Example - Using all HPP Methods</h2>";
-    echo '<a target="_blank" href="'.$third_example->payByLinkResponse->url.'">Click here to pay (HPP All Methods)</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($third_example->payByLinkResponse->url, ENT_QUOTES, 'UTF-8').'">Click here to pay (HPP All Methods)</a>';
     // echo "<pre>" . print_r($third_example->payByLinkResponse, true) . "</pre>";
     
     // echo "<h2>Third example loaded in Iframe (with display configuration)</h2>";
     // echo '<iframe src="'.$third_example->payByLinkResponse->url.'" width="100%" height="700px"></iframe>';
     
 } catch (\Exception $e) {
-    echo "Error creating comprehensive hosted payment page example: " . $e->getMessage();
-    echo "<pre>" . print_r($e->getTrace(), true) . "</pre>";
+    error_log("Error creating comprehensive hosted payment page example: " . $e->getMessage());
+    echo "Error creating comprehensive hosted payment page example. See the server error log for details.";
 }
 
 function getB64Image() : string {

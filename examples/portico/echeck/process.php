@@ -42,6 +42,6 @@ try {
 
     printf('<b>Success! Transaction ID: %s</b>', $response->transactionId);
 } catch (Exception $e) {
-    printf('Error running check sale: %s', $e->getMessage());
-    printf('<pre><code>%s</code></pre>', print_r($e, true));
+    error_log('Error running check sale: ' . $e->getMessage());
+    echo 'Error running check sale. See the server error log for details.';
 }

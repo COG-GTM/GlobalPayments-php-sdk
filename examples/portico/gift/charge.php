@@ -26,5 +26,6 @@ try {
     //echo $response->responseCode;
     echo "Transaction success transaction Id: " . $response->transactionId;
 } catch (Exception $e) {
-    echo $e->getMessage();
+    error_log('Gift transaction failed: ' . $e->getMessage());
+    echo 'Failure: the transaction could not be processed.';
 }

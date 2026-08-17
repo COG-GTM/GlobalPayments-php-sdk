@@ -1,6 +1,7 @@
-// Configure account
+// Configure account. The publishable (public) API key is read from the page so it is
+// not hardcoded in the script. Never place a secret API key in client-side code.
 GlobalPayments.configure({
-    publicApiKey: "pkapi_cert_P6dRqs1LzfWJ6HgGVZ" //gitleaks:allow
+    publicApiKey: document.querySelector('meta[name="gp-public-api-key"]').content
 });
 
 // Create Form
