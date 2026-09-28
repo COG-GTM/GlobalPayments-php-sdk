@@ -1,0 +1,32 @@
+{
+  "contract": "pan-masking",
+  "version": "2-candidate",
+  "status": "candidate",
+  "owner": "@northgate/sdk-shared",
+  "rationale": "CANDIDATE \u2014 not adopted. Option B of DECISION-PF-03: show the full 8-digit BIN + last four (PCI DSS v4.0.1 Req. 3.4.1 ceiling) so the portal BIN panel and bin-lookup-service agree with the SDKs. Requires a documented business need and QSA confirmation.",
+  "visible_prefix": 8,
+  "visible_suffix": 4,
+  "mask_char": "*",
+  "vectors": [
+    {
+      "pan": "4111111111111111",
+      "masked": "41111111****1111"
+    },
+    {
+      "pan": "5425233430109903",
+      "masked": "54252334****9903"
+    },
+    {
+      "pan": "378282246310005",
+      "masked": "37828224***0005"
+    },
+    {
+      "pan": "4000056655665556",
+      "masked": "40000566****5556"
+    },
+    {
+      "pan": "6011111111111117",
+      "masked": "60111111****1117"
+    }
+  ]
+}
