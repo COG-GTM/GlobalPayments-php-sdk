@@ -1,0 +1,3 @@
+*            @northgate/sdk-shared
+/vectors/    @northgate/sdk-shared @northgate/java-sdk @northgate/php-sdk
+/decisions/  @northgate/sdk-shared @northgate/product-payments
