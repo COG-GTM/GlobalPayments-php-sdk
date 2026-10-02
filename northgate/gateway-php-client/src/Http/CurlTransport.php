@@ -9,6 +9,9 @@ final class CurlTransport
 {
     public const DEFAULT_TIMEOUT = 30;
 
+    /** PCI DSS v4.0.1 Req. 4.2.1: TLS 1.0 and 1.1 are not secure versions; negotiate 1.2 or newer only. */
+    public const MIN_TLS_VERSION = CURL_SSLVERSION_TLSv1_2;
+
     /** @return array<int, mixed> cURL options for a JSON POST. */
     public static function options(string $url, string $body, array $headers): array
     {
@@ -25,7 +28,7 @@ final class CurlTransport
             CURLOPT_HTTPHEADER => $headerLines,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => self::DEFAULT_TIMEOUT,
-            CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1,
+            CURLOPT_SSLVERSION => self::MIN_TLS_VERSION,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
         ];
