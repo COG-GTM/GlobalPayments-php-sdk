@@ -1,0 +1,74 @@
+{
+  "standard": "PCI DSS v4.0.1 Req. 12.3.3 \u2014 cryptographic cipher suites and protocols in use: documented and reviewed at least once every 12 months",
+  "component": "gateway-php-client",
+  "owner": "@northgate/php-sdk",
+  "reviewed": "2026-09-28",
+  "next_review_due": "2027-09-28",
+  "protocols": [
+    {
+      "name": "TLS 1.3",
+      "status": "in-use",
+      "where": "Northgate\\Gateway\\Http\\CurlTransport (merchant \u2192 gateway, api.northgate.example)",
+      "notes": "preferred when the peer supports it"
+    },
+    {
+      "name": "TLS 1.2",
+      "status": "in-use (minimum)",
+      "where": "Northgate\\Gateway\\Http\\CurlTransport",
+      "notes": "CURLOPT_SSLVERSION minimum; see PF-04 / Req. 4.2.1"
+    },
+    {
+      "name": "TLS 1.1",
+      "status": "prohibited",
+      "where": "\u2014",
+      "notes": "insecure version; must not be negotiated"
+    },
+    {
+      "name": "TLS 1.0",
+      "status": "prohibited",
+      "where": "\u2014",
+      "notes": "insecure version; must not be negotiated"
+    },
+    {
+      "name": "SSL 3.0 / 2.0",
+      "status": "prohibited",
+      "where": "\u2014",
+      "notes": "disabled in libcurl/OpenSSL builds Northgate supports"
+    }
+  ],
+  "cipher_suites": [
+    {
+      "name": "TLS_AES_256_GCM_SHA384",
+      "protocol": "TLS 1.3",
+      "status": "in-use"
+    },
+    {
+      "name": "TLS_AES_128_GCM_SHA256",
+      "protocol": "TLS 1.3",
+      "status": "in-use"
+    },
+    {
+      "name": "TLS_CHACHA20_POLY1305_SHA256",
+      "protocol": "TLS 1.3",
+      "status": "in-use"
+    },
+    {
+      "name": "ECDHE-RSA-AES256-GCM-SHA384",
+      "protocol": "TLS 1.2",
+      "status": "in-use"
+    },
+    {
+      "name": "ECDHE-RSA-AES128-GCM-SHA256",
+      "protocol": "TLS 1.2",
+      "status": "in-use"
+    },
+    {
+      "name": "CBC-mode and RSA-key-exchange suites",
+      "protocol": "TLS 1.2",
+      "status": "deprecated \u2014 remove on next review",
+      "notes": "industry trend: GCM/AEAD only"
+    }
+  ],
+  "monitoring": "NIST SP 800-52r2, PCI SSC bulletins, OpenSSL advisories reviewed quarterly by @northgate/security-eng",
+  "response_plan": "Protocol/suite deprecations are handled as a security release of the SDK (MIN_TLS_VERSION / CURLOPT_SSL_CIPHER_LIST) with 90 days' merchant notice."
+}
