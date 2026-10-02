@@ -1,0 +1,5 @@
+# PHP SDK team owns the client; the shared masking contract and the transport get a second reviewer.
+*                            @northgate/php-sdk
+/src/Util/PanMask.php        @northgate/php-sdk @northgate/sdk-shared
+/src/Http/                   @northgate/php-sdk @northgate/security-eng
+/docs/                       @northgate/php-sdk @northgate/security-eng

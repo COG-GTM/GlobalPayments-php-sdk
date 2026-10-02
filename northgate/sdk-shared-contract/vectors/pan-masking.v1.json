@@ -1,0 +1,17 @@
+{
+  "contract": "pan-masking",
+  "version": "1",
+  "status": "active",
+  "owner": "@northgate/sdk-shared",
+  "rationale": "PCI DSS v4.0.1 Req. 3.4.1: PAN is masked when displayed; the BIN and last four digits are the maximum that may be shown. Northgate shows 6 + 4 (6-digit BIN) in both SDKs, the merchant portal and receipts.",
+  "visible_prefix": 6,
+  "visible_suffix": 4,
+  "mask_char": "*",
+  "vectors": [
+    {"pan": "4111111111111111", "masked": "411111******1111"},
+    {"pan": "5425233430109903", "masked": "542523******9903"},
+    {"pan": "378282246310005",  "masked": "378282*****0005"},
+    {"pan": "4000056655665556", "masked": "400005******5556"},
+    {"pan": "6011111111111117", "masked": "601111******1117"}
+  ]
+}
